@@ -18,7 +18,28 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('copiaincolla_meta_tags');
+        $rootNode = $treeBuilder->root('copiaincolla_meta_tags')
+            ->children()
+                ->arrayNode('exposed_routes')
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('route_name')
+                                ->isRequired(true)
+                            ->end()
+                            ->arrayNode('load_entities')
+                                ->isRequired(false)
+                                ->scalarNode('entity_class')
+                                    ->isRequired(true)
+                                ->end()
+                                ->arrayNode('exposed_routes')
+                                    ->prototype('array')->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
