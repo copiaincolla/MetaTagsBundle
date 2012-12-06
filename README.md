@@ -17,3 +17,7 @@ Add the following line to your composer.json:
 Load the bundle by adding this to `app/AppKernel.php`:
 
     new Copiaincolla\MetaTagsBundle\CopiaincollaMetaTagsBundle(),
+
+Add the following lines to `app/config.yml`:
+
+    copiaincolla_meta_tags: ~
