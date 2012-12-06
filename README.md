@@ -37,6 +37,6 @@ Add the following line to `app/routing.yml`:
 
     # CopiaincollaMetaTagsBundle
     ci_metatags_bundle:
-        resource: "@CopiaincollaMetaTagsBundle/Resources/config/routing.yml"
+        resource: "@CopiaincollaMetaTagsBundle/Resources/config/routing.yml"
     
 
