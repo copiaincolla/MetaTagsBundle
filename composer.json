@@ -1,0 +1,37 @@
+{
+    "name": "copiaincolla/metatags-bundle",
+    "description": "HTML Meta Tags management.",
+    "keywords": ["meta", "tag", "metatag", "html"],
+    "homepage": "https://github.com/copiaincolla/MetaTagsBundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "repositories":[
+        {
+            "type":"git",
+            "url":"https://github.com/copiaincolla/MetaTagsBundle.git"
+        }
+    ],
+
+    "authors": [
+        {
+            "name": "Emanuele Gaspari Castelletti",
+            "email": "inmarelibero@gmail.com",
+            "homepage": "https://twitter.com/inmarelibero"
+        },
+        {
+            "name": "Jury D'Ambros",
+            "email": "jurydambros@gmail.com",
+            "homepage": "https://twitter.com/juryDam"
+        }
+    ],
+    "require": {
+        "symfony/framework-bundle": "2.*"
+    },
+    "suggest": {
+        "symfony/twig-bundle": "2.*"
+    },
+    "autoload": {
+        "psr-0": { "Copiaincolla\\MetaTagsBundle": "" }
+    },
+    "target-dir": "Copiaincolla/MetaTagsBundle"
+}
