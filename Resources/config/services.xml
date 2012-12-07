@@ -4,4 +4,13 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
+    <services>
+		<service id="ci_metatags.loader" class="Copiaincolla\MetaTagsBundle\Loader\MetaTagsLoader">
+		    <tag name="ci_metatags.loader" />
+		    <argument type="service" id="router" />
+		    <argument>%copiaincolla_meta_tags%</argument>
+		    <argument type="service" id="doctrine.orm.entity_manager" />
+		</service>
+    </services>
+
 </container>

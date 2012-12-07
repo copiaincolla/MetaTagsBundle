@@ -1,0 +1,4 @@
+ci_metatags_bundle:
+    resource: "@CopiaincollaMetaTagsBundle/Controller/"
+    type:     annotation
+    prefix:   /
