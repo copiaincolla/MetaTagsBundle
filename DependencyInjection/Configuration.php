@@ -21,6 +21,14 @@ class Configuration implements ConfigurationInterface
         
         $rootNode = $treeBuilder->root('copiaincolla_meta_tags')
             ->children()
+                ->arrayNode('defaults')
+                    ->children()
+                        ->scalarNode('title')->defaultValue("")->end()
+                        ->scalarNode('description')->defaultValue("")->end()
+                        ->scalarNode('keywords')->defaultValue("")->end()
+                        ->scalarNode('author')->defaultValue("")->end()
+                    ->end()
+                ->end()
                 ->arrayNode('dynamic_routes_default_params')
                     // @TODO: can be an array too
                     ->prototype('scalar')->end()
