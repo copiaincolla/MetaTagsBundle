@@ -6,9 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Doctrine\ORM\EntityManager;
 
 /**
- * Urlss loader.
+ * Urls loader.
  */
-class UrlssLoader
+class UrlsLoader
 {
     protected $router;
     protected $config;
