@@ -30,8 +30,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->arrayNode('dynamic_routes_default_params')
-                    // @TODO: can be an array too
-                    ->prototype('scalar')->end()
+                    ->prototype('variable')->end()
                 ->end()
                 ->arrayNode('dynamic_routes')
                     ->useAttributeAsKey('route_name')
