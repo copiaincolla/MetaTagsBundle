@@ -6,9 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Doctrine\ORM\EntityManager;
 
 /**
- * MetaTags loader.
+ * Urlss loader.
  */
-class MetaTagsLoader
+class UrlssLoader
 {
     protected $router;
     protected $config;
