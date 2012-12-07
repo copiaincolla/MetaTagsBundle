@@ -41,12 +41,29 @@ Add to `app/config.yml`:
 
     copiaincolla_meta_tags: ~
     
+## Default meta tags values
+
+To define the default meta tags values, just add them to the configuration, under the key `dynamic_routes_default_params`:
+
+    copiaincolla_meta_tags:
+        defaults:
+            title: "My default Title"
+            description: "My default meta-description content"
+            keywords: "My default meta-keywords content"
+            author: "My default meta-author content"
+    
+# Load dynamic routes
+    
+## Default route variables
+    
 You can define `default_parameters`, an array of parameters to be used for all generated routes. For example, you may want to define the value of `_locale` parameter to be used for all routes you are going to generate:
     
     copiaincolla_meta_tags:
         default_params:
             _locale: en
-        
+
+## Load data from database to compile urls
+
 Additionally, you can specify `dynamic_routes`, an array of route names associated to data fetched from database.
         
     copiaincolla_meta_tags:
@@ -59,3 +76,11 @@ Additionally, you can specify `dynamic_routes`, an array of route names associat
                     id: id
                     slug: getSlug
 
+
+# Usage
+
+In the template you want to add metatags, add the following:
+
+    {% render 'CopiaincollaMetaTagsBundle:MetaTags:render' %}
+    
+Normally it gose in a template containing the `<head>` section.
