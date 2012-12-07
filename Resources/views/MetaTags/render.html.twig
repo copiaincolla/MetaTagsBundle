@@ -1,0 +1,21 @@
+<title>{% spaceless %}
+    {% block meta_title %}
+        {{ metatags.title }}
+    {% endblock %}
+{% endspaceless %}</title>
+
+<meta name="description" content="{% spaceless %}
+    {% block meta_description %}
+        {{ metatags.description }}
+    {% endblock %}
+{% endspaceless %}" />
+
+<meta name="keywords" content="{% spaceless %}
+    {% block meta_keywords %}
+    {% endblock %}
+{% endspaceless %}" />
+
+<meta name="author" content="{% spaceless %}
+    {% block meta_author %}
+    {% endblock %}
+{% endspaceless %}" />

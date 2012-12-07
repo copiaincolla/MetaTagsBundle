@@ -5,11 +5,17 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-		<service id="ci_metatags.url_loader" class="Copiaincolla\MetaTagsBundle\Loader\UrlsLoader">
-		    <tag name="ci_metatags.url_loader" />
-		    <argument type="service" id="router" />
-		    <argument>%copiaincolla_meta_tags%</argument>
-		    <argument type="service" id="doctrine.orm.entity_manager" />
+        <service id="ci_metatags.url_loader" class="Copiaincolla\MetaTagsBundle\Loader\UrlsLoader">
+            <tag name="ci_metatags.url_loader" />
+            <argument type="service" id="router" />
+            <argument>%copiaincolla_meta_tags%</argument>
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+        
+        <service id="ci_metatags.metatags_loader" class="Copiaincolla\MetaTagsBundle\Loader\MetaTagsLoader">
+            <tag name="ci_metatags.metatags_loader" />
+            <argument>%copiaincolla_meta_tags%</argument>
+            <argument type="service" id="doctrine.orm.entity_manager" />
 		</service>
     </services>
 

@@ -18,6 +18,11 @@ class MetaTagsController extends Controller
      */
     public function renderAction()
     {
+        $metatagsLoader = $this->container->get('ci_metatags.metatags_loader');
+        
+        return array(
+            'metatags' => $metatagsLoader->getMetaTags($this->getRequest())
+        );
     }
 
 }
