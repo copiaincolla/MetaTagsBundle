@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        
+
         $rootNode = $treeBuilder->root('copiaincolla_meta_tags')
             ->children()
                 ->arrayNode('defaults')
@@ -37,10 +37,12 @@ class Configuration implements ConfigurationInterface
                     ->prototype('array')
                         ->children()
                             ->arrayNode('params')
+                                ->useAttributeAsKey('k')
                                 ->prototype('scalar')->end()
                             ->end()
                             ->scalarNode('repository')->isRequired()->cannotBeEmpty()->end()
                             ->arrayNode('object_params')
+                                ->useAttributeAsKey('k')
                                 ->prototype('scalar')->end()
                             ->end()
                         ->end()
