@@ -21,6 +21,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode = $treeBuilder->root('copiaincolla_meta_tags')
             ->children()
+                ->scalarNode('urls_loader_custom_service')->defaultValue(null)->end()
                 ->arrayNode('defaults')
                     ->children()
                         ->scalarNode('title')->defaultValue("")->end()
