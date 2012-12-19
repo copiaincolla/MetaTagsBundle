@@ -1,12 +1,4 @@
-{% extends 'PleionAdminBundle::layout.html.twig' %}
-
-{% import 'PleionAdminBundle::macros/macrosForm.html.twig' as macrosForm %}
-
-{% block css %}
-    {{ parent() }}
-    <script rel="stylesheet" src="{{ asset('/bundles/copiaincollametatags/select2-release-3.2/select2.css') }}" type="text/css"></script>
-{% endblock css %}
-
+{% extends 'CopiaincollaMetaTagsBundle::layout.html.twig' %}
 
 {% block main %}
     <div class="row">
@@ -20,12 +12,12 @@
                         {{ (entity.id) ? 'Modifica meta tag "'~entity.route~'"' : 'Nuovo meta tag'}}
                     </legend>
 
-                    {{ macrosForm.bootstrapFormControlGroup(form.route, {'attr': {'style': 'width:600px'}}) }}
-                    {{ macrosForm.bootstrapFormControlGroup(form.title) }}
-                    {{ macrosForm.bootstrapFormControlGroup(form.description) }}
-                    {{ macrosForm.bootstrapFormControlGroup(form.keywords) }}
-                    {{ macrosForm.bootstrapFormControlGroup(form.author) }}
-
+                    {{ form_row(form.route) }}
+                    {{ form_row(form.title) }}
+                    {{ form_row(form.description) }}
+                    {{ form_row(form.keywords) }}
+                    {{ form_row(form.author) }}
+                    
                     <hr>
 
                     <button type="submit" class="btn">

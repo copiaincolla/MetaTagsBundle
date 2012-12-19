@@ -3,13 +3,15 @@
     <head>
         <meta charset="UTF-8" />
         {% block css %}
+            <script rel="stylesheet" src="{{ asset('/bundles/copiaincollametatags/select2-release-3.2/select2.css') }}" type="text/css"></script>
         {% endblock css %}
     </head>
-    <bodvy>
+    <body>
         {% block main %}
         {% endblock main %}
 
         {% block footerJavascripts %}
-        {% endblock main %}
+            
+        {% endblock footerJavascripts %}
     </body>
 </html>
