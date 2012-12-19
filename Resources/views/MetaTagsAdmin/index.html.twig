@@ -1,0 +1,47 @@
+{% extends 'PleionAdminBundle::layout.html.twig' %}
+
+{% block main %}
+<div class="row">
+    <div class="span12">
+        <h1>Meta Tag</h1>
+
+        <a href="{{ path('admin_metatag_new') }}" class="btn pull-right"><i class="icon-plus"></i> Inserisci una nuovo metatag</a>
+        <br><br>
+
+        <table class="records_list table">
+            <thead>
+                <tr>
+                    <th>Route</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>
+                        <a href="{{ path('admin_metatag_edit', { 'id': entity.id }) }}">{{ entity.route }}</a>
+                    </td>
+                    <td>{{ entity.title }}</td>
+                    <td>{{ entity.description }}</td>
+                    <td class="actions span3 text-right">
+                        <a href="{{ path('admin_metatag_edit', { 'id': entity.id }) }}" class="btn">
+                            <i class="icon-pencil"></i> modifica
+                        </a>
+                        <a href="{{ path('admin_metatag_delete', {'id': entity.id}) }}" class="btn" onclick="return confirm('Confermare l\'eliminazione?');">
+                            <i class="icon-remove icon-red"></i> elimina
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <hr>
+
+        <a href="{{ path('admin_metatag_new') }}" class="btn pull-right"><i class="icon-plus"></i> Inserisci una nuovo metatag</a>
+    </div>
+</div>
+
+{% endblock %}

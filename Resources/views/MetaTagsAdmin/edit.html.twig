@@ -1,0 +1,67 @@
+{% extends 'PleionAdminBundle::layout.html.twig' %}
+
+{% import 'PleionAdminBundle::macros/macrosForm.html.twig' as macrosForm %}
+
+{% block css %}
+    {{ parent() }}
+    <script rel="stylesheet" src="{{ asset('/bundles/copiaincollametatags/select2-release-3.2/select2.css') }}" type="text/css"></script>
+{% endblock css %}
+
+
+{% block main %}
+    <div class="row">
+        <div class="span12">
+            <form action="{{ (entity.id) ? path('admin_metatag_update', {id: entity.id}) : path('admin_metatag_create') }}" method="post" {{ form_enctype(form) }} class="form form-horizontal form-metatag-edit" novalidate>
+                {{ form_errors(form) }}
+
+                <fieldset>
+
+                    <legend class="title">
+                        {{ (entity.id) ? 'Modifica meta tag "'~entity.route~'"' : 'Nuovo meta tag'}}
+                    </legend>
+
+                    {{ macrosForm.bootstrapFormControlGroup(form.route, {'attr': {'style': 'width:600px'}}) }}
+                    {{ macrosForm.bootstrapFormControlGroup(form.title) }}
+                    {{ macrosForm.bootstrapFormControlGroup(form.description) }}
+                    {{ macrosForm.bootstrapFormControlGroup(form.keywords) }}
+                    {{ macrosForm.bootstrapFormControlGroup(form.author) }}
+
+                    <hr>
+
+                    <button type="submit" class="btn">
+                        <i class="icon-ok"></i>
+                        Salva
+                    </button>
+
+                    <a href="{{ path('admin_metatag') }}" class="btn">
+                        <i class="icon-chevron-left"></i>
+                        Torna alla lista
+                    </a>
+
+            </fieldset>
+            {{ form_rest(form) }}
+        </form>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block footerJavascripts %}
+    {{ parent() }}
+    <script src="{{ asset('/bundles/copiaincollametatags/select2-release-3.2/select2.min.js') }}" type="text/javascript"></script>
+
+    <script>
+        $(function() {
+            $('#{{ form.route.vars.id }}').select2({
+                placeholder: "Seleziona una rotta",
+                allowClear: true,
+                dropdownCss: {'width': 'auto'}
+            });
+
+            // workaround per mostrare la ricerca della select. Esiste una regola che gli da display block
+            $('.select2-drop').addClass('search-box-display');
+        });
+
+    </script>
+{% endblock footerJavascripts %}
+
