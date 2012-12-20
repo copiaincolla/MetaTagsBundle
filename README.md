@@ -84,3 +84,11 @@ In the template you want to add metatags, add the following:
     {% render 'CopiaincollaMetaTagsBundle:MetaTags:render' %}
     
 Normally it gose in a template containing the `<head>` section.
+
+# Load user generated urls
+
+The bundle automatically loads these urls to match:
+- static urls (based on the routes which don't need variables to be compiled)
+- dynamic urls as set in `config.yml` un der the key `copiaincolla_meta_tags.dynamic_routes`
+
+As well as these, you can generate custom urls and add them to the bundle generated ones by following [this guide](Resources/doc/add_custom_routes.md).
