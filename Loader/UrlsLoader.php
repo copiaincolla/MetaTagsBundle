@@ -29,7 +29,7 @@ class UrlsLoader
     public function __construct(array $config = array(), Router $router, EntityManager $em, $container)
     {
         $this->config = $config;
-        
+
         $this->router = $router;
         $this->em = $em;
         $this->container = $container;
@@ -97,12 +97,14 @@ class UrlsLoader
          * load a custom service defined by user, to load additional generated routes
          */
         if (array_key_exists('urls_loader_custom_service', $this->config) && $this->config['urls_loader_custom_service'] != null) {
-            
+
             // load custom service
             $urlsLoaderCustomService = $this->container->get($this->config['urls_loader_custom_service']);
 
             // merge generated urls
-            $output += $urlsLoaderCustomService->getUrls();
+            foreach ($urlsLoaderCustomService->getUrls() as $name => $preparedRoute) {
+                $output[$name] = $preparedRoute;
+            }
         }
 
         return $output;
