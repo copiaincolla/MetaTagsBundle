@@ -60,6 +60,11 @@ class UrlsLoader
         // associative array [route name] => [array urls] to be returned
         $output = array();
 
+
+        // removing the baseUrl to generate baseUrl independent urls
+        $baseUrl = $this->router->getContext()->getBaseUrl();
+        $this->router->getContext()->setBaseUrl(null);
+
         // iterate on selected routes to generate urls
         foreach ($this->router->getRouteCollection()->all() as $name => $route) {
             
@@ -114,6 +119,9 @@ class UrlsLoader
                 $output[$name] = $preparedRoute;
             }
         }
+
+        // restore the original baseURl
+        $this->router->getContext()->setBaseUrl($baseUrl);
 
         return $output;
     }
@@ -192,7 +200,7 @@ class UrlsLoader
         }
 
         // try to generate the route
-        try {his->router->setContext($c);
+        try {
             return $this->router->generate($name, $routeParameters);
         } catch (\Exception $e) {
 
