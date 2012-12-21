@@ -18,6 +18,7 @@ class UrlsLoader
     protected $container;
 
 
+    protected $loadedBundlesRegex = "";
     protected $dynamic_routes_default_params;
 
     /**
@@ -38,7 +39,7 @@ class UrlsLoader
         // set defaults parameters for all routes if specified
         $this->dynamic_routes_default_params = (array_key_exists('dynamic_routes_default_params', $this->config)) ? $this->config['dynamic_routes_default_params'] : array();
 
-        $this->generateFilterForLoadedBundles();
+        $this->generateLoadedBundlesRegex();
     }
 
     /**
@@ -62,7 +63,7 @@ class UrlsLoader
 
         // iterate on selected routes to generate urls
         foreach ($this->router->getRouteCollection()->all() as $name => $route) {
-            
+
             if (!$this->isRouteExposed($route)) {
                 continue;
             }
@@ -99,7 +100,7 @@ class UrlsLoader
                 }
             }
         }
-        
+
 
         /*
          * load a custom service defined by user, to load additional generated routes
@@ -181,7 +182,7 @@ class UrlsLoader
         // set variables value
         foreach ($variables as $variable) {
 
-            // read the variable valude from $defaultVariables
+            // read the variable value from $defaultVariables
             if (array_key_exists($variable, $defaultVariables)) {
                 $routeParameters[$variable] = $defaultVariables[$variable];
 
@@ -205,7 +206,7 @@ class UrlsLoader
 
         return null;
     }
-    
+
     /**
      * check if the Route $route is exposed
      */
@@ -214,41 +215,48 @@ class UrlsLoader
         $routeDefaults = $route->getDefaults();
         $_controller = $routeDefaults['_controller'];
 
-
-        if (preg_match($regex, $_controller)) {
+        if ($this->isRouteExposedByRepository($_controller)) {
             return true;
         }
 
         if ($this->isRouteExposedByRouteOption($route)) {
             return true;
         }
-        
+
         return false;
     }
-    
+
     /**
      * generate regex string to filter the controller of a route
-     * 
+     *
      * the regex is an OR concatenation of the bundles' namespaces set by the user in config.yml
-     * 
+     *
      * eg: (^Acme\\FooBundle)|(^Acme)
      */
-    private function generateFilterForLoadedBundles()
+    private function generateLoadedBundlesRegex()
     {
-        $regex = '';
-        
         foreach ($this->container->get('kernel')->getBundles() as $bundle) {
+
             if (in_array($bundle->getName(), $this->config['exposed_routes']['bundles'])) {
-                
-                if ($regex != '') {
-                    $regex .= '|';
+
+                if ($this->loadedBundlesRegex != '') {
+                    $this->loadedBundlesRegex .= '|';
                 }
-                
-                $regex .= '(^'.$bundle->getNamespace().')';
+
+                $this->loadedBundlesRegex .= "(^".addslashes($bundle->getNamespace()).")";
             }
         }
-        
-        return ($regex != '') ? $regex : null;
+
+        return ($this->loadedBundlesRegex != '') ? $this->loadedBundlesRegex : null;
+    }
+
+    private function isRouteExposedByRepository($_controller)
+    {
+        if ($this->loadedBundlesRegex != "" && preg_match($this->loadedBundlesRegex, $_controller)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
