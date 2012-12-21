@@ -47,8 +47,8 @@ class MetaTagsLoader
     {
         $metatags = $this->defaultMetatags;
 
-        die(var_dump($request->server->get('PATH_INFO')));
-        
+        $pathInfo = $request->server->get('PATH_INFO');
+
         return $metatags;
     }
 }

@@ -22,11 +22,11 @@ class Metatag
     private $id;
 
     /**
-     * @var string $route
+     * @var string $url
      *
-     * @ORM\Column(name="route", type="string", length=255)
+     * @ORM\Column(name="url", type="string", length=255)
      */
-    private $route;
+    private $url;
 
     /**
      * @var string $title
@@ -63,10 +63,12 @@ class Metatag
     /******************************************************************************************
      *  GETTER AND SETTER
      *****************************************************************************************/
+
+
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -74,79 +76,45 @@ class Metatag
     }
 
     /**
-     * Set route
+     * Set url
      *
-     * @param string $route
+     * @param string $url
+     * @return Metatag
      */
-    public function setRoute($route)
+    public function setUrl($url)
     {
-        $this->route = $route;
+        $this->url = $url;
+    
+        return $this;
     }
 
     /**
-     * Get route
+     * Get url
      *
-     * @return string
+     * @return string 
      */
-    public function getRoute()
+    public function getUrl()
     {
-        return $this->route;
-    }
-
-    /**
-     * Set metaTitle
-     *
-     * @param string $metaTitle
-     */
-    public function setMetaTitle($metaTitle)
-    {
-        $this->metaTitle = $metaTitle;
-    }
-
-    /**
-     * Get metaTitle
-     *
-     * @return string
-     */
-    public function getMetaTitle()
-    {
-        return $this->metaTitle;
-    }
-
-    /**
-     * Set metaDescription
-     *
-     * @param text $metaDescription
-     */
-    public function setMetaDescription($metaDescription)
-    {
-        $this->metaDescription = $metaDescription;
-    }
-
-    /**
-     * Get metaDescription
-     *
-     * @return text
-     */
-    public function getMetaDescription()
-    {
-        return $this->metaDescription;
+        return $this->url;
     }
 
     /**
      * Set title
      *
-     * @param text $title
+     * @param string $title
+     * @return Metatag
      */
     public function setTitle($title)
     {
         $this->title = $title;
+    
+        return $this;
     }
 
     /**
      * Get title
      *
-     * @return text
+     * @return string 
      */
     public function getTitle()
     {
@@ -156,17 +124,20 @@ class Metatag
     /**
      * Set description
      *
-     * @param text $description
+     * @param string $description
+     * @return Metatag
      */
     public function setDescription($description)
     {
         $this->description = $description;
+    
+        return $this;
     }
 
     /**
      * Get description
      *
-     * @return text
+     * @return string 
      */
     public function getDescription()
     {
@@ -176,17 +147,20 @@ class Metatag
     /**
      * Set keywords
      *
-     * @param text $keywords
+     * @param string $keywords
+     * @return Metatag
      */
     public function setKeywords($keywords)
     {
         $this->keywords = $keywords;
+    
+        return $this;
     }
 
     /**
      * Get keywords
      *
-     * @return text
+     * @return string 
      */
     public function getKeywords()
     {
@@ -196,21 +170,23 @@ class Metatag
     /**
      * Set author
      *
-     * @param text $author
+     * @param string $author
+     * @return Metatag
      */
     public function setAuthor($author)
     {
         $this->author = $author;
+    
+        return $this;
     }
 
     /**
      * Get author
      *
-     * @return text
+     * @return string 
      */
     public function getAuthor()
     {
         return $this->author;
     }
-
 }
