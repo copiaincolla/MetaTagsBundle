@@ -22,11 +22,10 @@ class UrlsLoader
     protected $dynamic_routes_default_params;
 
     /**
-     * constructor
-     *
-     * @param Router $router
      * @param array $config
-     * @param EntityManager $em
+     * @param \Symfony\Bundle\FrameworkBundle\Routing\Router $router
+     * @param \Doctrine\ORM\EntityManager $em
+     * @param $container
      */
     public function __construct(array $config = array(), Router $router, EntityManager $em, $container)
     {
@@ -66,6 +65,9 @@ class UrlsLoader
         $baseUrl = $this->router->getContext()->getBaseUrl();
         $this->router->getContext()->setBaseUrl(null);
 
+        // get all url stored in database
+        $databaseUrls = $this->getDatabaseUrls();
+
         // iterate on selected routes to generate urls
         foreach ($this->router->getRouteCollection()->all() as $name => $route) {
 
@@ -90,7 +92,7 @@ class UrlsLoader
                     foreach ($data as $obj) {
                         $preparedRoute = $this->prepareDynamicUrl($name, $route, $obj, $this->config['dynamic_routes'][$name]);
 
-                        if ($preparedRoute) {
+                        if ($preparedRoute && !in_array($preparedRoute, $databaseUrls)) {
                             $output[$name][] = $preparedRoute;
                         }
                     }
@@ -100,7 +102,7 @@ class UrlsLoader
             } else {
                 $preparedRoute = $this->prepareUrl($name, $route);
 
-                if ($preparedRoute) {
+                if ($preparedRoute && !in_array($preparedRoute, $databaseUrls)) {
                     $output[$name][] = $preparedRoute;
                 }
             }
@@ -289,6 +291,22 @@ class UrlsLoader
         }
 
         return null;
+    }
+
+    /**
+     * get all url stored in database
+     *
+     * @return array of urls
+     */
+    private function getDatabaseUrls() {
+        $metatags = $this->em->getRepository('CopiaincollaMetaTagsBundle:Metatag')->findAll();
+        $arrDatabaseUrls = array();
+
+        foreach($metatags as $metatag) {
+            $arrDatabaseUrls[] = $metatag->getUrl();
+        }
+
+        return $arrDatabaseUrls;
     }
 
 }
