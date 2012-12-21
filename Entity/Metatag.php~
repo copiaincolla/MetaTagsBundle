@@ -7,19 +7,12 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Copiaincolla\MetaTagsBundle\Entity\Metatag
  *
- *
- *
  * @ORM\Table(name="ci_metatag")
  * @ORM\Entity(repositoryClass="Copiaincolla\MetaTagsBundle\Repository\MetatagRepository")
  */
 class Metatag
 {
-
     /**
-     * title
-     * description
-     * keywords
-     * author
      * @var integer $id
      *
      * @ORM\Column(name="id", type="integer")
@@ -29,11 +22,11 @@ class Metatag
     private $id;
 
     /**
-     * @var string $route
+     * @var string $url
      *
-     * @ORM\Column(name="route", type="string", length=255)
+     * @ORM\Column(name="url", type="string", length=255)
      */
-    private $route;
+    private $url;
 
     /**
      * @var string $title
@@ -65,86 +58,10 @@ class Metatag
 
     /******************************************************************************************
      *  CUSTOM FUNCTIONS
-     *******************************************************************************************/
-
-    public function __toString()
-    {
-        return $this->getRoute();
-    }
+     *****************************************************************************************/
 
     /******************************************************************************************
      *  GETTER AND SETTER
-     *******************************************************************************************/
+     *****************************************************************************************/
 
-
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set route
-     *
-     * @param string $route
-     */
-    public function setRoute($route)
-    {
-        $this->route = $route;
-    }
-
-    /**
-     * Get route
-     *
-     * @return string
-     */
-    public function getRoute()
-    {
-        return $this->route;
-    }
-
-    /**
-     * Set metaTitle
-     *
-     * @param string $metaTitle
-     */
-    public function setMetaTitle($metaTitle)
-    {
-        $this->metaTitle = $metaTitle;
-    }
-
-    /**
-     * Get metaTitle
-     *
-     * @return string
-     */
-    public function getMetaTitle()
-    {
-        return $this->metaTitle;
-    }
-
-    /**
-     * Set metaDescription
-     *
-     * @param text $metaDescription
-     */
-    public function setMetaDescription($metaDescription)
-    {
-        $this->metaDescription = $metaDescription;
-    }
-
-    /**
-     * Get metaDescription
-     *
-     * @return text
-     */
-    public function getMetaDescription()
-    {
-        return $this->metaDescription;
-    }
 }

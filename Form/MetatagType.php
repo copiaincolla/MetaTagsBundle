@@ -25,11 +25,13 @@ class MetatagType extends AbstractType
          * by replacing the urls keys
          */
         array_walk($urls, function($val, $key) use(&$urls){
-            $urls[$key] = array_combine($val, $val);
+            if (count($val) > 0) {
+                $urls[$key] = array_combine($val, $val);
+            }
         });
 
         $builder
-                ->add('route', 'choice', array(
+                ->add('url', 'choice', array(
                     'choices' => $urls,
                     'required' => true,
                 ))
