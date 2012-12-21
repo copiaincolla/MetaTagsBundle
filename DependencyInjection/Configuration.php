@@ -21,11 +21,21 @@ class Configuration implements ConfigurationInterface
 
         $rootNode = $treeBuilder->root('copiaincolla_meta_tags')
             ->children()
-                ->scalarNode('urls_loader_custom_service')->defaultValue(null)->end()
+
                 ->arrayNode('exposed_routes')
-                    ->prototype('variable')->end()
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('bundles')
+                            ->useAttributeAsKey('k')
+                            ->prototype('scalar')->end()
+                        ->end()
+                    ->end()
                 ->end()
+
+                ->scalarNode('urls_loader_custom_service')->defaultValue(null)->end()
+
                 ->arrayNode('defaults')
+                    ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('title')->defaultValue("")->end()
                         ->scalarNode('description')->defaultValue("")->end()
@@ -33,9 +43,12 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('author')->defaultValue("")->end()
                     ->end()
                 ->end()
+
                 ->arrayNode('dynamic_routes_default_params')
-                    ->prototype('variable')->end()
+                    ->useAttributeAsKey('k')
+                    ->prototype('scalar')->end()
                 ->end()
+
                 ->arrayNode('dynamic_routes')
                     ->useAttributeAsKey('route_name')
                     ->prototype('array')
