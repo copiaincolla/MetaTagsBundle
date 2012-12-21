@@ -18,10 +18,20 @@ class MetatagType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $urls = $this->urlsLoader->getUrls();
+die(var_dump($urls));
+        /*
+         * prepare the multidimensional array of urls to be put in a <select> tag
+         * by replacing the urls keys
+         */
+        array_walk($urls, function($val, $key) use(&$urls){
+            $urls[$key] = array_combine($val, $val);
+        });
+
         $builder
                 ->add('route', 'choice', array(
-                    'choices' => $this->urlsLoader->getUrls(),
-                    'required' => false,
+                    'choices' => $urls,
+                    'required' => true,
                 ))
                 ->add('title')
                 ->add('description')

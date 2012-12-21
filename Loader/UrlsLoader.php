@@ -61,6 +61,11 @@ class UrlsLoader
         // associative array [route name] => [array urls] to be returned
         $output = array();
 
+
+        // removing the baseUrl to generate baseUrl independent urls
+        $baseUrl = $this->router->getContext()->getBaseUrl();
+        $this->router->getContext()->setBaseUrl(null);
+
         // iterate on selected routes to generate urls
         foreach ($this->router->getRouteCollection()->all() as $name => $route) {
 
@@ -115,6 +120,9 @@ class UrlsLoader
                 $output[$name] = $preparedRoute;
             }
         }
+
+        // restore the original baseURl
+        $this->router->getContext()->setBaseUrl($baseUrl);
 
         return $output;
     }
@@ -194,11 +202,6 @@ class UrlsLoader
 
         // try to generate the route
         try {
-            // remove the base url
-            $c = $this->router->getContext();
-            $c->setBaseUrl(null);
-
-            $this->router->setContext($c);
             return $this->router->generate($name, $routeParameters);
         } catch (\Exception $e) {
 
@@ -215,11 +218,14 @@ class UrlsLoader
         $routeDefaults = $route->getDefaults();
         $_controller = $routeDefaults['_controller'];
 
-        if ($this->isRouteExposedByRepository($_controller)) {
-            return true;
+        // check if an "expose" parameter is set in the controller
+        $routeExposedByRouteOption = $this->getRouteExposedByRouteOption($route);
+        if (null !== $routeExposedByRouteOption) {
+            return $routeExposedByRouteOption;
         }
 
-        if ($this->isRouteExposedByRouteOption($route)) {
+        // check if the bundles is set in the configurations file
+        if ($this->isRouteExposedByRepository($_controller)) {
             return true;
         }
 
@@ -269,15 +275,20 @@ class UrlsLoader
      * @param \Symfony\Component\Routing\Route $route
      * @return bool
      */
-    private function isRouteExposedByRouteOption(Route $route)
+    private function getRouteExposedByRouteOption(Route $route)
     {
         $routeOptions = $route->getOptions();
 
-        if (array_key_exists('ci_metatags_expose', $routeOptions) && true === $routeOptions['ci_metatags_expose']) {
-            return true;
+        if (array_key_exists('ci_metatags_expose', $routeOptions)) {
+            if (true === $routeOptions['ci_metatags_expose']) {
+                return true;
+            } else if (false === $routeOptions['ci_metatags_expose']) {
+                return false;
+            }
+
         }
 
-        return false;
+        return null;
     }
 
 }
