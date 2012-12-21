@@ -192,12 +192,7 @@ class UrlsLoader
         }
 
         // try to generate the route
-        try {
-            // remove the base url
-            $c = $this->router->getContext();
-            $c->setBaseUrl(null);
-
-            $this->router->setContext($c);
+        try {his->router->setContext($c);
             return $this->router->generate($name, $routeParameters);
         } catch (\Exception $e) {
 
@@ -215,9 +210,9 @@ class UrlsLoader
         $_controller = $routeDefaults['_controller'];
 
 
-        if (preg_match($regex, $_controller)) {
-            return true;
-        }
+        //if (preg_match($regex, $_controller)) {
+        //   return true;
+        //}
 
         if ($this->isRouteExposedByRouteOption($route)) {
             return true;
