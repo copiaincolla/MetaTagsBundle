@@ -16,13 +16,13 @@ class MetaTagsController extends Controller
      *
      * @Template()
      */
-    public function renderAction()
+    public function renderAction($templateVars = array())
     {
         $metatagsLoader = $this->container->get('ci_metatags.metatags_loader');
-        
-        return array(
-            'metatags' => $metatagsLoader->getMetaTags($this->getRequest())
-        );
+
+        return $this->render("CopiaincollaMetaTagsBundle:MetaTags:render.html.twig", array(
+            'metatags' => $metatagsLoader->getMetaTagsForRequest($this->getRequest(), $templateVars)
+        ));
     }
 
 }

@@ -13,7 +13,6 @@
             <argument type="service" id="service_container" />
         </service>
 
-
         <service id="ci_metatags.metatags_loader" class="Copiaincolla\MetaTagsBundle\Loader\MetaTagsLoader">
             <tag name="ci_metatags.metatags_loader" />
             <argument>%copiaincolla_meta_tags%</argument>
