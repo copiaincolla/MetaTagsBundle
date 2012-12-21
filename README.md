@@ -3,7 +3,11 @@ MetaTagsBundle
 
 Symfony Bundle to manage html metatags
 
-# Install
+# Note
+
+This bundle is in __alpha__ state at the moment, not ready for production environment
+
+## Install
 
 If you are using `composer`, add the following line to your `composer.json`:
 
@@ -35,13 +39,13 @@ Add the following line to `app/routing.yml`:
     ci_metatags_bundle:
         resource: "@CopiaincollaMetaTagsBundle/Resources/config/routing.yml"
     
-# Configuration
+## Configuration
 
 Add to `app/config.yml`:
 
     copiaincolla_meta_tags: ~
     
-## Default meta tags values
+### Default meta tags values
 
 To define the default meta tags values, just add them to the configuration, under the key `dynamic_routes_default_params`:
 
@@ -52,9 +56,9 @@ To define the default meta tags values, just add them to the configuration, unde
             keywords: "My default meta-keywords content"
             author: "My default meta-author content"
     
-# Load dynamic routes
+## Load dynamic routes
     
-## Default route variables
+### Default route variables
     
 You can define `default_parameters`, an array of parameters to be used for all generated routes. For example, you may want to define the value of `_locale` parameter to be used for all routes you are going to generate:
     
@@ -62,7 +66,7 @@ You can define `default_parameters`, an array of parameters to be used for all g
         default_params:
             _locale: en
 
-## Load data from database to compile urls
+### Load data from database to compile urls
 
 Additionally, you can specify `dynamic_routes`, an array of route names associated to data fetched from database.
         
@@ -77,7 +81,7 @@ Additionally, you can specify `dynamic_routes`, an array of route names associat
                     slug: getSlug
 
 
-# Usage
+## Usage
 
 In the template you want to add metatags, add the following:
 
@@ -85,7 +89,7 @@ In the template you want to add metatags, add the following:
     
 Normally it gose in a template containing the `<head>` section.
 
-# Load user generated urls
+## Load user generated urls
 
 The bundle automatically loads these urls to match:
 - static urls (based on the routes which don't need variables to be compiled)
