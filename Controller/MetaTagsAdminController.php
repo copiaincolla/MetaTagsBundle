@@ -28,7 +28,7 @@ class MetaTagsAdminController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entities = $em->getRepository('CopiaincollaMetaTagsBundle:Metatag')->findBy(array(), array('route' => 'DESC'));
+        $entities = $em->getRepository('CopiaincollaMetaTagsBundle:Metatag')->findBy(array(), array('url' => 'DESC'));
 
         return array(
             'entities' => $entities
@@ -64,18 +64,18 @@ class MetaTagsAdminController extends Controller
     public function createAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
-        
+
         $entity = new Metatag();
-        
+
         $request = $this->getRequest();
-        
+
         $form = $this->createForm($this->container->get('ci_metatags.metatag_formtype'), $entity);
-        
+
         $form->bindRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
-            
+
             $em->persist($entity);
             $em->flush();
 
@@ -105,9 +105,9 @@ class MetaTagsAdminController extends Controller
         }
 
         $editForm = $this->createForm($this->container->get('ci_metatags.metatag_formtype'), $entity);
-        
+
         $deleteForm = $this->createDeleteForm($id);
-        
+
         return array(
             'entity' => $entity,
             'form' => $editForm->createView(),
