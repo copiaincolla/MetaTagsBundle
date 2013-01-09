@@ -9,15 +9,15 @@
                 <fieldset>
 
                     <legend class="title">
-                        {{ (entity.id) ? 'Modifica meta tag "'~entity.route~'"' : 'Nuovo meta tag'}}
+                        {{ (entity.id) ? 'Modifica meta tag "'~entity.url~'"' : 'Nuovo meta tag'}}
                     </legend>
 
-                    {{ form_row(form.url) }}
+                    {{ (entity.id) ? "" : form_row(form.url)}}
                     {{ form_row(form.title) }}
                     {{ form_row(form.description) }}
                     {{ form_row(form.keywords) }}
                     {{ form_row(form.author) }}
-                    
+
                     <hr>
 
                     <button type="submit" class="btn">
@@ -25,13 +25,18 @@
                         Salva
                     </button>
 
+                    {% if ((entity.id)) %}
+                        <a href="{{ path('admin_metatag_delete', {'id': entity.id}) }}" class="btn" onclick="return confirm('Are you sure you want to delete this url?');">
+                            <i class="icon-remove icon-red"></i> elimina
+                        </a>
+                    {% endif %}
                     <a href="{{ path('admin_metatag') }}" class="btn">
                         <i class="icon-chevron-left"></i>
                         Torna alla lista
                     </a>
 
             </fieldset>
-            {{ form_rest(form) }}
+            {{ form_row(form._token) }}
         </form>
         </div>
     </div>
