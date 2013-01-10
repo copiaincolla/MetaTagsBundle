@@ -4,15 +4,16 @@
     <div class="row">
         <div class="span12">
             <form action="{{ (entity.id) ? path('admin_metatag_update', {id: entity.id}) : path('admin_metatag_create') }}" method="post" {{ form_enctype(form) }} class="form form-horizontal form-metatag-edit" novalidate>
+
                 {{ form_errors(form) }}
 
                 <fieldset>
 
                     <legend class="title">
-                        {{ (entity.id) ? 'Modifica meta tag "'~entity.url~'"' : 'Nuovo meta tag'}}
+                        {{ (entity.id) ? 'Edit meta tag "'~entity.url~'"' : 'New meta tag'}}
                     </legend>
 
-                    {{ (entity.id) ? "" : form_row(form.url)}}
+                    {{ form_row(form.url) }}
                     {{ form_row(form.title) }}
                     {{ form_row(form.description) }}
                     {{ form_row(form.keywords) }}
@@ -21,22 +22,15 @@
                     <hr>
 
                     <button type="submit" class="btn">
-                        <i class="icon-ok"></i>
-                        Salva
+                        <i class="icon-ok"></i> Save
                     </button>
 
-                    {% if ((entity.id)) %}
-                        <a href="{{ path('admin_metatag_delete', {'id': entity.id}) }}" class="btn" onclick="return confirm('Are you sure you want to delete this url?');">
-                            <i class="icon-remove icon-red"></i> elimina
-                        </a>
-                    {% endif %}
                     <a href="{{ path('admin_metatag') }}" class="btn">
-                        <i class="icon-chevron-left"></i>
-                        Torna alla lista
+                        <i class="icon-chevron-left"></i> Back to list
                     </a>
 
             </fieldset>
-            {{ form_row(form._token) }}
+            {{ form_rest(form) }}
         </form>
         </div>
     </div>
@@ -49,7 +43,7 @@
 
     <script>
         $(function() {
-            $('#{{ form.route.vars.id }}').select2({
+            $('#{{ form.url.vars.id }}').select2({
                 placeholder: "Seleziona una rotta",
                 allowClear: true,
                 dropdownCss: {'width': 'auto'}

@@ -18,6 +18,9 @@ class MetatagType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $metaTag = $builder->getForm()->getData();
+
+        // load urls to populate the select
         $urls = $this->urlsLoader->getUrls();
 
         /*
@@ -30,15 +33,27 @@ class MetatagType extends AbstractType
             }
         });
 
+        /**
+         * add 'url' field
+         *
+         * if $metaTag object is not new, 'url' field is hidden.
+         * otherwise it is a choice field to select the url to associate
+         */
+        if ($metaTag->getId()) {
+            $builder->add('url', 'hidden');
+        } else {
+            $builder->add('url', 'choice', array(
+                'choices' => $urls,
+                'required' => true,
+            ));
+        }
+
+        // add meta tags fields
         $builder
-                ->add('url', 'choice', array(
-                    'choices' => $urls,
-                    'required' => true,
-                ))
-                ->add('title')
-                ->add('description')
-                ->add('keywords')
-                ->add('author')
+            ->add('title')
+            ->add('description')
+            ->add('keywords')
+            ->add('author')
         ;
     }
 

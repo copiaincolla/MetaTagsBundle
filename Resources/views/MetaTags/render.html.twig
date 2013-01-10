@@ -1,23 +1,23 @@
 <title>{% spaceless %}
     {% block meta_title %}
-        {{ metatags.title|raw }}
+        {{ metaTagsParseValue(metatags.title, vars)|raw }}
     {% endblock %}
 {% endspaceless %}</title>
 
 <meta name="description" content="{% spaceless %}
     {% block meta_description %}
-        {{ metatags.description|raw }}
+        {{ metaTagsParseValue(metatags.description, vars)|raw }}
     {% endblock %}
 {% endspaceless %}" />
 
 <meta name="keywords" content="{% spaceless %}
     {% block meta_keywords %}
-        {{ metatags.keywords|raw }}
+        {{ metaTagsParseValue(metatags.keywords, vars)|raw }}
     {% endblock %}
 {% endspaceless %}" />
 
 <meta name="author" content="{% spaceless %}
     {% block meta_author %}
-        {{ metatags.author|raw }}
+        {{ metaTagsParseValue(metatags.author, vars)|raw }}
     {% endblock %}
 {% endspaceless %}" />

@@ -24,6 +24,10 @@
             <argument type="service" id="ci_metatags.url_loader" />
         </service>
 
+        <service id="ci_metatags.twig.extension" class="Copiaincolla\MetaTagsBundle\Extension\MetaTagsExtension">
+            <tag name="twig.extension" />
+        </service>
+
     </services>
 
 </container>

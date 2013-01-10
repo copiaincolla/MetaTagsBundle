@@ -16,9 +16,6 @@ class MetaTagsLoader
 {
     protected $defaultMetaTags;
     protected $em;
-
-    // to load twig templates from string
-    protected $twig;
     
     /**
      * List of supported metatags
@@ -40,30 +37,27 @@ class MetaTagsLoader
     {
         $this->defaultMetaTags  = $config['defaults'];
         $this->em               = $em;
-
-        // as explained in http://twig.sensiolabs.org/doc/api.html
-        $this->twig = new \Twig_Environment(new \Twig_Loader_String());
     }
     
     /**
-     * Load meta tags depending on the url
+     * Load the right meta tags for a Request
      * 
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param array $templateVars optional array of template parameters
      * @return array
      */
-    public function getMetaTagsForRequest(Request $request, $templateVars = array())
+    public function getMetaTagsForRequest(Request $request)
     {
         $pathInfo = $request->server->get('PATH_INFO');
 
         $metaTags = $this->defaultMetaTags;
 
+        // search MetaTag in database
         $metaTag = $this->em->getRepository('CopiaincollaMetaTagsBundle:Metatag')->findOneBy(array(
             'url' => $pathInfo
         ));
 
         if ($metaTag) {
-            $metaTags = $this->injectMetaTag($metaTags, $metaTag, $templateVars);
+            $metaTags = $this->mergeMetaTag($metaTags, $metaTag);
         }
 
         return $metaTags;
@@ -76,30 +70,30 @@ class MetaTagsLoader
      * @param \Copiaincolla\MetaTagsBundle\Entity\Metatag $metaTag
      * @return array
      */
-    private function injectMetaTag($metaTags = array(), MetaTag $metaTag, $templateVars = array())
+    private function mergeMetaTag($metaTags = array(), MetaTag $metaTag)
     {
         // title
         $title = $this->cleanMetaTagValue($metaTag->getTitle());
         if ('' !== $title) {
-            $metaTags['title'] = $this->twig->render($title, $templateVars);
+            $metaTags['title'] = $title;
         }
 
         // description
         $description = $this->cleanMetaTagValue($metaTag->getDescription());
         if ('' !== $description) {
-            $metaTags['description'] = $this->twig->render($description, $templateVars);
+            $metaTags['description'] = $description;
         }
 
         // keywords
         $keywords = $this->cleanMetaTagValue($metaTag->getKeywords());
         if ('' !== $keywords) {
-            $metaTags['keywords'] = $this->twig->render($keywords, $templateVars);
+            $metaTags['keywords'] = $keywords;
         }
 
         // author
         $author = $this->cleanMetaTagValue($metaTag->getAuthor());
         if ('' !== $author) {
-            $metaTags['author'] = $this->twig->render($author, $templateVars);
+            $metaTags['author'] = $author;
         }
 
         return $metaTags;

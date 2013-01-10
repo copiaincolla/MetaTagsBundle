@@ -10,19 +10,19 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  */
 class MetaTagsController extends Controller
 {
-
     /**
      * Render HTML metatags
      *
      * @Template()
      */
-    public function renderAction($templateVars = array())
+    public function renderAction($vars = array())
     {
         $metatagsLoader = $this->container->get('ci_metatags.metatags_loader');
 
-        return $this->render("CopiaincollaMetaTagsBundle:MetaTags:render.html.twig", array(
-            'metatags' => $metatagsLoader->getMetaTagsForRequest($this->getRequest(), $templateVars)
-        ));
+        return array (
+            'metatags'  => $metatagsLoader->getMetaTagsForRequest($this->getRequest()),
+            'vars'      => $vars
+        );
     }
 
 }

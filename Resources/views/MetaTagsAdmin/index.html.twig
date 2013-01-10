@@ -1,12 +1,15 @@
 {% extends 'CopiaincollaMetaTagsBundle::layout.html.twig' %}
 
 {% block main %}
-    
+
     <div class="row">
         <div class="span12">
             <h1>Meta Tag</h1>
 
-            <a href="{{ path('admin_metatag_new') }}" class="btn pull-right"><i class="icon-plus"></i> Inserisci una nuovo metatag</a>
+            <a href="{{ path('admin_metatag_new') }}" class="btn pull-right">
+                <i class="icon-plus"></i> New Meta Tag
+            </a>
+
             <br><br>
 
             <table class="records_list table">
@@ -32,17 +35,17 @@
                                 <a href="{{ path('admin_metatag_edit', { 'id': entity.id }) }}">{{ entity.url }}</a>
                             </td>
                             <td>
-                                {{ entity.title }}
+                                {{ entity.title|raw }}
                             </td>
                             <td>
-                                {{ entity.description }}
+                                {{ entity.description|raw }}
                             </td>
                             <td class="actions span3 text-right">
                                 <a href="{{ path('admin_metatag_edit', { 'id': entity.id }) }}" class="btn">
-                                    <i class="icon-pencil"></i> modifica
+                                    <i class="icon-pencil"></i> edit
                                 </a>
                                 <a href="{{ path('admin_metatag_delete', {'id': entity.id}) }}" class="btn" onclick="return confirm('Are you sure you want to delete this url?');">
-                                    <i class="icon-remove icon-red"></i> elimina
+                                    <i class="icon-remove icon-red"></i> delete
                                 </a>
                             </td>
                         </tr>
@@ -52,7 +55,9 @@
 
             <hr>
 
-            <a href="{{ path('admin_metatag_new') }}" class="btn pull-right"><i class="icon-plus"></i> Inserisci una nuovo metatag</a>
+            <a href="{{ path('admin_metatag_new') }}" class="btn pull-right">
+                <i class="icon-plus"></i> New Meta Tag
+            </a>
         </div>
     </div>
 
