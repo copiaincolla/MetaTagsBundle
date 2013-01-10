@@ -101,7 +101,7 @@ class MetaTagsAdminController extends Controller
         $form->bind($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
 
             $em->persist($entity);
             $em->flush();
