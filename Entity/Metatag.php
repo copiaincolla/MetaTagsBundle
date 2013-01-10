@@ -31,28 +31,28 @@ class Metatag
     /**
      * @var string $title
      *
-     * @ORM\Column(name="title", type="text")
+     * @ORM\Column(name="title", type="text", nullable=true)
      */
     private $title;
 
     /**
      * @var string $description
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
 
     /**
      * @var string $keywords
      *
-     * @ORM\Column(name="keywords", type="text")
+     * @ORM\Column(name="keywords", type="text", nullable=true)
      */
     private $keywords;
 
     /**
      * @var string $author
      *
-     * @ORM\Column(name="author", type="text")
+     * @ORM\Column(name="author", type="text", nullable=true)
      */
     private $author;
 
@@ -63,8 +63,6 @@ class Metatag
     /******************************************************************************************
      *  GETTER AND SETTER
      *****************************************************************************************/
-
-
     /**
      * Get id
      *
