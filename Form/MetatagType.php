@@ -33,6 +33,9 @@ class MetatagType extends AbstractType
             }
         });
 
+        // sort the urls array by route names
+        ksort($urls);
+
         /**
          * add 'url' field
          *
