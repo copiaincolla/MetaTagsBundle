@@ -9,9 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Copiaincolla\MetaTagsBundle\Entity\Metatag;
 
-//  $metatagasLoader = $this->container->get('ci_metatags.loader');
-//  $urls = $metatagasLoader->getUrls();
-
 /**
  * MetaTag controller.
  *
@@ -19,19 +16,48 @@ use Copiaincolla\MetaTagsBundle\Entity\Metatag;
  */
 class MetaTagsAdminController extends Controller
 {
-
     /**
      * @Route("/", name="admin_metatag")
      * @Template()
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('CopiaincollaMetaTagsBundle:Metatag')->findBy(array(), array('url' => 'DESC'));
 
+        /**
+         * build an array with urls as keys and entity as value
+         */
+        $arrayUrlEntities = array();
+        foreach ($entities as $entity) {
+            if ($entity->getUrl()) {
+                $arrayUrlEntities[$entity->getUrl()] = $entity;
+            }
+        }
+
+        $urlsLoader = $this->container->get('ci_metatags.url_loader');
+
+        $routes = $urlsLoader->getUrls();
+
+        /**
+         * build an array with urls as keys and a composite array as value
+         */
+        $output = array();
+
+        foreach ($routes as $route => $urls) {
+            foreach ($urls as $url) {
+                $output[$url] = array(
+                    'url'       => $url,
+                    'entity'    => ($url && array_key_exists($url, $arrayUrlEntities)) ? $arrayUrlEntities[$url] : null
+                );
+            }
+        }
+
+        ksort($output);
+
         return array(
-            'entities' => $entities
+            'urls' => $output
         );
     }
 
@@ -44,8 +70,11 @@ class MetaTagsAdminController extends Controller
      */
     public function newAction()
     {
-        $em = $this->getDoctrine()->getEntityManager();
         $entity = new Metatag();
+
+        $url = $this->getRequest()->get('url');
+        $entity->setUrl($url);
+
         $form = $this->createForm($this->container->get('ci_metatags.metatag_formtype'), $entity);
 
         return array(
@@ -63,15 +92,13 @@ class MetaTagsAdminController extends Controller
      */
     public function createAction()
     {
-        $em = $this->getDoctrine()->getEntityManager();
-
         $entity = new Metatag();
 
         $request = $this->getRequest();
 
         $form = $this->createForm($this->container->get('ci_metatags.metatag_formtype'), $entity);
 
-        $form->bindRequest($request);
+        $form->bind($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
@@ -96,7 +123,7 @@ class MetaTagsAdminController extends Controller
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CopiaincollaMetaTagsBundle:Metatag')->find($id);
 
@@ -124,7 +151,7 @@ class MetaTagsAdminController extends Controller
      */
     public function updateAction($id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CopiaincollaMetaTagsBundle:Metatag')->find($id);
 
@@ -137,12 +164,12 @@ class MetaTagsAdminController extends Controller
 
         $request = $this->getRequest();
 
-        $editForm->bindRequest($request);
+        $editForm->bind($request);
 
         if ($editForm->isValid()) {
-
             $em->persist($entity);
             $em->flush();
+
             return $this->redirect($this->generateUrl('admin_metatag_edit', array('id' => $id)));
         }
 
@@ -160,7 +187,8 @@ class MetaTagsAdminController extends Controller
      */
     public function deleteAction($id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
+
         $entity = $em->getRepository('CopiaincollaMetaTagsBundle:Metatag')->find($id);
 
         if (!$entity) {
@@ -176,8 +204,8 @@ class MetaTagsAdminController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder(array('id' => $id))
-                        ->add('id', 'hidden')
-                        ->getForm()
+            ->add('id', 'hidden')
+            ->getForm()
         ;
     }
 }

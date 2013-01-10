@@ -122,16 +122,16 @@ class UrlsLoader
         // restore the original baseURl
         $this->router->getContext()->setBaseUrl($baseUrl);
 
+        // purge urls from already associated urls
+        if ($excludeAlreadyAssociated) {
+            $output = $this->purgeRoutesArrayFromAlreadyAssociatedUrls($output);
+        }
+
         // purge $output from routes with no urls generated
         foreach ($output as $route => $urls) {
             if (count($output[$route]) <= 0) {
                 unset($output[$route]);
             }
-        }
-
-        // purge urls from already associated urls
-        if ($excludeAlreadyAssociated) {
-            $output = $this->purgeRoutesArrayFromAlreadyAssociatedUrls($output);
         }
 
         // sort the urls array by route names
@@ -238,7 +238,7 @@ class UrlsLoader
         }
 
         // check if the bundles is set in the configurations file
-        if ($this->isRouteExposedByRepository($_controller)) {
+        if ($this->isRouteExposedByBundle($_controller)) {
             return true;
         }
 
@@ -269,7 +269,13 @@ class UrlsLoader
         return ($this->loadedBundlesRegex != '') ? $this->loadedBundlesRegex : null;
     }
 
-    private function isRouteExposedByRepository($_controller)
+    /**
+     * Check if a route is exposed by including a bundle name under the 'exposed_routes.bundles' key in config.yml
+     *
+     * @param $_controller
+     * @return bool
+     */
+    private function isRouteExposedByBundle($_controller)
     {
         if ($this->loadedBundlesRegex != "" && preg_match($this->loadedBundlesRegex, $_controller)) {
             return true;
@@ -298,7 +304,6 @@ class UrlsLoader
             } else if (false === $routeOptions['ci_metatags_expose']) {
                 return false;
             }
-
         }
 
         return null;
