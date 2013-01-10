@@ -36,23 +36,3 @@
     </div>
 
 {% endblock %}
-
-{% block footerJavascripts %}
-    {{ parent() }}
-    <script src="{{ asset('/bundles/copiaincollametatags/select2-release-3.2/select2.min.js') }}" type="text/javascript"></script>
-
-    <script>
-        $(function() {
-            $('#{{ form.url.vars.id }}').select2({
-                placeholder: "Seleziona una rotta",
-                allowClear: true,
-                dropdownCss: {'width': 'auto'}
-            });
-
-            // workaround per mostrare la ricerca della select. Esiste una regola che gli da display block
-            $('.select2-drop').addClass('search-box-display');
-        });
-
-    </script>
-{% endblock footerJavascripts %}
-
