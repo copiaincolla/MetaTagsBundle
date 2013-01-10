@@ -47,7 +47,7 @@ class MetaTagsLoader
      */
     public function getMetaTagsForRequest(Request $request)
     {
-        $pathInfo = $request->server->get('PATH_INFO');
+        $pathInfo = $request->getPathInfo();
 
         $metaTags = $this->defaultMetaTags;
 

@@ -21,7 +21,7 @@ class MetatagType extends AbstractType
         $metaTag = $builder->getForm()->getData();
 
         // load urls to populate the select
-        $routes = $this->urlsLoader->getUrls();
+        $routes = $this->urlsLoader->getUrls(true);
 
         /*
          * prepare the multidimensional array of urls to be put in a <select> tag
@@ -32,9 +32,6 @@ class MetatagType extends AbstractType
                 $routes[$key] = array_combine($val, $val);
             }
         });
-
-        // sort the urls array by route names
-        ksort($routes);
 
         /**
          * add 'url' field

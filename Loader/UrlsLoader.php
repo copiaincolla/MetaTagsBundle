@@ -55,7 +55,7 @@ class UrlsLoader
      *
      * @return array
      */
-    public function getUrls()
+    public function getUrls($excludeAlreadyAssociated = false)
     {
         // associative array [route name] => [array urls] to be returned
         $output = array();
@@ -64,9 +64,6 @@ class UrlsLoader
         // removing the baseUrl to generate baseUrl independent urls
         $baseUrl = $this->router->getContext()->getBaseUrl();
         $this->router->getContext()->setBaseUrl(null);
-
-        // get all url stored in database
-        $databaseUrls = $this->getDatabaseUrls();
 
         // iterate on selected routes to generate urls
         foreach ($this->router->getRouteCollection()->all() as $name => $route) {
@@ -92,7 +89,7 @@ class UrlsLoader
                     foreach ($data as $obj) {
                         $preparedRoute = $this->prepareDynamicUrl($name, $route, $obj, $this->config['dynamic_routes']['routes'][$name]);
 
-                        if ($preparedRoute && !in_array($preparedRoute, $databaseUrls)) {
+                        if ($preparedRoute) {
                             $output[$name][] = $preparedRoute;
                         }
                     }
@@ -102,12 +99,11 @@ class UrlsLoader
             } else {
                 $preparedRoute = $this->prepareUrl($name, $route);
 
-                if ($preparedRoute && !in_array($preparedRoute, $databaseUrls)) {
+                if ($preparedRoute) {
                     $output[$name][] = $preparedRoute;
                 }
             }
         }
-
 
         /*
          * load a custom service defined by user, to load additional generated routes
@@ -125,6 +121,21 @@ class UrlsLoader
 
         // restore the original baseURl
         $this->router->getContext()->setBaseUrl($baseUrl);
+
+        // purge $output from routes with no urls generated
+        foreach ($output as $route => $urls) {
+            if (count($output[$route]) <= 0) {
+                unset($output[$route]);
+            }
+        }
+
+        // purge urls from already associated urls
+        if ($excludeAlreadyAssociated) {
+            $output = $this->purgeRoutesArrayFromAlreadyAssociatedUrls($output);
+        }
+
+        // sort the urls array by route names
+        ksort($output);
 
         return $output;
     }
@@ -307,6 +318,27 @@ class UrlsLoader
         }
 
         return $arrDatabaseUrls;
+    }
+
+    /**
+     * Purge the array of routes/urls from the urls already associated (currently stored in database)
+     *
+     * @param $routes
+     */
+    private function purgeRoutesArrayFromAlreadyAssociatedUrls($routes)
+    {
+        // get all url stored in database
+        $databaseUrls = $this->getDatabaseUrls();
+
+        foreach ($routes as $route => $urls) {
+            foreach ($urls as $k => $url) {
+                if (in_array($url, $databaseUrls)) {
+                    unset($routes[$route][$k]);
+                }
+            }
+        }
+
+        return $routes;
     }
 
 }
