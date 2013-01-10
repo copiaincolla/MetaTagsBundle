@@ -36,7 +36,7 @@ class UrlsLoader
         $this->container = $container;
 
         // set defaults parameters for all routes if specified
-        $this->dynamic_routes_default_params = (array_key_exists('dynamic_routes_default_params', $this->config)) ? $this->config['dynamic_routes_default_params'] : array();
+        $this->dynamic_routes_default_params = (array_key_exists('default_params', $this->config['dynamic_routes'])) ? $this->config['dynamic_routes']['default_params'] : array();
 
         $this->generateLoadedBundlesRegex();
     }
@@ -79,18 +79,18 @@ class UrlsLoader
             $output[$name] = array();
 
             // route needs datas from database
-            if (array_key_exists($name, $this->config['dynamic_routes'])) {
+            if (array_key_exists($name, $this->config['dynamic_routes']['routes'])) {
 
                 // load objects from repository
-                if (array_key_exists('repository', $this->config['dynamic_routes'][$name])) {
-                    $repository = $this->config['dynamic_routes'][$name]['repository'];
+                if (array_key_exists('repository', $this->config['dynamic_routes']['routes'][$name])) {
+                    $repository = $this->config['dynamic_routes']['routes'][$name]['repository'];
 
                     // data fetched from database
                     $data = $this->em->getRepository($repository)->findAll();
 
                     // generate a url for each object
                     foreach ($data as $obj) {
-                        $preparedRoute = $this->prepareDynamicUrl($name, $route, $obj, $this->config['dynamic_routes'][$name]);
+                        $preparedRoute = $this->prepareDynamicUrl($name, $route, $obj, $this->config['dynamic_routes']['routes'][$name]);
 
                         if ($preparedRoute && !in_array($preparedRoute, $databaseUrls)) {
                             $output[$name][] = $preparedRoute;
@@ -161,8 +161,8 @@ class UrlsLoader
         }
 
         // process [route_name]['params']
-        foreach ($dynamicRouteArray['params'] as $k => $param) {
-            $routeParameters[$k] = $dynamicRouteArray['params'][$k];
+        foreach ($dynamicRouteArray['fixed_params'] as $k => $param) {
+            $routeParameters[$k] = $dynamicRouteArray['fixed_params'][$k];
         }
 
         // return the url
@@ -206,7 +206,7 @@ class UrlsLoader
         try {
             return $this->router->generate($name, $routeParameters);
         } catch (\Exception $e) {
-
+            // no exception is thrown, the url is simply not added to the list
         }
 
         return null;
