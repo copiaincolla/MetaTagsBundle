@@ -52,9 +52,7 @@
                     </td>
                     <td>
                         {% if entity %}
-                            <a href="{{ path('admin_metatag_delete', {'id': entity.id}) }}">
-                                clear
-                            </a>
+                            {% render 'CopiaincollaMetaTagsBundle:MetaTagsAdmin:_deleteForm' with {id: entity.id} %}
                         {% endif %}
                     </td>
                     <td>

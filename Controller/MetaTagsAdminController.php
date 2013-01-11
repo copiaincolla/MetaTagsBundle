@@ -76,7 +76,6 @@ class MetaTagsAdminController extends Controller
             );
         }
 
-
         ksort($output);
 
         return array(
@@ -204,9 +203,37 @@ class MetaTagsAdminController extends Controller
     }
 
     /**
+     * Display a form to delete a MetaTag entity
+     *
+     * @Template()
+     *
+     * @param $id
+     * @return array
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    public function _deleteFormAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('CopiaincollaMetaTagsBundle:Metatag')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Metatag entity.');
+        }
+
+        $deleteForm = $this->createDeleteForm($id);
+
+        return array(
+            'entity' => $entity,
+            'delete_form' => $deleteForm->createView()
+        );
+    }
+
+    /**
      * Deletes a Metatag entity.
      *
      * @Route("/{id}/delete", name="admin_metatag_delete")
+     * @method("POST")
      */
     public function deleteAction($id)
     {
