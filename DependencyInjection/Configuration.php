@@ -55,14 +55,16 @@ class Configuration implements ConfigurationInterface
                             ->prototype('array')
                                 ->children()
                                     ->scalarNode('repository')->isRequired()->cannotBeEmpty()->end()
-                                    ->arrayNode('fixed_params')
-                                        ->useAttributeAsKey('k')
-                                        ->prototype('scalar')->end()
+
+                                    ->variableNode('fixed_params')
+                                        ->defaultValue(array())
                                     ->end()
+
                                     ->arrayNode('object_params')
                                         ->useAttributeAsKey('k')
                                         ->prototype('scalar')->end()
                                     ->end()
+
                                 ->end()
                             ->end()
                         ->end()

@@ -17,7 +17,6 @@ class UrlsLoader
     protected $em;
     protected $container;
 
-
     protected $loadedBundlesRegex = "";
     protected $dynamic_routes_default_params;
 
@@ -87,10 +86,12 @@ class UrlsLoader
 
                     // generate a url for each object
                     foreach ($data as $obj) {
-                        $preparedRoute = $this->prepareDynamicUrl($name, $route, $obj, $this->config['dynamic_routes']['routes'][$name]);
+                        $preparedRoutes = $this->prepareDynamicUrls($name, $route, $obj, $this->config['dynamic_routes']['routes'][$name]);
 
-                        if ($preparedRoute) {
-                            $output[$name][] = $preparedRoute;
+                        if ($preparedRoutes) {
+                            foreach ($preparedRoutes as $preparedRoute ) {
+                                $output[$name][] = $preparedRoute;
+                            }
                         }
                     }
                 }
@@ -141,14 +142,15 @@ class UrlsLoader
     }
 
     /**
-     * Generate a url fetching the route variables from the object $obj
+     * Generate urls fetching the route variables from the object $obj and the config
      *
      * @param string $name route name
      * @param Route $route Route object
      * @param mixed $obj object fetched from database
      * @param array $dynamicRouteArray array from bundle config
+     * @return array $output always return an array, even if there's only one value
      */
-    private function prepareDynamicUrl($name, $route, $obj, $dynamicRouteArray)
+    private function prepareDynamicUrls($name, $route, $obj, $dynamicRouteArray)
     {
         // route parameters
         $routeParameters = array();
@@ -171,13 +173,30 @@ class UrlsLoader
             }
         }
 
-        // process [route_name]['params']
-        foreach ($dynamicRouteArray['fixed_params'] as $k => $param) {
-            $routeParameters[$k] = $dynamicRouteArray['fixed_params'][$k];
+        $output = array();
+
+        // process [route_name]['fixed_params']
+        if (count($dynamicRouteArray['fixed_params']) > 0) {
+            foreach ($dynamicRouteArray['fixed_params'] as $k => $params) {
+                if (is_array($params)) {
+                    foreach ($params as $p => $param) {
+                        $routeParameters[$k] = $dynamicRouteArray['fixed_params'][$k][$p];
+
+                        $output[] = $this->prepareUrl($name, $route, $routeParameters);
+                    }
+                } else {
+                    $routeParameters[$k] = $dynamicRouteArray['fixed_params'][$k];
+
+                    $output[] = $this->prepareUrl($name, $route, $routeParameters);
+                }
+            }
+        } else {
+            $output[] = $this->prepareUrl($name, $route, $routeParameters);
         }
 
+
         // return the url
-        return $this->prepareUrl($name, $route, $routeParameters);
+        return $output;
     }
 
     /**
