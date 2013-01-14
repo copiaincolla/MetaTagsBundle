@@ -1,45 +1,38 @@
 {% extends 'CopiaincollaMetaTagsBundle::layout.html.twig' %}
 
 {% block main %}
-    <div class="row">
-        <div class="span12">
-            <form action="{{ (entity.id) ? path('admin_metatag_update', {id: entity.id}) : path('admin_metatag_create') }}" method="post" {{ form_enctype(form) }} class="form form-horizontal form-metatag-edit" novalidate>
 
-                {{ form_errors(form) }}
+    <h1>
+        {{ (entity.id) ? 'Edit meta tag "'~entity.url~'"' : 'New meta tag'}}
+    </h1>
 
-                <fieldset>
+    <form action="{{ (entity.id) ? path('admin_metatag_update', {id: entity.id}) : path('admin_metatag_create') }}" method="post" {{ form_enctype(form) }} class="form form-horizontal form-metatag-edit" novalidate>
 
-                    <legend class="title">
-                        {{ (entity.id) ? 'Edit meta tag "'~entity.url~'"' : 'New meta tag'}}
-                    </legend>
+        {{ form_errors(form) }}
 
-                    {{ form_row(form.url) }}
-                    {{ form_row(form.title) }}
-                    {{ form_row(form.description) }}
-                    {{ form_row(form.keywords) }}
-                    {{ form_row(form.author) }}
 
-                    <hr>
+        {{ form_row(form.url) }}
+        {{ form_row(form.title) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.keywords) }}
+        {{ form_row(form.author) }}
 
-                    <button type="submit">
-                        Save
-                    </button>
-                    <a href="{{ path('admin_metatag') }}">
-                        Back to list
-                    </a>
-            </fieldset>
-            {{ form_rest(form) }}
+        <br>
+
+        <button type="submit">
+            Save
+        </button>
+        <a href="{{ path('admin_metatag') }}">
+            Back to list
+        </a>
+        {{ form_rest(form) }}
+    </form>
+
+    {% if entity.id %}
+        <form action="{{ path('admin_metatag_delete', {id: entity.id}) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
         </form>
-
-        {% if entity.id %}
-            <form action="{{ path('admin_metatag_delete', {id: entity.id}) }}" method="post">
-                {{ form_widget(delete_form) }}
-
-                <button type="submit">Delete</button>
-            </form>
-        {% endif %}
-
-        </div>
-    </div>
+    {% endif %}
 
 {% endblock %}
