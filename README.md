@@ -1,98 +1,77 @@
 MetaTagsBundle
 ==============
 
-Symfony Bundle to manage html metatags
+Symfony Bundle to manage html meta tags by matching urls.
 
-# Note
+# How it works
 
-This bundle is in __alpha__ state at the moment, not ready for production environment
+Based on the configuration provided by the user and/or a user custom service, MetaTagsBundle _loads_ some urls and manages the association between an __url__ and its __meta tags values__ storing the data in the database.
+
+To choose which urls must be managed by MetaTagsBundle, the __routes__ generating them must be specified. There are some different methods to achieve this:
+
+- load all the routes of a bundle by including the bundle name in `config.yml`
+- for each route, specify an `option` in the Route annotation
+
+For routes requiring parameters that must be fetched from database, there's the possibility to load entities from database, and associate the route parameters to the entities values in order to create urls.
+
+For more specifid needs, it is also possible to create a custom service which simply returns an array of urls.
+
+Once the urls are loaded in MetaTagsBundle, you will be able to associate the following meta tags to each url:
+
+- title
+- description
+- keywords
+- author
+
+Obviously it is possible to specify default values for each meta tag, used when a url has no or partially meta tags specified by the user.
+
+__Note:__ This bundle is in __beta__ state at the moment, in test phase and almost ready for the first release.
+
+---
 
 ## Install
 
-If you are using `composer`, add the following line to your `composer.json`:
-
-
-    {
-        "require": {
-            "copiaincolla/metatags-bundle": "dev-master"
-        }
-    }
-
-If you are using `deps`, add the following line to your `deps`:
+Installation instructions can be found in [doc/install.md](MetaTagsBundle/Resources/doc/install.md).
     
-    [CopiaincollaMetaTagsBundle]
-        git=https://github.com/copiaincolla/MetaTagsBundle.git
-        target=/bundles/Copiaincolla/MetaTagsBundle    
+## Configure
 
-And in your `app/autoload.php`:
+To configure this bundle, read [doc/configuration.md](MetaTagsBundle/Resources/doc/configuration.md) for all possible values.
 
-    // Copiaincolla
-    'Copiaincolla'   => __DIR__.'/../vendor/bundles',
+## Load urls
 
-Load the bundle by adding this to `app/AppKernel.php`:
+To generate urls starting by all routes contained in a bundle, just add the bundle name to `config.yml`, as explained [here](MetaTagsBundle/Resources/doc/configuration.md#exposed_routes).
 
-    new Copiaincolla\MetaTagsBundle\CopiaincollaMetaTagsBundle(),
+You can also add a single route by specifying an option in the Route annotation, like this:
 
-Add the following line to `app/routing.yml`:
+```
+@Route("/product/{id}/{slug}", name="product_show", options={"ci_metatags_expose"=true})
+```
 
-    # CopiaincollaMetaTagsBundle
-    ci_metatags_bundle:
-        resource: "@CopiaincollaMetaTagsBundle/Resources/config/routing.yml"
-    
-## Configuration
+Through this option, you can also choose __not__ to generate urls from a specific route:
 
-Add to `app/config.yml`:
+```
+@Route("/product/{id}/{slug}", name="product_show", options={"ci_metatags_expose"=false})
+```
 
-    copiaincolla_meta_tags: ~
-    
-### Default meta tags values
+You can also generate urls for associating meta tags by fetching data from database; read the section [doc/configuration.md#dynamic_routes](MetaTagsBundle/Resources/doc/configuration.md#dynamic_routes).
 
-To define the default meta tags values, just add them to the configuration, under the key `dynamic_routes_default_params`:
-
-    copiaincolla_meta_tags:
-        defaults:
-            title: "My default Title"
-            description: "My default meta-description content"
-            keywords: "My default meta-keywords content"
-            author: "My default meta-author content"
-    
-## Load dynamic routes
-    
-### Default route variables
-    
-You can define `default_parameters`, an array of parameters to be used for all generated routes. For example, you may want to define the value of `_locale` parameter to be used for all routes you are going to generate:
-    
-    copiaincolla_meta_tags:
-        default_params:
-            _locale: en
-
-### Load data from database to compile urls
-
-Additionally, you can specify `dynamic_routes`, an array of route names associated to data fetched from database.
-        
-    copiaincolla_meta_tags:
-        dynamic_routes:
-            prodotto_show:
-                params:
-                    prefix: products
-                repository: "AcmeBundle:Product"
-                object_params:
-                    id: id
-                    slug: getSlug
+Finally, you can also create your custom __urls loader__ service, by following [this guide](MetaTagsBundle/Resources/doc/custom_urls_loader_service.md).
 
 
-## Usage
+## Usage in the templates
 
-In the template you want to add metatags, add the following:
+Currently only twig is supported.
 
-    {% render 'CopiaincollaMetaTagsBundle:MetaTags:render' %}
-    
-Normally it gose in a template containing the `<head>` section.
+In the template containing an `<head>` tag, simply add:
 
-## Load user generated urls
+```
+<body>
+    <head>
+        {% render 'CopiaincollaMetaTagsBundle:MetaTags:render' %}
+        [...]
+    </head>
 
-The bundle automatically loads these urls to match:
-- static urls (based on the routes which don't need variables to be compiled)
-- dynamic urls as set in `config.yml` un der the key `copiaincolla_meta_tags.dynamic_routes`
+    [...]
+</body>
 
-As well as these, you can generate custom urls and add them to the bundle generated ones by following [this guide](https://github.com/copiaincolla/MetaTagsBundle/blob/master/Resources/doc/add_custom_routes.md).
+For a better explanation of usage in templates and advanced use, read [doc/template_usage.md](MetaTagsBundle/Resources/doc/template_usage.md).

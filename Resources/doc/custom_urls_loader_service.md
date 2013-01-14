@@ -1,8 +1,6 @@
-# Add custom routes
+# Create a custom urls loader service
 
 You can add custom generated urls by defining a new service returning a formatted array.
-
-## 1. Create a custom service
 
 In your `Acme/FooBundle/Loader/UrlsLoader`:
 
