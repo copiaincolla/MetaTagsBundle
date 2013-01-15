@@ -31,7 +31,7 @@ __Note:__ This bundle is in __beta__ state at the moment, in test phase and almo
 
 ## Install
 
-Installation instructions can be found in [doc/install.md](MetaTagsBundle/blob/master/Resources/doc/install.md).
+Installation instructions can be found in [doc/install.md](/blob/master/Resources/doc/install.md).
     
 ## Configure
 
