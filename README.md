@@ -73,5 +73,6 @@ In the template containing an `<head>` tag, simply add:
 
     [...]
 </body>
+```
 
 For a better explanation of usage in templates and advanced use, read [doc/template_usage.md](Resources/doc/template_usage.md).
