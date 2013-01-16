@@ -37,6 +37,7 @@ class UrlsLoader
         // set defaults parameters for all routes if specified
         $this->dynamic_routes_default_params = (array_key_exists('default_params', $this->config['dynamic_routes'])) ? $this->config['dynamic_routes']['default_params'] : array();
 
+
         $this->generateLoadedBundlesRegex();
     }
 
@@ -254,7 +255,7 @@ class UrlsLoader
             if (array_key_exists($variable, $defaultVariables)) {
                 $routeParameters[$variable] = $defaultVariables[$variable];
 
-                // search the $variable key in bundle configuration: dynamic_routes_default_params
+            // search the $variable key in bundle configuration: dynamic_routes_default_params
             } else if (array_key_exists($variable, $this->dynamic_routes_default_params)) {
                 $routeParameters[$variable] = $this->dynamic_routes_default_params[$variable];
             }
