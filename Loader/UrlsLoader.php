@@ -82,7 +82,12 @@ class UrlsLoader
                     $repository = $this->config['dynamic_routes']['routes'][$name]['repository'];
 
                     // data fetched from database
-                    $data = $this->em->getRepository($repository)->findAll();
+                    if (isset($this->config['dynamic_routes']['routes'][$name]['repository_fetch_function'])) {
+                        $repositoryFunction = $this->config['dynamic_routes']['routes'][$name]['repository_fetch_function'];
+                        $data = $this->em->getRepository($repository)->$repositoryFunction();
+                    } else {
+                        $data = $this->em->getRepository($repository)->findAll();
+                    }
 
                     // generate a url for each object
                     foreach ($data as $obj) {
@@ -244,6 +249,9 @@ class UrlsLoader
 
     /**
      * check if the Route $route is exposed
+     *
+     * @param $route
+     * @return Boolean
      */
     public function isRouteExposed(Route $route)
     {

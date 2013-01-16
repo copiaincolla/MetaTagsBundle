@@ -56,6 +56,10 @@ class Configuration implements ConfigurationInterface
                                 ->children()
                                     ->scalarNode('repository')->isRequired()->cannotBeEmpty()->end()
 
+                                    ->scalarNode('repository_fetch_function')
+                                        ->defaultValue(null)
+                                    ->end()
+
                                     ->variableNode('fixed_params')
                                         ->defaultValue(array())
                                     ->end()
