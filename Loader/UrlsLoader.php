@@ -76,9 +76,10 @@ class UrlsLoader
 
             // route needs datas from database
             if (array_key_exists($name, $this->config['dynamic_routes']['routes'])) {
+                $preparedRoutes = null;
 
                 // load objects from repository
-                if (array_key_exists('repository', $this->config['dynamic_routes']['routes'][$name])) {
+                if (isset($this->config['dynamic_routes']['routes'][$name]['repository'])) {
                     $repository = $this->config['dynamic_routes']['routes'][$name]['repository'];
 
                     // data fetched from database
@@ -91,17 +92,22 @@ class UrlsLoader
 
                     // generate a url for each object
                     foreach ($data as $obj) {
-                        $preparedRoutes = $this->prepareDynamicUrls($name, $route, $obj, $this->config['dynamic_routes']['routes'][$name]);
+                        $preparedRoutes = $this->prepareDynamicUrls($name, $route, $this->config['dynamic_routes']['routes'][$name], $obj);
+                    }
 
-                        if ($preparedRoutes) {
-                            foreach ($preparedRoutes as $preparedRoute ) {
-                                $output[$name][] = $preparedRoute;
-                            }
-                        }
+                // no repository required
+                } else {
+                    $preparedRoutes = $this->prepareDynamicUrls($name, $route, $this->config['dynamic_routes']['routes'][$name]);
+                }
+
+                //add urls to $output
+                if ($preparedRoutes) {
+                    foreach ($preparedRoutes as $preparedRoute ) {
+                        $output[$name][] = $preparedRoute;
                     }
                 }
 
-                // route does not need variables to be loaded by objects in database
+            // route does not need variables to be loaded by objects in database
             } else {
                 $preparedRoute = $this->prepareUrl($name, $route);
 
@@ -147,15 +153,54 @@ class UrlsLoader
     }
 
     /**
-     * Generate urls fetching the route variables from the object $obj and the config
+     * Generate urls fetching the route variables
      *
      * @param string $name route name
      * @param Route $route Route object
-     * @param mixed $obj object fetched from database
      * @param array $dynamicRouteArray array from bundle config
+     * @param mixed $obj object fetched from database
      * @return array $output always return an array, even if there's only one value
      */
-    private function prepareDynamicUrls($name, $route, $obj, $dynamicRouteArray)
+    private function prepareDynamicUrls($name, $route, $dynamicRouteArray, $obj = null)
+    {
+        $output = array();
+        $routeParameters = array();
+
+        if ($obj !== null) {
+            $routeParameters = $this->prepareEntityUrlsVariable($obj, $dynamicRouteArray);
+        }
+
+        // process [route_name]['fixed_params']
+        if (count($dynamicRouteArray['fixed_params']) > 0) {
+            foreach ($dynamicRouteArray['fixed_params'] as $k => $params) {
+                if (is_array($params)) {
+                    foreach ($params as $p => $param) {
+                        $routeParameters[$k] = $dynamicRouteArray['fixed_params'][$k][$p];
+
+                        $output[] = $this->prepareUrl($name, $route, $routeParameters);
+                    }
+                } else {
+                    $routeParameters[$k] = $dynamicRouteArray['fixed_params'][$k];
+
+                    $output[] = $this->prepareUrl($name, $route, $routeParameters);
+                }
+            }
+        } else {
+            $output[] = $this->prepareUrl($name, $route, $routeParameters);
+        }
+
+        // return the url
+        return $output;
+    }
+
+    /**
+     * fetch the route variables from the object
+     *
+     * @param mixed $obj object fetched from database
+     * @param array $dynamicRouteArray array from bundle config
+     * @return array $routeParameters
+     */
+    private function prepareEntityUrlsVariable($obj, $dynamicRouteArray)
     {
         // route parameters
         $routeParameters = array();
@@ -178,30 +223,8 @@ class UrlsLoader
             }
         }
 
-        $output = array();
-
-        // process [route_name]['fixed_params']
-        if (count($dynamicRouteArray['fixed_params']) > 0) {
-            foreach ($dynamicRouteArray['fixed_params'] as $k => $params) {
-                if (is_array($params)) {
-                    foreach ($params as $p => $param) {
-                        $routeParameters[$k] = $dynamicRouteArray['fixed_params'][$k][$p];
-
-                        $output[] = $this->prepareUrl($name, $route, $routeParameters);
-                    }
-                } else {
-                    $routeParameters[$k] = $dynamicRouteArray['fixed_params'][$k];
-
-                    $output[] = $this->prepareUrl($name, $route, $routeParameters);
-                }
-            }
-        } else {
-            $output[] = $this->prepareUrl($name, $route, $routeParameters);
-        }
-
-
-        // return the url
-        return $output;
+        // return object routes parameters
+        return $routeParameters;
     }
 
     /**
