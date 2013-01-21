@@ -53,13 +53,9 @@ class Configuration implements ConfigurationInterface
                             ->useAttributeAsKey('route_name')
                             ->prototype('array')
                                 ->children()
-                                    ->scalarNode('repository')
-                        ->defaultValue(null)
-                        ->end()
+                                    ->scalarNode('repository')->end()
 
-                                    ->scalarNode('repository_fetch_function')
-                                        ->defaultValue(null)
-                                    ->end()
+                                    ->scalarNode('repository_fetch_function')->end()
 
                                     ->variableNode('fixed_params')
                                         ->defaultValue(array())
