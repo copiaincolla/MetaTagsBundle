@@ -5,12 +5,26 @@ namespace Copiaincolla\MetaTagsBundle\Loader;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Doctrine\ORM\EntityManager;
 
+use Copiaincolla\MetaTagsBundle\Service\MetaTagsRouteExposer;
+use Copiaincolla\MetaTagsBundle\Service\UrlsGenerator;
+use Copiaincolla\MetaTagsBundle\Service\DynamicRouteUrlsGenerator;
+
 /**
- * Urls loader.
+ * Urls loader interface.
  */
 interface UrlsLoaderInterface
 {
-    function __construct(array $config = array(), Router $router, EntityManager $em, $container);
+    public function __construct(
+        array $config = array(),
+        Router $router,
+        EntityManager $em,
+        $container,
+        MetaTagsRouteExposer $metaTagsRouteExposer,
+        UrlsGenerator $urlsGenerator,
+        DynamicRouteUrlsGenerator $dynamicRouteUrlsGenerator
+    );
 
-    function getUrls($excludeAlreadyAssociated = false);
+    public function getGeneratedUrls($excludeAlreadyAssociated = false);
+
+    public function getDatabaseUrls();
 }

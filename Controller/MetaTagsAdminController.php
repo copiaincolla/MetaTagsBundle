@@ -38,7 +38,7 @@ class MetaTagsAdminController extends Controller
 
         $urlsLoader = $this->container->get('ci_metatags.url_loader');
 
-        $routes = $urlsLoader->getUrls();
+        $routes = $urlsLoader->getGeneratedUrls();
 
         /**
          * build an array with urls as keys and a composite array as value

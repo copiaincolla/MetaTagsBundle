@@ -44,7 +44,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
 
-                ->arrayNode('dynamic_routes')
+                ->arrayNode('parametric_routes')
                     ->children()
                         ->variableNode('default_params')
                             ->defaultValue(array())
@@ -57,9 +57,7 @@ class Configuration implements ConfigurationInterface
 
                                     ->scalarNode('repository_fetch_function')->end()
 
-                                    ->variableNode('fixed_params')
-                                        ->defaultValue(array())
-                                    ->end()
+                                    ->variableNode('fixed_params')->end()
 
                                     ->arrayNode('object_params')
                                         ->useAttributeAsKey('k')

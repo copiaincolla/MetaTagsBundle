@@ -6,18 +6,45 @@
 
     <services>
         <service id="ci_metatags.url_loader" class="Copiaincolla\MetaTagsBundle\Loader\UrlsLoader">
-            <tag name="ci_metatags.url_loader" />
             <argument>%copiaincolla_meta_tags%</argument>
             <argument type="service" id="router" />
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="service_container" />
+            <argument type="service" id="ci_metatags.route_exposer" />
+            <argument type="service" id="ci_metatags.urls_generator" />
+            <argument type="service" id="ci_metatags.dynamic_route_urls_generator" />
         </service>
+
+        <service id="ci_metatags.urls_generator" class="Copiaincolla\MetaTagsBundle\Service\UrlsGenerator">
+            <argument>%copiaincolla_meta_tags%</argument>
+            <argument type="service" id="router" />
+        </service>
+
+        <service id="ci_metatags.dynamic_route_urls_generator" class="Copiaincolla\MetaTagsBundle\Service\DynamicRouteUrlsGenerator">
+            <argument>%copiaincolla_meta_tags%</argument>
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="ci_metatags.urls_generator" />
+        </service>
+
+        <service id="ci_metatags.route_exposer" class="Copiaincolla\MetaTagsBundle\Service\MetaTagsRouteExposer">
+            <argument>%copiaincolla_meta_tags%</argument>
+            <argument type="service" id="service_container" />
+        </service>
+
+
+
+
+
 
         <service id="ci_metatags.metatags_loader" class="Copiaincolla\MetaTagsBundle\Loader\MetaTagsLoader">
             <tag name="ci_metatags.metatags_loader" />
             <argument>%copiaincolla_meta_tags%</argument>
             <argument type="service" id="doctrine.orm.entity_manager" />
-		</service>
+        </service>
+
+
+
+
 
         <service id="ci_metatags.metatag_formtype" class="Copiaincolla\MetaTagsBundle\Form\MetatagType">
             <tag name="ci_metatags.metatag_formtype" />
