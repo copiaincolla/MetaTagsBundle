@@ -47,7 +47,12 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
 
-                        ->scalarNode('custom_service')->defaultValue(null)->end()
+                        ->arrayNode('custom_service')
+                            ->children()
+                                ->scalarNode('id')->end()
+                                ->scalarNode('function')->defaultNull()->end()
+                            ->end()
+                        ->end()
 
                         ->arrayNode('parameters')
                             ->addDefaultsIfNotSet()

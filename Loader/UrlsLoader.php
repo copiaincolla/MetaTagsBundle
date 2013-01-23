@@ -100,18 +100,7 @@ class UrlsLoader implements UrlsLoaderInterface
         /*
          * load a custom service defined by user, to load additional generated routes
          */
-
-        if (array_key_exists('custom_service', $this->config['urls_loader']) && $this->config['urls_loader']['custom_service'] != null) {
-
-            // load custom service
-            $urlsLoaderCustomService = $this->container->get($this->config['urls_loader']['custom_service']);
-
-            // merge generated urls
-            foreach ($urlsLoaderCustomService->getUrls() as $routeKey => $preparedRoute) {
-                // @FIX overwrite
-                $output[$routeKey] = $preparedRoute;
-            }
-        }
+        $output = array_merge($output, $this->getCustomServiceUrls());
 
         // restore the original baseURl
         $this->router->getContext()->setBaseUrl($baseUrl);
@@ -128,6 +117,39 @@ class UrlsLoader implements UrlsLoaderInterface
 
         // sort the urls array by route names
         ksort($output);
+
+        ldd($output);
+
+        return $output;
+    }
+
+    private function getCustomServiceUrls()
+    {
+        $output = array();
+
+        if (array_key_exists('custom_service', $this->config['urls_loader'])) {
+
+            $serviceId = $this->config['urls_loader']['custom_service']['id'];
+            $serviceFunction = $this->config['urls_loader']['custom_service']['function'];
+
+            // load custom service
+            $service = $this->container->get($serviceId);
+
+
+            if (!is_null($serviceFunction) && !method_exists($service, $serviceFunction)) {
+                throw new \Exception('Called undefined function "'.$serviceFunction.'" in class "'.get_class($service).'"');
+            } elseif (is_null($serviceFunction) && !method_exists($service, 'getUrls')) {
+                throw new \Exception('Called undefined function "getUrls" in class "'.get_class($service).'". Either add getUrls() or specify a custom function under custom_service.function key.');
+            }
+
+            $loadedUrls = ($serviceFunction) ? $service->$serviceFunction() : $service->getUrls();
+
+            // merge generated urls
+            foreach ($loadedUrls as $routeKey => $preparedRoute) {
+                // @FIX overwrite
+                $output[$routeKey] = $preparedRoute;
+            }
+        }
 
         return $output;
     }
