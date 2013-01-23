@@ -4,6 +4,7 @@ namespace Copiaincolla\MetaTagsBundle\Service;
 
 use Symfony\Component\Routing\Route;
 use Copiaincolla\MetaTagsBundle\Service\UrlsGenerator;
+use Copiaincolla\MetaTagsBundle\Lib\CartesianProduct;
 
 /*
  * Generate a url for a route specified under the 'parametric_routes.routes' key in bundle configuration
@@ -28,7 +29,7 @@ class DynamicRouteUrlsGenerator
     }
 
     /**
-     * Generate urls for a route specified under the 'parametric_routes.routes' key
+     * Generate urls for a route specified under the 'urls_loader.parameters.dynamic_routes' key
      *
      * @param $routeKey
      * @param $route
@@ -37,32 +38,70 @@ class DynamicRouteUrlsGenerator
     public function generateUrls($routeKey, Route $route)
     {
         $fixedParams = $this->processFixedParams($routeKey);
-
         $repositoryParams = $this->processRepositoryParam($routeKey);
+
+
+        $fixedParamsCartesian = CartesianProduct::cartesian($fixedParams);
 
         $urls = array();
 
-        // entrambi sono array
-        if($fixedParams && $repositoryParams) {
-            foreach ($fixedParams as $fixedParam) {
+        // both are array
+        // @FIX: improve this very raw piece of code
+        if(count($fixedParams) > 0 && count($repositoryParams) > 0) {
+            foreach ($fixedParamsCartesian as $fixedParam) {
                 foreach ($repositoryParams as $repositoryParam) {
 
                     $routeParams = $fixedParam + $repositoryParam;
 
-                    $urls = array_merge($urls, $this->urlsGenerator->generateUrls($routeKey, $route, $routeParams));
+                    $urls[] = $this->urlsGenerator->generateUrl($routeKey, $route, $routeParams);
                 }
             }
-        } elseif ($fixedParams) {
-            foreach ($fixedParams as $fixedParam) {
-                $urls = array_merge($urls, $this->urlsGenerator->generateUrls($routeKey, $route, $fixedParam));
+        } elseif ($fixedParamsCartesian) {
+            foreach ($fixedParamsCartesian as $fixedParam) {
+                $urls[] = $this->urlsGenerator->generateUrl($routeKey, $route, $fixedParam);
             }
         } elseif ($repositoryParams) {
             foreach ($repositoryParams as $repositoryParam) {
-                $urls = array_merge($urls, $this->urlsGenerator->generateUrls($routeKey, $route, $repositoryParam));
+                $urls[] = $this->urlsGenerator->generateUrl($routeKey, $route, $repositoryParam);
             }
         }
 
         return $urls;
+    }
+
+    /**
+     * Return an array of parameters for processing the 'fixed_params' key
+     * Merge the route specific fixed parameters with the default fixed parameters
+     *
+     * @param $routeKey
+     * @return array
+     */
+    private function processFixedParams($routeKey)
+    {
+        // array of fixed_params for all parametric routes (can be empty)
+        $parametricRoutesFixedParams = $this->config['urls_loader']['parameters']['fixed_params'];
+
+
+        // array of fixed_params for the current route (can be empty)
+        $fixedParams = $this->config['urls_loader']['parameters']['dynamic_routes'][$routeKey]['fixed_params'];
+
+        $routeParameters = array();
+
+        foreach ($fixedParams as $k => $params) {
+
+            $params = (array)$params;
+
+            // apply fixed parameters for all parametric routes
+            if (isset($parametricRoutesFixedParams[$k])) {
+                $params = array_unique(array_merge($params, (array)$parametricRoutesFixedParams[$k]));
+            }
+
+            foreach ($params as $param) {
+                $routeParameters[$k][] = $param;
+            }
+        }
+
+        return $routeParameters;
     }
 
     /**
@@ -74,25 +113,36 @@ class DynamicRouteUrlsGenerator
     private function processRepositoryParam($routeKey)
     {
         // array with infos about the dynamic route lo load, as specified in config by user
-        $dynamicRouteConfig = $this->config['parametric_routes']['routes'][$routeKey];
+        $dynamicRouteConfig = $this->config['urls_loader']['parameters']['dynamic_routes'][$routeKey];
 
         $routeParams = array();
 
-        if (isset($this->config['parametric_routes']['routes'][$routeKey]['repository'])) {
-            $repository = $this->config['parametric_routes']['routes'][$routeKey]['repository'];
+        $repository = $dynamicRouteConfig['repository'];
+
+        if (!is_null($repository)) {
+
+            // check the repository name
+            try {
+                $this->em->getRepository($repository);
+            } catch (\Exception $e) {
+                throw new \Exception("Unable to find repository \"{$repository}\"");
+            }
+
 
             // data fetched from database
-            if (isset($this->config['parametric_routes']['routes'][$routeKey]['repository_fetch_function'])) {
+            $repositoryFunction = $dynamicRouteConfig['repository_fetch_function'];
 
-                $repositoryFunction = $this->config['parametric_routes']['routes'][$routeKey]['repository_fetch_function'];
-
-                // FIX: verificare esistenza funzione
+            // try to call a user defined function
+            if (!is_null($repositoryFunction) && method_exists($this->em->getRepository($repository), $repositoryFunction)) {
                 $data = $this->em->getRepository($repository)->$repositoryFunction();
+            }
 
-            } else {
+            // fetch all records
+            else {
                 $data = $this->em->getRepository($repository)->findAll();
             }
 
+            // generate urls using the parameters from the fetched records
             foreach ($data as $obj) {
                 $routeParams[] = $this->prepareEntityUrlsVariable($obj, $dynamicRouteConfig);
             }
@@ -102,39 +152,10 @@ class DynamicRouteUrlsGenerator
     }
 
     /**
-     * Return an array of parameters for processing the 'fixed_params' key
-     *
-     * @param $routeKey
-     * @return array
-     */
-    private function processFixedParams($routeKey)
-    {
-        // array with infos about the dynamic route lo load, as specified in config by user
-        $dynamicRouteConfig = $this->config['parametric_routes']['routes'][$routeKey];
-
-        $routeParameters = array();
-
-        if (array_key_exists('fixed_params', $dynamicRouteConfig) && count($dynamicRouteConfig['fixed_params']) > 0) {
-            foreach ($dynamicRouteConfig['fixed_params'] as $k => $params) {
-
-                if (!is_array($params)) {
-                    $params = array($params);
-                }
-
-                foreach ($params as $param) {
-                    $routeParameters[] = array($k => $param);
-                }
-            }
-        }
-
-        return $routeParameters;
-    }
-
-    /**
      * fetch the route variables from the object
      *
      * @param mixed $obj object fetched from database
-     * @param array $dynamicRouteConfig array from bundle config
+     * @param array $dynamicRouteConfig array containing the dynamic route configuration from bundle config
      * @return array $routeParameters
      */
     private function prepareEntityUrlsVariable($obj, $dynamicRouteConfig)

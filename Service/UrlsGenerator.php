@@ -4,6 +4,7 @@ namespace Copiaincolla\MetaTagsBundle\Service;
 
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\Routing\Route;
+use Copiaincolla\MetaTagsBundle\Lib\CartesianProduct;
 
 /**
  * Generate urls starting from routes
@@ -24,50 +25,39 @@ class UrlsGenerator
     }
 
     /**
-     * Generate urls starting from a Route object and an array of parameters
-     *
-     * Apply the parametric_routes.default_params
+     * Generate urls for the routes loaded but not included under the 'urls_loader.parameters.dynamic_routes' key
      *
      * @param $routeKey
      * @param $route
-     * @param array $routeParameters
      * @return array
      */
-    public function generateUrls($routeKey, Route $route, array $routeParameters = array())
+    public function generateUrls($routeKey, Route $route)
     {
-        $parametricRoutesDefaultParams = $this->config['parametric_routes']['default_params'];
+        // array of fixed_params for all parametric routes. can be empty
+        $parametricRoutesFixedParams = $this->config['urls_loader']['parameters']['fixed_params'];
+
+        $fixedParamsCartesian = CartesianProduct::cartesian($parametricRoutesFixedParams);
 
         $urls = array();
 
-        if (count($parametricRoutesDefaultParams) > 0) {
-
-            if (is_array($parametricRoutesDefaultParams)) {
-                $parametricRoutesDefaultParams = array($parametricRoutesDefaultParams);
-            }
-
-            foreach ($parametricRoutesDefaultParams as $k => $defaultParams) {
-
-                if (!is_array($defaultParams)) {
-                    $defaultParams = array($defaultParams);
-                }
-
-                foreach ($defaultParams as $p => $defaultParam) {
-                    $rp = $routeParameters + array($k => $defaultParam);
-                    $urls[] = $this->generateUrl($routeKey, $route, $rp);
-                }
-
+        if (count($fixedParamsCartesian) > 0) {
+            foreach ($fixedParamsCartesian as $fixedParam) {
+                $urls[] = $this->generateUrl($routeKey, $route, $fixedParam);
             }
         } else {
-            $urls[] = $this->generateUrl($routeKey, $route, $routeParameters);
+            $urls[] = $this->generateUrl($routeKey, $route);
         }
 
-        return array_filter(array_unique($urls), function($e) {
+        return array_filter($urls, function($e) {
             return $e != null;
         });
     }
 
     /**
      * Generate a single url
+     * Manage the url generation exceptions
+     *
+     * Always call this function to generate a url to be loaded in the bundle
      *
      * $routeParameters could contain extra parameters: only required parameters for a route are used
      *
@@ -75,7 +65,7 @@ class UrlsGenerator
      * @param Route $route Route object
      * @param array $defaultVariables array of [route variable] => [value]
      */
-    private function generateUrl($routeKey, Route $route, array $routeParameters = array())
+    public function generateUrl($routeKey, Route $route, array $routeParameters = array())
     {
         $compiledRoute = $route->compile();
 
@@ -95,4 +85,5 @@ class UrlsGenerator
 
         return null;
     }
+
 }

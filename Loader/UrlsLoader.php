@@ -68,7 +68,7 @@ class UrlsLoader implements UrlsLoaderInterface
      */
     public function getGeneratedUrls($excludeAlreadyAssociated = false)
     {
-        // associative array [route name] => [array urls] to be returned
+        // associative array [route name] => [array of urls] to be returned
         $output = array();
 
         // remove the baseUrl to generate baseUrl independent urls
@@ -87,10 +87,8 @@ class UrlsLoader implements UrlsLoaderInterface
             $output[$routeKey] = array();
 
             // route needs datas fetched from database
-            if (array_key_exists($routeKey, $this->config['parametric_routes']['routes'])) {
-
+            if (array_key_exists($routeKey, $this->config['urls_loader']['parameters']['dynamic_routes'])) {
                 $output[$routeKey] = array_merge($output[$routeKey], $this->dynamicRouteUrlsGenerator->generateUrls($routeKey, $route));
-
             }
 
             // route does not need variables to be loaded by objects in database
@@ -103,10 +101,10 @@ class UrlsLoader implements UrlsLoaderInterface
          * load a custom service defined by user, to load additional generated routes
          */
 
-        if (array_key_exists('urls_loader_custom_service', $this->config) && $this->config['urls_loader_custom_service'] != null) {
+        if (array_key_exists('custom_service', $this->config['urls_loader']) && $this->config['urls_loader']['custom_service'] != null) {
 
             // load custom service
-            $urlsLoaderCustomService = $this->container->get($this->config['urls_loader_custom_service']);
+            $urlsLoaderCustomService = $this->container->get($this->config['urls_loader']['custom_service']);
 
             // merge generated urls
             foreach ($urlsLoaderCustomService->getUrls() as $routeKey => $preparedRoute) {

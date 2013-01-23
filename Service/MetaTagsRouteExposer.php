@@ -7,18 +7,15 @@ use Symfony\Component\Routing\Route;
 class MetaTagsRouteExposer
 {
     protected $config;
-
     protected $container;
-
     protected $loadedBundlesRegex;
 
     public function __construct(array $config = array(), $container)
     {
         $this->config = $config;
-
         $this->container = $container;
 
-        $this->loadedBundlesRegex = $this->getLoadedBundlesRegex();
+        $this->loadedBundlesRegex = $this->calculateLoadedBundlesRegex();
     }
 
     /**
@@ -28,18 +25,16 @@ class MetaTagsRouteExposer
      *
      * eg: (^Acme\\FooBundle)|(^Acme)
      */
-    private function getLoadedBundlesRegex()
+    private function calculateLoadedBundlesRegex()
     {
         $regex = '';
 
         foreach ($this->container->get('kernel')->getBundles() as $bundle) {
 
-            if (in_array($bundle->getName(), $this->config['exposed_routes']['bundles'])) {
-
+            if (in_array($bundle->getName(), $this->config['urls_loader']['exposed_routes']['bundles'])) {
                 if ($regex != '') {
                     $regex .= '|';
                 }
-
                 $regex .= "(^".addslashes($bundle->getNamespace()).")";
             }
         }
@@ -85,11 +80,7 @@ class MetaTagsRouteExposer
      */
     private function isRouteExposedByBundle($_controller)
     {
-        if ($this->loadedBundlesRegex != "" && preg_match($this->loadedBundlesRegex, $_controller)) {
-            return true;
-        }
-
-        return false;
+        return ($this->loadedBundlesRegex != "" && preg_match($this->loadedBundlesRegex, $_controller));
     }
 
     /**

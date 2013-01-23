@@ -22,18 +22,6 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('copiaincolla_meta_tags')
             ->children()
 
-                ->arrayNode('exposed_routes')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->arrayNode('bundles')
-                            ->useAttributeAsKey('k')
-                            ->prototype('scalar')->end()
-                        ->end()
-                    ->end()
-                ->end()
-
-                ->scalarNode('urls_loader_custom_service')->defaultValue(null)->end()
-
                 ->arrayNode('defaults')
                     ->addDefaultsIfNotSet()
                     ->children()
@@ -44,31 +32,56 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
 
-                ->arrayNode('parametric_routes')
+
+                ->arrayNode('urls_loader')
+                    ->addDefaultsIfNotSet()
                     ->children()
-                        ->variableNode('default_params')
-                            ->defaultValue(array())
-                        ->end()
-                        ->arrayNode('routes')
-                            ->useAttributeAsKey('route_name')
-                            ->prototype('array')
-                                ->children()
-                                    ->scalarNode('repository')->end()
 
-                                    ->scalarNode('repository_fetch_function')->end()
-
-                                    ->variableNode('fixed_params')->end()
-
-                                    ->arrayNode('object_params')
-                                        ->useAttributeAsKey('k')
-                                        ->prototype('scalar')->end()
-                                    ->end()
-
+                        ->arrayNode('exposed_routes')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->arrayNode('bundles')
+                                    ->useAttributeAsKey('k')
+                                    ->prototype('scalar')->end()
                                 ->end()
                             ->end()
                         ->end()
+
+                        ->scalarNode('custom_service')->defaultValue(null)->end()
+
+                        ->arrayNode('parameters')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode('fixed_params')
+                                    ->defaultValue(array())
+                                ->end()
+                                ->arrayNode('dynamic_routes')
+                                    ->useAttributeAsKey('route_name')
+                                    ->prototype('array')
+                                        ->children()
+                                            ->scalarNode('repository')->defaultNull()->end()
+
+                                            ->scalarNode('repository_fetch_function')->defaultNull()->end()
+
+                                            ->variableNode('fixed_params')->defaultValue(array())->end()
+
+                                            ->arrayNode('object_params')
+                                                ->useAttributeAsKey('k')
+                                                ->prototype('scalar')->end()
+                                            ->end()
+
+                                        ->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+
                     ->end()
                 ->end()
+
+
+
+
 
             ->end()
         ;
