@@ -133,7 +133,12 @@ class DynamicRouteUrlsGenerator
             $repositoryFunction = $dynamicRouteConfig['repository_fetch_function'];
 
             // try to call a user defined function
-            if (!is_null($repositoryFunction) && method_exists($this->em->getRepository($repository), $repositoryFunction)) {
+            if (!is_null($repositoryFunction)) {
+
+                if (!method_exists($this->em->getRepository($repository), $repositoryFunction)) {
+                    throw new \Exception("Called undefined function\"{$repositoryFunction}\" for repository \"{$repository}\"");
+                }
+
                 $data = $this->em->getRepository($repository)->$repositoryFunction();
             }
 
