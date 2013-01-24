@@ -88,12 +88,12 @@ class UrlsLoader implements UrlsLoaderInterface
 
             // route needs datas fetched from database
             if (array_key_exists($routeKey, $this->config['urls_loader']['parameters']['dynamic_routes'])) {
-                $output[$routeKey] = array_merge($output[$routeKey], $this->dynamicRouteUrlsGenerator->generateUrls($routeKey, $route));
+                $output[$routeKey] = $this->dynamicRouteUrlsGenerator->generateUrls($routeKey, $route);
             }
 
             // route does not need variables to be loaded by objects in database
             else {
-                $output[$routeKey] = array_merge($output[$routeKey], $this->urlsGenerator->generateUrls($routeKey, $route));
+                $output[$routeKey] = $this->urlsGenerator->generateUrls($routeKey, $route);
             }
         }
 
