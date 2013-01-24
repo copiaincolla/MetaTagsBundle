@@ -5,7 +5,7 @@ namespace Copiaincolla\MetaTagsBundle\Loader;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Doctrine\ORM\EntityManager;
 
-use Copiaincolla\MetaTagsBundle\Service\MetaTagsRouteExposer;
+use Copiaincolla\MetaTagsBundle\Service\RouteExposer;
 use Copiaincolla\MetaTagsBundle\Service\UrlsGenerator;
 use Copiaincolla\MetaTagsBundle\Service\DynamicRouteUrlsGenerator;
 
@@ -19,7 +19,7 @@ interface UrlsLoaderInterface
         Router $router,
         EntityManager $em,
         $container,
-        MetaTagsRouteExposer $metaTagsRouteExposer,
+        RouteExposer $metaTagsRouteExposer,
         UrlsGenerator $urlsGenerator,
         DynamicRouteUrlsGenerator $dynamicRouteUrlsGenerator
     );

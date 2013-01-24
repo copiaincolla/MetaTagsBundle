@@ -4,16 +4,16 @@ namespace Copiaincolla\MetaTagsBundle\Service;
 
 use Symfony\Component\Routing\Route;
 
-class MetaTagsRouteExposer
+class RouteExposer
 {
     protected $config;
-    protected $container;
+    protected $kernel;
     protected $loadedBundlesRegex;
 
-    public function __construct(array $config = array(), $container)
+    public function __construct(array $config = array(), $kernel)
     {
         $this->config = $config;
-        $this->container = $container;
+        $this->kernel = $kernel;
 
         $this->loadedBundlesRegex = $this->calculateLoadedBundlesRegex();
     }
@@ -29,7 +29,7 @@ class MetaTagsRouteExposer
     {
         $regex = '';
 
-        foreach ($this->container->get('kernel')->getBundles() as $bundle) {
+        foreach ($this->kernel->getBundles() as $bundle) {
 
             if (in_array($bundle->getName(), $this->config['urls_loader']['exposed_routes']['bundles'])) {
                 if ($regex != '') {

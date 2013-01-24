@@ -26,14 +26,10 @@
             <argument type="service" id="ci_metatags.urls_generator" />
         </service>
 
-        <service id="ci_metatags.route_exposer" class="Copiaincolla\MetaTagsBundle\Service\MetaTagsRouteExposer">
+        <service id="ci_metatags.route_exposer" class="Copiaincolla\MetaTagsBundle\Service\RouteExposer">
             <argument>%copiaincolla_meta_tags%</argument>
-            <argument type="service" id="service_container" />
+            <argument type="service" id="kernel" />
         </service>
-
-
-
-
 
 
         <service id="ci_metatags.metatags_loader" class="Copiaincolla\MetaTagsBundle\Loader\MetaTagsLoader">
@@ -41,9 +37,6 @@
             <argument>%copiaincolla_meta_tags%</argument>
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
-
-
-
 
 
         <service id="ci_metatags.metatag_formtype" class="Copiaincolla\MetaTagsBundle\Form\MetatagType">
