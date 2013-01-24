@@ -118,8 +118,6 @@ class UrlsLoader implements UrlsLoaderInterface
         // sort the urls array by route names
         ksort($output);
 
-        ldd($output);
-
         return $output;
     }
 
