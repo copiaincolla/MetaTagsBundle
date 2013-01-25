@@ -31,15 +31,15 @@ __Note:__ This bundle is in __beta__ state at the moment, in test phase and almo
 
 ## Install
 
-Installation instructions can be found in [doc/install.md](Resources/doc/install.md).
+Installation instructions can be found in [doc/install.md](https://github.com/copiaincolla/MetaTagsBundle/blob/master/Resources/doc/install.md).
     
 ## Configure
 
-To configure this bundle, read [doc/configuration.md](Resources/doc/configuration.md) for all possible values.
+To configure this bundle, read [doc/configuration.md](https://github.com/copiaincolla/MetaTagsBundle/blob/master/Resources/doc/configuration.md) for all possible values.
 
 ## Load urls
 
-To generate urls starting by all routes contained in a bundle, just add the bundle name to `config.yml`, as explained [here](Resources/doc/configuration.md#exposed_routes).
+To generate urls starting by all routes contained in a bundle, just add the bundle name to `config.yml`, as explained [here](https://github.com/copiaincolla/MetaTagsBundle/blob/master/Resources/doc/configuration.md#copiaincolla_meta_tags--urls_loader--exposed_routes).
 
 You can also add a single route by specifying an option in the Route annotation, like this:
 
@@ -53,9 +53,9 @@ Through this option, you can also choose __not__ to generate urls from a specifi
 @Route("/product/{id}/{slug}", name="product_show", options={"ci_metatags_expose"=false})
 ```
 
-You can also generate urls for associating meta tags by fetching data from database; read the section [doc/configuration.md#dynamic_routes](Resources/doc/configuration.md#dynamic_routes).
+You can also generate urls for associating meta tags by fetching data from database; read the section [doc/configuration.md#dynamic_routes](https://github.com/copiaincolla/MetaTagsBundle/blob/master/Resources/doc/configuration.md#copiaincolla_meta_tags--urls_loader--parameters--dynamic_routes).
 
-Finally, you can also create your custom __urls loader__ service, by following [this guide](Resources/doc/custom_urls_loader_service.md).
+Finally, you can also create your custom __urls loader__ service, by following [this guide](https://github.com/copiaincolla/MetaTagsBundle/blob/master/Resources/doc/custom_urls_loader_service.md).
 
 
 ## Usage in the templates
@@ -75,4 +75,4 @@ In the template containing an `<head>` tag, simply add:
 </body>
 ```
 
-For a better explanation of usage in templates and advanced use, read [doc/template_usage.md](Resources/doc/template_usage.md).
+For a better explanation of usage in templates and advanced use, read [doc/template_usage.md](https://github.com/copiaincolla/MetaTagsBundle/blob/master/Resources/doc/template_usage.md).
