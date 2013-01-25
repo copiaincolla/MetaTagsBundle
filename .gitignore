@@ -5,3 +5,6 @@
 
 # netbeans
 nbproject
+
+# phpunit
+phpunit.xml
