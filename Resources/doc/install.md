@@ -1,6 +1,8 @@
 Installation
 ============
 
+The `master` branch and the `X.Y` tags are compatible with the version 2.2.x of Symfony.
+
 ## Step 1 - Vendors
 
 ### composer
@@ -10,7 +12,7 @@ If you are using `composer`, add the following line to your `composer.json`:
 
     {
         "require": {
-            "copiaincolla/metatags-bundle": "dev-master"
+            "copiaincolla/metatags-bundle": "0.*"
         }
     }
     
@@ -20,7 +22,8 @@ If you are using `deps`, add the following line to your `deps`:
     
     [CopiaincollaMetaTagsBundle]
         git=https://github.com/copiaincolla/MetaTagsBundle.git
-        target=/bundles/Copiaincolla/MetaTagsBundle    
+        target=/bundles/Copiaincolla/MetaTagsBundle
+        version=0.*
 
 And in your `app/autoload.php`:
 

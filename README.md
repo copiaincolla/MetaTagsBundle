@@ -67,7 +67,7 @@ In the template containing an `<head>` tag, simply add:
 ```
 <body>
     <head>
-        {% render 'CopiaincollaMetaTagsBundle:MetaTags:render' %}
+        {% render controller('CopiaincollaMetaTagsBundle:MetaTags:render') %}
         [...]
     </head>
 
