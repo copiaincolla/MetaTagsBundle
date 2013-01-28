@@ -5,7 +5,7 @@ Symfony Bundle to manage html meta tags by matching urls.
 
 Tags starting with __"S2.0"__ are compatible with Symfony 2.0.x.
 
-If you are using symfony 2.0.x follow [this guide](https://github.com/copiaincolla/MetaTagsBundle/blob/symfony-2.0.x/README.md).
+If you are using symfony 2.0.x follow [this guide on the symfony-2.0.x branch](https://github.com/copiaincolla/MetaTagsBundle/blob/symfony-2.0.x/README.md).
 
 # How it works
 
