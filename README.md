@@ -3,6 +3,10 @@ MetaTagsBundle
 
 Symfony Bundle to manage html meta tags by matching urls.
 
+Tags starting with S2.0 are compatible with symfony 2.0.x
+
+If you are using symfony 2.0.x follow [this guide](https://github.com/copiaincolla/MetaTagsBundle/blob/symfony-2.0.x/README.md)
+
 # How it works
 
 Based on the configuration provided by the user and/or a user custom service, MetaTagsBundle _loads_ some urls and manages the association between an __url__ and its __meta tags values__ storing the data in the database.
