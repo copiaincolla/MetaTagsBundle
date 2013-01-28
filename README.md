@@ -3,6 +3,8 @@ MetaTagsBundle
 
 Symfony Bundle to manage html meta tags by matching urls.
 
+Tags with __"x.y"__ format are compatible with latest Symfony version (currently >= 2.2). 
+
 Tags starting with __"S2.0"__ are compatible with Symfony 2.0.x.
 
 If you are using symfony 2.0.x follow [this guide on the symfony-2.0.x branch](https://github.com/copiaincolla/MetaTagsBundle/blob/symfony-2.0.x/README.md).
