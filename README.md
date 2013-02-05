@@ -3,12 +3,6 @@ MetaTagsBundle
 
 Symfony Bundle to manage html meta tags by matching urls.
 
-Tags with __"x.y"__ format are compatible with latest Symfony version (currently >= 2.2). 
-
-Tags starting with __"S2.0"__ are compatible with Symfony 2.0.x.
-
-If you are using symfony 2.0.x follow [this guide on the symfony-2.0.x branch](https://github.com/copiaincolla/MetaTagsBundle/blob/symfony-2.0.x/README.md).
-
 # How it works
 
 Based on the configuration provided by the user and/or a user custom service, MetaTagsBundle _loads_ some urls and manages the association between an __url__ and its __meta tags values__ storing the data in the database.
@@ -38,6 +32,24 @@ __Note:__ This bundle is in __beta__ state at the moment, in test phase and almo
 ## Install
 
 Installation instructions can be found in [doc/install.md](Resources/doc/install.md).
+
+The current version of this bundle is compatible with Symfony >= 2.2.*
+
+#### Tag notes
+
+We will try to provide tags as best as we can, to be used proficiently with composer or deps.
+
+The development of this bundle is intended for Symfony versions >= 2.0.*; here is a brief explanation of the tagging system we use:
+
+- tags with the __"X.Y"__ format are compatible with Symfony >= 2.2.*
+- tags with the __"S2.0-X.Y"__ format are compatible with Symfony 2.0.*
+- tags with the __"S2.1-X.Y"__ format are compatible with Symfony 2.1.*
+
+If you are using symfony 2.0.* follow [this guide on the symfony-2.0.* branch](https://github.com/copiaincolla/MetaTagsBundle/blob/symfony-2.0.x/README.md).
+
+If you are using symfony 2.1.* follow [this guide on the symfony-2.0.* branch](https://github.com/copiaincolla/MetaTagsBundle/blob/symfony-2.1.x/README.md).
+
+More details about _tagging system_ can be found in [doc/tagging.md](Resources/doc/tagging.md).
     
 ## Configure
 
