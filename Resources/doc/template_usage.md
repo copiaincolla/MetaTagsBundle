@@ -65,7 +65,7 @@ class ProductController extends Controller
 
 ```
 
-After loading urls generated from `product_show`route (see how [here](MetaTagsBundle/Readme.md#load_urls)), you may want to use the variable `entity` in the values of the meta tags.
+After loading urls generated from `product_show`route (see how [here](../../Readme.md#load_urls)), you may want to use the variable `entity` in the values of the meta tags.
 
 For example, for url /product/1/the-best-product`, you may want:
 
