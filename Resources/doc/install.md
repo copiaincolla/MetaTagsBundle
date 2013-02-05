@@ -49,5 +49,12 @@ Add the following line to `app/routing.yml`:
 Add to `app/config.yml`:
 
     copiaincolla_meta_tags: ~
-    
+
+## Step 5 - Database
+
+Update the database by adding some tables; run:
+
+    php app/console doctrine:schema:update --force
+
+
 The bundle is now ready to work!
