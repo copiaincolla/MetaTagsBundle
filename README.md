@@ -49,7 +49,7 @@ If you are using symfony 2.0.* follow [this guide on the symfony-2.0.* branch](h
 If you are using symfony 2.1.* follow [this guide on the symfony-2.0.* branch](https://github.com/copiaincolla/MetaTagsBundle/blob/symfony-2.1.x/README.md).
 
 More details about _tagging and branching system_ used in CopiaincollaMetaTagsBundle can be found in [doc/tagging_branching.md](Resources/doc/tagging_branching.md).
-    
+
 ## Configure
 
 To configure this bundle, read [doc/configuration.md](Resources/doc/configuration.md) for all possible values.
