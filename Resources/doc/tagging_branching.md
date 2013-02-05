@@ -16,5 +16,5 @@ The development of this bundle is intended for Symfony versions >= 2.0.*; here i
 Currently there are 3 main branches:
 
 - __master__: compatible with Symfony >= 2.2.*
-- __symfony-2.1.x: compatible with Symfony 2.1.*
+- __symfony-2.1.x__: compatible with Symfony 2.1.*
 - __symfony-2.0.x__: compatible with Symfony 2.0.*

@@ -14,7 +14,7 @@ To choose which urls must be managed by MetaTagsBundle, the __routes__ generatin
 
 For routes requiring parameters that must be fetched from database, there's the possibility to load entities from database, and associate the route parameters to the entities values in order to create urls.
 
-For more specifid needs, it is also possible to create a custom service which simply returns an array of urls.
+For more specific needs, it is also possible to create a custom service which simply returns an array of urls.
 
 Once the urls are loaded in MetaTagsBundle, you will be able to associate the following meta tags to each url:
 
@@ -45,8 +45,9 @@ The development of this bundle is intended for Symfony versions >= 2.0.*; here i
 - tags with the __"S2.0-X.Y"__ format are compatible with Symfony 2.0.*
 - tags with the __"S2.1-X.Y"__ format are compatible with Symfony 2.1.*
 
-If you are using symfony 2.0.* follow [this guide on the symfony-2.0.* branch](https://github.com/copiaincolla/MetaTagsBundle/blob/symfony-2.0.x/README.md).
-If you are using symfony 2.1.* follow [this guide on the symfony-2.0.* branch](https://github.com/copiaincolla/MetaTagsBundle/blob/symfony-2.1.x/README.md).
+If you are using symfony 2.0.*, follow [this guide on the symfony-2.0.x branch](https://github.com/copiaincolla/MetaTagsBundle/blob/symfony-2.0.x/README.md).
+
+If you are using symfony 2.1.*, follow [this guide on the symfony-2.1.x branch](https://github.com/copiaincolla/MetaTagsBundle/blob/symfony-2.1.x/README.md).
 
 More details about _tagging and branching system_ used in CopiaincollaMetaTagsBundle can be found in [doc/tagging_branching.md](Resources/doc/tagging_branching.md).
 
