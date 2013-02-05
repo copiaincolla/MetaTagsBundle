@@ -18,7 +18,7 @@ class MetaTagsAdminController extends Controller
 {
     /**
      * @Route("/", name="admin_metatag")
-     * @Template()
+     * @Template("CopiaincollaMetaTagsBundle:MetaTagsAdmin:index/index.html.twig")
      */
     public function indexAction()
     {
@@ -72,14 +72,14 @@ class MetaTagsAdminController extends Controller
             $output[$url] = array(
                 'url'               => $url,
                 'entity'            => $entity,
-                'only_in_database'  => true
+                //'only_in_database'  => true
             );
         }
 
         ksort($output);
 
         return array(
-            'urls' => $output
+            'items' => $output
         );
     }
 

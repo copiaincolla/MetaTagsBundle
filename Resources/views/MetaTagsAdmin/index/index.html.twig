@@ -1,0 +1,15 @@
+{% extends 'CopiaincollaMetaTagsBundle::layout.html.twig' %}
+
+{% block main %}
+
+    <h1>Meta Tag</h1>
+
+    {% include "CopiaincollaMetaTagsBundle:MetaTagsAdmin:index/_table.html.twig" with {"items": items} %}
+
+    <hr>
+
+    <a href="{{ path('admin_metatag_new') }}">
+        New custom Meta Tag
+    </a>
+
+{% endblock %}
