@@ -1,23 +1,7 @@
-<title>{% spaceless %}
-    {% block meta_title %}
-        {{ metaTagsParseValue(metatags.title, vars)|raw }}
-    {% endblock %}
-{% endspaceless %}</title>
+<title>{% block meta_title %}{{ metaTagsParseValue(metatags.title, vars)|raw }}{% endblock %}</title>
 
-<meta name="description" content="{% spaceless %}
-    {% block meta_description %}
-        {{ metaTagsParseValue(metatags.description, vars)|raw }}
-    {% endblock %}
-{% endspaceless %}" />
+<meta name="description" content="{% block meta_description %}{{ metaTagsParseValue(metatags.description, vars)|raw }}{% endblock %}" />
 
-<meta name="keywords" content="{% spaceless %}
-    {% block meta_keywords %}
-        {{ metaTagsParseValue(metatags.keywords, vars)|raw }}
-    {% endblock %}
-{% endspaceless %}" />
+<meta name="keywords" content="{% block meta_keywords %}{{ metaTagsParseValue(metatags.keywords, vars)|raw }}{% endblock %}" />
 
-<meta name="author" content="{% spaceless %}
-    {% block meta_author %}
-        {{ metaTagsParseValue(metatags.author, vars)|raw }}
-    {% endblock %}
-{% endspaceless %}" />
+<meta name="author" content="{% block meta_author %}{{ metaTagsParseValue(metatags.author, vars)|raw }}{% endblock %}" />
