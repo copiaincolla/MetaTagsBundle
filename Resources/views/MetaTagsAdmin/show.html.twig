@@ -1,0 +1,38 @@
+{% extends 'CopiaincollaMetaTagsBundle::layout.html.twig' %}
+
+{% block main %}
+
+    <h1>Meta Tag: "{{ entity.url }}"</h1>
+
+    <br><br>
+
+    <table>
+        <tr>
+            <td>Url:</td>
+            <td>{{ entity.url }}</td>
+        </tr>
+        <tr>
+            <td>Title:</td>
+            <td>{{ entity.title }}</td>
+        </tr>
+        <tr>
+            <td>Description:</td>
+            <td>{{ entity.description }}</td>
+        </tr>
+        <tr>
+            <td>Keywords:</td>
+            <td>{{ entity.keywords }}</td>
+        </tr>
+        <tr>
+            <td>Author:</td>
+            <td>{{ entity.author }}</td>
+        </tr>
+    </table>
+
+    <hr>
+
+    <a href="{{ path('admin_metatag') }}">
+        Back to meta tags list
+    </a>
+
+{% endblock %}

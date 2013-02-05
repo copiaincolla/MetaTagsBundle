@@ -83,9 +83,29 @@ class MetaTagsAdminController extends Controller
         );
     }
 
+    /**
+     * Displays information about a MetaTag entity.
+     *
+     * @Route("/show/{id}", name="admin_metatag_show")
+     * @Template()
+     */
+    public function showAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('CopiaincollaMetaTagsBundle:Metatag')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Metatag entity.');
+        }
+
+        return array(
+            'entity' => $entity
+        );
+    }
 
     /**
-     * Displays a form to create a new Metatag entity.
+     * Displays a form to create a new MetaTag entity.
      *
      * @Route("/new", name="admin_metatag_new")
      * @Template("CopiaincollaMetaTagsBundle:MetaTagsAdmin:edit.html.twig")

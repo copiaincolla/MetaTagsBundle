@@ -56,7 +56,11 @@
                         {% endif %}
                     </td>
                     <td>
-                        show
+                        {% if entity %}
+                            <a href="{{ path('admin_metatag_show', {'id': entity.id }) }}">
+                                show
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}
