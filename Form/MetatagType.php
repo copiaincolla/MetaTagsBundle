@@ -3,7 +3,7 @@
 namespace Copiaincolla\MetaTagsBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormBuilder;
 use Copiaincolla\MetaTagsBundle\Loader\UrlsLoader;
 
 class MetatagType extends AbstractType
@@ -16,7 +16,7 @@ class MetatagType extends AbstractType
         $this->urlsLoader = $urlsLoader;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
             ->add('url', 'text', array(
