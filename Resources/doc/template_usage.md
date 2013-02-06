@@ -9,7 +9,7 @@ Let's say `AcmeFooBundle::layout.html.twig` exists, and contains the base layout
 ```
 <body>
     <head>
-        {% render controller('CopiaincollaMetaTagsBundle:MetaTags:render') %}
+        {% render url('CopiaincollaMetaTagsBundle:MetaTags:render') %}
         [...]
     </head>
 
@@ -104,7 +104,7 @@ Now, `AcmeFooBundle::layout.html.twig` should be slightly modified, introducing 
  <body>
      <head>
         {% block metatags %}
-            {% render controller('CopiaincollaMetaTagsBundle:MetaTags:render') %}
+            {% render url('CopiaincollaMetaTagsBundle:MetaTags:render') %}
         {% endblock metatags %}
         [...]
      </head>
@@ -117,7 +117,7 @@ Now, in `AcmeFooBundle:Product:show.html.twig`, overwrite the `metatags` block a
 
 ```
 {% block metatags %}
-    {% render controller('CopiaincollaMetaTagsBundle:MetaTags:render', {'vars': {'entity': entity}}) %}
+    {% render url('CopiaincollaMetaTagsBundle:MetaTags:render' with {'vars': {'entity': entity}} %}
 {% endblock metatags %}
 ```
 

@@ -225,6 +225,7 @@ class MetaTagsAdminController extends Controller
     /**
      * Display a form to delete a MetaTag entity
      *
+     * @Route("/admin_metatag__delete")
      * @Template()
      *
      * @param $id
