@@ -22,7 +22,7 @@ class MetaTagsAdminController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getEntityManager();
 
         $entities = $em->getRepository('CopiaincollaMetaTagsBundle:Metatag')->findBy(array(), array('url' => 'DESC'));
 
@@ -91,7 +91,7 @@ class MetaTagsAdminController extends Controller
      */
     public function showAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('CopiaincollaMetaTagsBundle:Metatag')->find($id);
 
@@ -143,7 +143,7 @@ class MetaTagsAdminController extends Controller
         $form->bind($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->getDoctrine()->getEntityManager();
 
             $em->persist($entity);
             $em->flush();
@@ -165,7 +165,7 @@ class MetaTagsAdminController extends Controller
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('CopiaincollaMetaTagsBundle:Metatag')->find($id);
 
@@ -193,7 +193,7 @@ class MetaTagsAdminController extends Controller
      */
     public function updateAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('CopiaincollaMetaTagsBundle:Metatag')->find($id);
 
@@ -233,7 +233,7 @@ class MetaTagsAdminController extends Controller
      */
     public function _deleteFormAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('CopiaincollaMetaTagsBundle:Metatag')->find($id);
 
@@ -257,7 +257,7 @@ class MetaTagsAdminController extends Controller
      */
     public function deleteAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('CopiaincollaMetaTagsBundle:Metatag')->find($id);
 
