@@ -3,7 +3,7 @@
 namespace Copiaincolla\MetaTagsBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormBuilder;
 use Copiaincolla\MetaTagsBundle\Loader\UrlsLoader;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -18,7 +18,7 @@ class MetatagType extends AbstractType
         $this->urlsLoader = $urlsLoader;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilder $builder, array $options)
     {
         $config = $this->urlsLoader->getConfig();
 
@@ -52,7 +52,7 @@ class MetatagType extends AbstractType
         ;
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form)
     {
         $view->vars['allow_editable_url'] = $form->getAttribute('allow_editable_url');
     }
