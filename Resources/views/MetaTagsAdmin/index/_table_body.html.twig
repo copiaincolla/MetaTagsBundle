@@ -30,7 +30,7 @@
             </td>
             <td>
                 {% if entity %}
-                    {% render controller('CopiaincollaMetaTagsBundle:MetaTagsAdmin:_deleteForm', {id: entity.id}) %}
+                    {% render url('CopiaincollaMetaTagsBundle:MetaTagsAdmin:_deleteForm', {id: entity.id}) %}
                 {% endif %}
             </td>
             <td>

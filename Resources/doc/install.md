@@ -28,7 +28,7 @@ If you are using `composer`, add the following line to your `composer.json`:
 ```
 
 note: substitute `"X.Y"` with the most recent tag or the concrete tag you want to use
-    
+
 ### deps
 
 If you are using `deps`, add the following line to your `deps`:
