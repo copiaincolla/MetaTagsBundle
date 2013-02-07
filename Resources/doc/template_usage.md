@@ -1,8 +1,8 @@
 # Template usage
 
-Currently only twig is supported.
-
 Meta tags are embedded trough the `{% render %}` function of twig. It is sufficient to add the `{% render %}` function in the template containing an `<head>` tag.
+
+Currently only twig is supported.
 
 Let's say `AcmeFooBundle::layout.html.twig` exists, and contains the base layout; to embed all meta tags managed by MetaTagsBundle add the following inside the `<head>` tag:
 
@@ -17,9 +17,32 @@ Let's say `AcmeFooBundle::layout.html.twig` exists, and contains the base layout
 </body>
 ```
 
-## Using twig variables inside meta tag values
+This will print:
 
-There are situations in which you want to use twig variables inside a meta tag value.
+```
+<body>
+    <head>
+        <title>[...]</title>
+        <meta name="description" content="[...]" />
+        <meta name="keywords" content="[...]" />
+        <meta name="author" content="[...]" />
+        <meta name="language" content="[...]" />
+        <meta name="robots" content="[...]" />
+        <meta name="googlebot" content="[...]" />
+        <meta property="og:title" content="[...]" />
+        <meta property="og:description" content="[...]" />
+        <meta property="og:image" content="[...]" />
+
+        [...]
+    </head>
+
+    [...]
+</body>
+```
+
+## Use of twig variables inside meta tag values
+
+There are situations where you want to use twig variables inside a meta tag value.
 
 For example, you have the entity `AcmeFooBundle:Product`:
 
@@ -99,3 +122,44 @@ Now, in `AcmeFooBundle:Product:show.html.twig`, overwrite the `metatags` block a
 ```
 
 In this way the variable `entity` passed from the action to the template, will be available in `www.mysite.com | Product "{{ entity.name }}"`.
+
+## Use of request attributes in meta tag values
+
+You may want to use some parameter stored in the request to compile a meta tag value.
+
+A clear example of this is the `language` meta tag: it's common to set it as the `\_locale` parameter stored in the request. To do so you can use the __\_master\_request__ twig variable to access the original request.
+
+So, for a route you can populate the `language` field with:
+
+```
+{{ _master_request.locale }}
+```
+
+This is the same of putting in a template `{{ app.request.locale }}`.
+
+If you want, you can specify a default value for the `language` meta tag in the configuration:
+
+```
+copiaincolla_meta_tags:
+
+    defaults:
+        title: [my default title]
+        description: [my default description]
+        keywords: [my default keywords]
+        author: [my default author]
+        language: "{{ _master_request.locale }}"
+```
+
+Note: for `Symfony < 2.1` the `_locale` parameter is stored in session, not in the request. Extracted from [here](https://github.com/symfony/symfony/blob/master/UPGRADE-2.1.md), the `locale` is accessible by `{{ _master_request.session.locale }}` or `{{ app.session.locale }}`.
+
+In general you can access request parameter with the syntax:
+
+```
+{{ _master_request.get('[PARAMETER_NAME]') }}
+```
+
+For example, for the `product_show` route, to populate a meta tag value (eg: keywords, or description) you could use:
+
+```
+{{ _master_request.get('slug') }}
+```

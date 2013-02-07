@@ -1,33 +1,46 @@
 Installation
 ============
 
-The `master` branch and the `X.Y` tags are compatible with the version 2.2.x of Symfony.
+The `master` branch and the `X.Y` tags are compatible with `Symfony >= 2.2.*`.
 
 ## Step 1 - Vendors
+
+To choose the right version of this bundle to install, have a look at [Tagging and Branching system explanation.](tagging_branching.md)
+
+Review the list of available tags [here.](https://github.com/copiaincolla/MetaTagsBundle/tags)
+
+In short:
+
+- tags with the __"X.Y"__ format are compatible with `Symfony >= 2.2.*`
+- tags with the __"S2.0/X.Y"__ format are compatible with `Symfony 2.0.*`
+- tags with the __"S2.1/X.Y"__ format are compatible with `Symfony 2.1.*`
 
 ### composer
 
 If you are using `composer`, add the following line to your `composer.json`:
 
-
-    {
-        "require": {
-            "copiaincolla/metatags-bundle": "0.3"
-        }
+```
+{
+    "require": {
+        "copiaincolla/metatags-bundle": "X.Y"
     }
+}
+```
 
-note: substitute "0.3" with the most recent tag or the concrete tag you want to use
+note: substitute `"X.Y"` with the most recent tag or the concrete tag you want to use
     
 ### deps
 
 If you are using `deps`, add the following line to your `deps`:
-    
-    [CopiaincollaMetaTagsBundle]
-        git=https://github.com/copiaincolla/MetaTagsBundle.git
-        target=/bundles/Copiaincolla/MetaTagsBundle
-        version=0.3
 
-note: substitute "0.3" with the most recent tag or the concrete tag you want to use
+```
+[CopiaincollaMetaTagsBundle]
+    git=https://github.com/copiaincolla/MetaTagsBundle.git
+    target=/bundles/Copiaincolla/MetaTagsBundle
+    version=X.Y
+```
+
+note: substitute `"X.Y"` with the most recent tag or the concrete tag you want to use
 
 And in your `app/autoload.php`:
 
