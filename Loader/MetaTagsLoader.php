@@ -90,10 +90,46 @@ class MetaTagsLoader
             $metaTags['keywords'] = $keywords;
         }
 
+        // robots
+        $robots = $this->cleanMetaTagValue($metaTag->getRobots());
+        if ('' !== $robots) {
+            $metaTags['robots'] = $robots;
+        }
+
+        // googlebot
+        $googlebot = $this->cleanMetaTagValue($metaTag->getGooglebot());
+        if ('' !== $googlebot) {
+            $metaTags['googlebot'] = $googlebot;
+        }
+
         // author
         $author = $this->cleanMetaTagValue($metaTag->getAuthor());
         if ('' !== $author) {
             $metaTags['author'] = $author;
+        }
+
+        // language
+        $language = $this->cleanMetaTagValue($metaTag->getLanguage());
+        if ('' !== $language) {
+            $metaTags['language'] = $language;
+        }
+
+        // og:title
+        $ogTitle = $this->cleanMetaTagValue($metaTag->getOgTitle());
+        if ('' !== $ogTitle) {
+            $metaTags['og_title'] = $ogTitle;
+        }
+
+        // og:description
+        $ogDescription = $this->cleanMetaTagValue($metaTag->getOgDescription());
+        if ('' !== $ogTitle) {
+            $metaTags['og_description'] = $ogDescription;
+        }
+
+        // og:image
+        $ogImage = $this->cleanMetaTagValue($metaTag->getOgImage());
+        if ('' !== $ogImage) {
+            $metaTags['og_image'] = $ogImage;
         }
 
         return $metaTags;
@@ -110,6 +146,6 @@ class MetaTagsLoader
      */
     private function cleanMetaTagValue($str)
     {
-        return trim((string)$str);
+        return trim((string) $str);
     }
 }

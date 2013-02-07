@@ -28,7 +28,13 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('title')->defaultValue("")->end()
                         ->scalarNode('description')->defaultValue("")->end()
                         ->scalarNode('keywords')->defaultValue("")->end()
+                        ->scalarNode('robots')->defaultValue("")->end()
+                        ->scalarNode('googlebot')->defaultValue("")->end()
                         ->scalarNode('author')->defaultValue("")->end()
+                        ->scalarNode('language')->defaultValue("")->end()
+                        ->scalarNode('og:title')->defaultValue("")->end()
+                        ->scalarNode('og:description')->defaultValue("")->end()
+                        ->scalarNode('og:image')->defaultValue("")->end()
                     ->end()
                 ->end()
 

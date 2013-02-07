@@ -5,3 +5,15 @@
 <meta name="keywords" content="{% block meta_keywords %}{{ metaTagsParseValue(metatags.keywords, vars)|raw }}{% endblock %}" />
 
 <meta name="author" content="{% block meta_author %}{{ metaTagsParseValue(metatags.author, vars)|raw }}{% endblock %}" />
+
+<meta name="language" content="{% block meta_language %}{{ metaTagsParseValue(metatags.language, vars)|raw }}{% endblock %}" />
+
+<meta name="robots" content="{% block meta_robots %}{{ metaTagsParseValue(metatags.robots, vars)|raw }}{% endblock %}" />
+
+<meta name="googlebot" content="{% block meta_googlebot %}{{ metaTagsParseValue(metatags.googlebot, vars)|raw }}{% endblock %}" />
+
+<meta property="og:title" content="{% block meta_og_title %}{{ metaTagsParseValue(metatags.og_title, vars)|raw }}{% endblock %}" />
+
+<meta property="og:description" content="{% block meta_og_description %}{{ metaTagsParseValue(metatags.og_description, vars)|raw }}{% endblock %}" />
+
+<meta property="og:image" content="{% block meta_og_image %}{{ metaTagsParseValue(metatags.og_image, vars)|raw }}{% endblock %}" />
