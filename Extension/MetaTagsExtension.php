@@ -2,6 +2,8 @@
 
 namespace Copiaincolla\MetaTagsBundle\Extension;
 
+use Symfony\Component\HttpFoundation\Request;
+
 /**
  * Twig extension to help rendering meta tags
  */
@@ -33,6 +35,10 @@ class MetaTagsExtension extends \Twig_Extension
      */
     public function metaTagsParseValue($val, $vars = array())
     {
+        // add the master request to the available variables for twig rendering
+        $vars['_master_request'] = Request::createFromGlobals();
+
+        // return twig rendered meta tag value
         return $this->twig->render($val, $vars);
     }
 
