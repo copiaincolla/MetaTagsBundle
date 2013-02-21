@@ -1,19 +1,39 @@
-<title>{% block meta_title %}{{ metaTagsParseValue(metatags.title, vars)|raw }}{% endblock %}</title>
+{% if '' != metatags['title'] %}
+    <title>{% block meta_title %}{{ metaTagsParseValue(metatags['title'], vars)|raw }}{% endblock %}</title>
+{% endif %}
 
-<meta name="description" content="{% block meta_description %}{{ metaTagsParseValue(metatags.description, vars)|raw }}{% endblock %}" />
+{% if '' != metatags['description'] %}
+    <meta name="description" content="{% block meta_description %}{{ metaTagsParseValue(metatags['description'], vars)|raw }}{% endblock %}" />
+{% endif %}
 
-<meta name="keywords" content="{% block meta_keywords %}{{ metaTagsParseValue(metatags.keywords, vars)|raw }}{% endblock %}" />
+{% if '' != metatags['keywords'] %}
+    <meta name="keywords" content="{% block meta_keywords %}{{ metaTagsParseValue(metatags['keywords'], vars)|raw }}{% endblock %}" />
+{% endif %}
 
-<meta name="author" content="{% block meta_author %}{{ metaTagsParseValue(metatags.author, vars)|raw }}{% endblock %}" />
+{% if '' != metatags['author'] %}
+    <meta name="author" content="{% block meta_author %}{{ metaTagsParseValue(metatags['author'], vars)|raw }}{% endblock %}" />
+{% endif %}
 
-<meta name="language" content="{% block meta_language %}{{ metaTagsParseValue(metatags.language, vars)|raw }}{% endblock %}" />
+{% if '' != metatags['language'] %}
+    <meta name="language" content="{% block meta_language %}{{ metaTagsParseValue(metatags['language'], vars)|raw }}{% endblock %}" />
+{% endif %}
 
-<meta name="robots" content="{% block meta_robots %}{{ metaTagsParseValue(metatags.robots, vars)|raw }}{% endblock %}" />
+{% if '' != metatags['robots'] %}
+    <meta name="robots" content="{% block meta_robots %}{{ metaTagsParseValue(metatags['robots'], vars)|raw }}{% endblock %}" />
+{% endif %}
 
-<meta name="googlebot" content="{% block meta_googlebot %}{{ metaTagsParseValue(metatags.googlebot, vars)|raw }}{% endblock %}" />
+{% if '' != metatags['googlebot'] %}
+    <meta name="googlebot" content="{% block meta_googlebot %}{{ metaTagsParseValue(metatags['googlebot'], vars)|raw }}{% endblock %}" />
+{% endif %}
 
-<meta property="og:title" content="{% block meta_og_title %}{{ metaTagsParseValue(metatags.og_title, vars)|raw }}{% endblock %}" />
+{% if '' != metatags['og:title'] %}
+    <meta property="og:title" content="{% block meta_og_title %}{{ metaTagsParseValue(metatags['og:title'], vars)|raw }}{% endblock %}" />
+{% endif %}
 
-<meta property="og:description" content="{% block meta_og_description %}{{ metaTagsParseValue(metatags.og_description, vars)|raw }}{% endblock %}" />
+{% if '' != metatags['og:description'] %}
+    <meta property="og:description" content="{% block meta_og_description %}{{ metaTagsParseValue(metatags['og:description'], vars)|raw }}{% endblock %}" />
+{% endif %}
 
-<meta property="og:image" content="{% block meta_og_image %}{{ metaTagsParseValue(metatags.og_image, vars)|raw }}{% endblock %}" />
+{% if '' != metatags['og:image'] %}
+    <meta property="og:image" content="{% block meta_og_image %}{{ metaTagsParseValue(metatags['og:image'], vars)|raw }}{% endblock %}" />
+{% endif %}

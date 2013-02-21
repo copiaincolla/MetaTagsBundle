@@ -24,7 +24,13 @@ class MetaTagsLoader
         'title',
         'description',
         'keywords',
-        'author'
+        'author',
+        'language',
+        'robots',
+        'googlebot',
+        'og:title',
+        'og:description',
+        'og:image'
     );
     
     /**
@@ -117,19 +123,19 @@ class MetaTagsLoader
         // og:title
         $ogTitle = $this->cleanMetaTagValue($metaTag->getOgTitle());
         if ('' !== $ogTitle) {
-            $metaTags['og_title'] = $ogTitle;
+            $metaTags['og:title'] = $ogTitle;
         }
 
         // og:description
         $ogDescription = $this->cleanMetaTagValue($metaTag->getOgDescription());
         if ('' !== $ogTitle) {
-            $metaTags['og_description'] = $ogDescription;
+            $metaTags['og:description'] = $ogDescription;
         }
 
         // og:image
         $ogImage = $this->cleanMetaTagValue($metaTag->getOgImage());
         if ('' !== $ogImage) {
-            $metaTags['og_image'] = $ogImage;
+            $metaTags['og:image'] = $ogImage;
         }
 
         return $metaTags;
