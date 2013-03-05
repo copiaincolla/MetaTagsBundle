@@ -189,4 +189,14 @@ class UrlsLoader implements UrlsLoaderInterface
 
         return $arrDatabaseUrls;
     }
+
+    /**
+     * return bundle configuration
+     *
+     * @return array
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
 }

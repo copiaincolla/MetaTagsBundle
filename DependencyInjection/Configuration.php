@@ -22,6 +22,13 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('copiaincolla_meta_tags')
             ->children()
 
+                ->arrayNode('config')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('allow_editable_url')->defaultTrue()->end()
+                    ->end()
+                ->end()
+
                 ->arrayNode('defaults')
                     ->addDefaultsIfNotSet()
                     ->children()

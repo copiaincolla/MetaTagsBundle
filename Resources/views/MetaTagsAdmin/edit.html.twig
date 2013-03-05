@@ -16,8 +16,12 @@
 
         {{ form_errors(form) }}
 
+        {% if form.vars.allow_editable_url == false and form.url.vars.value != '' %}
+            <h3>{{ form.url.vars.value }}</h3>
+        {% endif %}
 
         {{ form_row(form.url) }}
+
         {{ form_row(form.title) }}
         {{ form_row(form.description) }}
         {{ form_row(form.keywords) }}
