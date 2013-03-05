@@ -54,7 +54,7 @@ class MetatagType extends AbstractType
 
     public function buildView(FormView $view, FormInterface $form)
     {
-        $view->vars['allow_editable_url'] = $form->getAttribute('allow_editable_url');
+        $view->set('allow_editable_url', $form->getAttribute('allow_editable_url'));
     }
 
     public function getName()
