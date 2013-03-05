@@ -3,17 +3,21 @@
 namespace Copiaincolla\MetaTagsBundle\Service;
 
 use Symfony\Component\Routing\Route;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 class RouteExposer
 {
     protected $config;
     protected $kernel;
+    protected $router;
+
     protected $loadedBundlesRegex;
 
-    public function __construct(array $config = array(), $kernel)
+    public function __construct(array $config = array(), $kernel, Router $router)
     {
         $this->config = $config;
         $this->kernel = $kernel;
+        $this->router = $router;
 
         $this->loadedBundlesRegex = $this->calculateLoadedBundlesRegex();
     }
@@ -105,6 +109,23 @@ class RouteExposer
             }
         }
 
+        return null;
+    }
+
+    /**
+     * return a Route object by matching a $url
+     *
+     * @param $url
+     */
+    public function getRouteByUrl($url)
+    {
+        $matchedRoute = $this->router->match($url);
+
+        if ($matchedRoute !== null) {
+            $_route = $matchedRoute['_route'];
+
+            return $this->router->getRouteCollection()->get($_route);
+        }
         return null;
     }
 

@@ -29,6 +29,7 @@
         <service id="ci_metatags.route_exposer" class="Copiaincolla\MetaTagsBundle\Service\RouteExposer">
             <argument>%copiaincolla_meta_tags%</argument>
             <argument type="service" id="kernel" />
+            <argument type="service" id="router" />
         </service>
 
 

@@ -6,6 +6,12 @@
 
     <br><br>
 
+    {% if associated_route is not null %}
+        <p>
+            {{ associated_route.options.ci_metatags_help|raw }}
+        </p>
+    {% endif %}
+
     <table>
         <tr>
             <td>Url:</td>

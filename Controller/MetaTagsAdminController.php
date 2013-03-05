@@ -100,7 +100,8 @@ class MetaTagsAdminController extends Controller
         }
 
         return array(
-            'entity' => $entity
+            'entity' => $entity,
+            'associated_route' => $this->container->get('ci_metatags.route_exposer')->getRouteByUrl($entity->getUrl())
         );
     }
 
@@ -121,6 +122,7 @@ class MetaTagsAdminController extends Controller
 
         return array(
             'entity' => $entity,
+            'associated_route' => $this->container->get('ci_metatags.route_exposer')->getRouteByUrl($url),
             'form' => $form->createView()
         );
     }
@@ -179,6 +181,7 @@ class MetaTagsAdminController extends Controller
 
         return array(
             'entity' => $entity,
+            'associated_route' => $this->container->get('ci_metatags.route_exposer')->getRouteByUrl($entity->getUrl()),
             'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );

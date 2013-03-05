@@ -6,6 +6,12 @@
         {{ (entity.id) ? 'Edit meta tag "'~entity.url~'"' : 'New meta tag'}}
     </h1>
 
+    {% if associated_route is not null %}
+        <p>
+            {{ associated_route.options.ci_metatags_help|raw }}
+        </p>
+    {% endif %}
+
     <form action="{{ (entity.id) ? path('admin_metatag_update', {id: entity.id}) : path('admin_metatag_create') }}" method="post" {{ form_enctype(form) }} class="form form-horizontal form-metatag-edit" novalidate>
 
         {{ form_errors(form) }}
