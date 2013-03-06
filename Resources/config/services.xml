@@ -9,12 +9,15 @@
         <parameter key="ci_metatags.urls_generator.class">Copiaincolla\MetaTagsBundle\Service\UrlsGenerator</parameter>
         <parameter key="ci_metatags.dynamic_route_urls_generator.class">Copiaincolla\MetaTagsBundle\Service\DynamicRouteUrlsGenerator</parameter>
         <parameter key="ci_metatags.route_exposer.class">Copiaincolla\MetaTagsBundle\Service\RouteExposer</parameter>
+        <parameter key="ci_metatags.defaults.class">Copiaincolla\MetaTagsBundle\Service\Defaults</parameter>
+        <parameter key="form.type.metatagdefaults.class">Copiaincolla\MetaTagsBundle\Form\MetatagDefaultsType</parameter>
         <parameter key="ci_metatags.metatags_loader.class">Copiaincolla\MetaTagsBundle\Loader\MetaTagsLoader</parameter>
         <parameter key="form.type.metatag.class">Copiaincolla\MetaTagsBundle\Form\MetatagType</parameter>
         <parameter key="ci_metatags.twig.extension.class">Copiaincolla\MetaTagsBundle\Extension\MetaTagsExtension</parameter>
     </parameters>
 
     <services>
+        <!-- Loader\UrlsLoader -->
         <service id="ci_metatags.url_loader" class="%ci_metatags.url_loader.class%">
             <argument>%copiaincolla_meta_tags%</argument>
             <argument type="service" id="router" />
@@ -25,34 +28,52 @@
             <argument type="service" id="ci_metatags.dynamic_route_urls_generator" />
         </service>
 
+        <!-- Service\UrlsGenerator -->
         <service id="ci_metatags.urls_generator" class="%ci_metatags.urls_generator.class%">
             <argument>%copiaincolla_meta_tags%</argument>
             <argument type="service" id="router" />
         </service>
 
+        <!-- Service\DynamicRouteUrlsGenerator -->
         <service id="ci_metatags.dynamic_route_urls_generator" class="%ci_metatags.dynamic_route_urls_generator.class%">
             <argument>%copiaincolla_meta_tags%</argument>
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="ci_metatags.urls_generator" />
         </service>
 
+        <!-- Service\RouteExposer -->
         <service id="ci_metatags.route_exposer" class="%ci_metatags.route_exposer.class%">
             <argument>%copiaincolla_meta_tags%</argument>
             <argument type="service" id="kernel" />
             <argument type="service" id="router" />
         </service>
 
-        <service id="ci_metatags.metatags_loader" class="%ci_metatags.metatags_loader.class%">
-            <tag name="ci_metatags.metatags_loader" />
+        <!-- Service\Defaults -->
+        <service id="ci_metatags.defaults" class="%ci_metatags.defaults.class%">
+            <tag name="ci_metatags.defaults" />
             <argument>%copiaincolla_meta_tags%</argument>
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
 
+        <!-- Form\MetatagDefaultsType -->
+        <service id="ci_metatags.metatagdefaults_formtype" class="%form.type.metatagdefaults.class%">
+            <tag name="form.type" />
+        </service>
+
+        <!-- Loader\MetaTagsLoader -->
+        <service id="ci_metatags.metatags_loader" class="%ci_metatags.metatags_loader.class%">
+            <tag name="ci_metatags.metatags_loader" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="ci_metatags.defaults" />
+        </service>
+
+        <!-- Form\MetatagType -->
         <service id="ci_metatags.metatag_formtype" class="%form.type.metatag.class%">
-            <tag name="ci_metatags.metatag_formtype" />
+            <tag name="form.type" />
             <argument type="service" id="ci_metatags.url_loader" />
         </service>
 
+        <!-- Extension\MetaTagsExtension -->
         <service id="ci_metatags.twig.extension" class="%ci_metatags.twig.extension.class%">
             <tag name="twig.extension" />
         </service>
