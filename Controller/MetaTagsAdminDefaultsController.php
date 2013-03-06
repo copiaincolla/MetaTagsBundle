@@ -56,14 +56,14 @@ class MetaTagsAdminDefaultsController extends Controller
      */
     public function updateAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getEntityManager();
 
         $entityMetatagDefaults = $this->container->get('ci_metatags.defaults')->getEntityMetatagDefaults();
         $editForm = $this->createForm($this->container->get('ci_metatags.metatagdefaults_formtype'), $entityMetatagDefaults);
 
         $request = $this->getRequest();
 
-        $editForm->bind($request);
+        $editForm->bindRequest($request);
 
         if ($editForm->isValid()) {
             $em->persist($entityMetatagDefaults);
