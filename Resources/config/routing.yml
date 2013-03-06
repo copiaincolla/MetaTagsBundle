@@ -1,4 +1,14 @@
-ci_metatags_bundle:
-    resource: "@CopiaincollaMetaTagsBundle/Controller/"
+ci_metatags_bundle_metatags:
+    resource: "@CopiaincollaMetaTagsBundle/Controller/MetaTagsController.php"
+    type:     annotation
+    prefix:   /
+
+ci_metatags_bundle_metatags_admin_defaults:
+    resource: "@CopiaincollaMetaTagsBundle/Controller/MetaTagsAdminDefaultsController.php"
+    type:     annotation
+    prefix:   /
+
+ci_metatags_bundle_metatags_admin:
+    resource: "@CopiaincollaMetaTagsBundle/Controller/MetaTagsAdminController.php"
     type:     annotation
     prefix:   /
