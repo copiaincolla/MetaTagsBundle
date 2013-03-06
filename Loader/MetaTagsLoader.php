@@ -5,6 +5,7 @@ namespace Copiaincolla\MetaTagsBundle\Loader;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
 
+use Copiaincolla\MetaTagsBundle\Service\Defaults;
 use Copiaincolla\MetaTagsBundle\Entity\Metatag;
 
 /**
@@ -14,24 +15,8 @@ use Copiaincolla\MetaTagsBundle\Entity\Metatag;
  */
 class MetaTagsLoader
 {
-    protected $defaultMetaTags;
+    protected $defaults;
     protected $em;
-    
-    /**
-     * List of supported metatags
-     */
-    private $supportedMetatags = array(
-        'title',
-        'description',
-        'keywords',
-        'author',
-        'language',
-        'robots',
-        'googlebot',
-        'og:title',
-        'og:description',
-        'og:image'
-    );
     
     /**
      * constructor
@@ -39,10 +24,10 @@ class MetaTagsLoader
      * @param array $config
      * @param EntityManager $em
      */
-    public function __construct(array $config, EntityManager $em)
+    public function __construct(EntityManager $em, Defaults $defaults)
     {
-        $this->defaultMetaTags  = $config['defaults'];
-        $this->em               = $em;
+        $this->em       = $em;
+        $this->defaults = $defaults;
     }
     
     /**
@@ -55,29 +40,29 @@ class MetaTagsLoader
     {
         $pathInfo = $request->getPathInfo();
 
-        $metaTags = $this->defaultMetaTags;
-
         // search MetaTag in database
         $metaTag = $this->em->getRepository('CopiaincollaMetaTagsBundle:Metatag')->findOneBy(array(
             'url' => $pathInfo
         ));
 
-        if ($metaTag) {
-            $metaTags = $this->mergeMetaTag($metaTags, $metaTag);
-        }
-
-        return $metaTags;
+        return $this->mergeWithDefaults($metaTag);
     }
 
     /**
-     * injects the values stored in a MetaTag entity into an array
+     * merges the values in $metaTag object with the default ones
      *
-     * @param array $metaTags
      * @param \Copiaincolla\MetaTagsBundle\Entity\Metatag $metaTag
      * @return array
      */
-    private function mergeMetaTag($metaTags = array(), MetaTag $metaTag)
+    private function mergeWithDefaults($metaTag)
     {
+        $metaTags = $this->defaults->getEntityMetatagDefaults()->toArray();
+
+        // return defaults
+        if ($metaTag === null) {
+            return $metaTags;
+        }
+
         // title
         $title = $this->cleanMetaTagValue($metaTag->getTitle());
         if ('' !== $title) {

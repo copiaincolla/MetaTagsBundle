@@ -1,0 +1,51 @@
+{% extends 'CopiaincollaMetaTagsBundle::layout.html.twig' %}
+
+{% block main %}
+
+    <h1>Meta Tag Defaults</h1>
+
+
+    <table>
+        <tr>
+            <td>title</td>
+            <td>{{ entity.title }}</td>
+        </tr>
+        <tr>
+            <td>description</td>
+            <td>{{ entity.description}}</td>
+        </tr>
+        <tr>
+            <td>keywords</td>
+            <td>{{ entity.author }}</td>
+        </tr>
+        <tr>
+            <td>language</td>
+            <td>{{ entity.language }}</td>
+        </tr>
+        <tr>
+            <td>robots</td>
+            <td>{{ entity.robots }}</td>
+        </tr>
+        <tr>
+            <td>googlebot</td>
+            <td>{{ entity.googlebot }}</td>
+        </tr>
+        <tr>
+            <td>og:title</td>
+            <td>{{ entity.ogTitle }}</td>
+        </tr>
+        <tr>
+            <td>og:description</td>
+            <td>{{ entity.ogDescription }}</td>
+        </tr>
+        <tr>
+            <td>og:image</td>
+            <td>{{ entity.ogImage }}</td>
+        </tr>
+    </table>
+
+    <br><br>
+
+    <a href="{{ path('admin_metatag_defaults_edit') }}">Edit default meta tags</a>
+
+{% endblock %}
