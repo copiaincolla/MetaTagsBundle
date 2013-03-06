@@ -1,11 +1,21 @@
 <?xml version="1.0" ?>
 
 <container xmlns="http://symfony.com/schema/dic/services"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="ci_metatags.url_loader.class">Copiaincolla\MetaTagsBundle\Loader\UrlsLoader</parameter>
+        <parameter key="ci_metatags.urls_generator.class">Copiaincolla\MetaTagsBundle\Service\UrlsGenerator</parameter>
+        <parameter key="ci_metatags.dynamic_route_urls_generator.class">Copiaincolla\MetaTagsBundle\Service\DynamicRouteUrlsGenerator</parameter>
+        <parameter key="ci_metatags.route_exposer.class">Copiaincolla\MetaTagsBundle\Service\RouteExposer</parameter>
+        <parameter key="ci_metatags.metatags_loader.class">Copiaincolla\MetaTagsBundle\Loader\MetaTagsLoader</parameter>
+        <parameter key="form.type.metatag.class">Copiaincolla\MetaTagsBundle\Form\MetatagType</parameter>
+        <parameter key="ci_metatags.twig.extension.class">Copiaincolla\MetaTagsBundle\Extension\MetaTagsExtension</parameter>
+    </parameters>
 
     <services>
-        <service id="ci_metatags.url_loader" class="Copiaincolla\MetaTagsBundle\Loader\UrlsLoader">
+        <service id="ci_metatags.url_loader" class="%ci_metatags.url_loader.class%">
             <argument>%copiaincolla_meta_tags%</argument>
             <argument type="service" id="router" />
             <argument type="service" id="doctrine.orm.entity_manager" />
@@ -15,43 +25,37 @@
             <argument type="service" id="ci_metatags.dynamic_route_urls_generator" />
         </service>
 
-        <service id="ci_metatags.urls_generator" class="Copiaincolla\MetaTagsBundle\Service\UrlsGenerator">
+        <service id="ci_metatags.urls_generator" class="%ci_metatags.urls_generator.class%">
             <argument>%copiaincolla_meta_tags%</argument>
             <argument type="service" id="router" />
         </service>
 
-        <service id="ci_metatags.dynamic_route_urls_generator" class="Copiaincolla\MetaTagsBundle\Service\DynamicRouteUrlsGenerator">
+        <service id="ci_metatags.dynamic_route_urls_generator" class="%ci_metatags.dynamic_route_urls_generator.class%">
             <argument>%copiaincolla_meta_tags%</argument>
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="ci_metatags.urls_generator" />
         </service>
 
-        <service id="ci_metatags.route_exposer" class="Copiaincolla\MetaTagsBundle\Service\RouteExposer">
+        <service id="ci_metatags.route_exposer" class="%ci_metatags.route_exposer.class%">
             <argument>%copiaincolla_meta_tags%</argument>
             <argument type="service" id="kernel" />
             <argument type="service" id="router" />
         </service>
 
-
-        <service id="ci_metatags.metatags_loader" class="Copiaincolla\MetaTagsBundle\Loader\MetaTagsLoader">
+        <service id="ci_metatags.metatags_loader" class="%ci_metatags.metatags_loader.class%">
             <tag name="ci_metatags.metatags_loader" />
             <argument>%copiaincolla_meta_tags%</argument>
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
 
-
-        <service id="ci_metatags.metatag_formtype" class="Copiaincolla\MetaTagsBundle\Form\MetatagType">
+        <service id="ci_metatags.metatag_formtype" class="%form.type.metatag.class%">
             <tag name="ci_metatags.metatag_formtype" />
             <argument type="service" id="ci_metatags.url_loader" />
         </service>
 
-        <service id="ci_metatags.twig.extension" class="Copiaincolla\MetaTagsBundle\Extension\MetaTagsExtension">
+        <service id="ci_metatags.twig.extension" class="%ci_metatags.twig.extension.class%">
             <tag name="twig.extension" />
         </service>
-
     </services>
 
 </container>
-
-
-
