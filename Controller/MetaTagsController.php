@@ -14,16 +14,19 @@ class MetaTagsController extends Controller
     /**
      * Render HTML metatags
      *
+     * @param $vars array of template variables
+     * @param $inlineMetatags array of override metatags
+     *
      * @Template()
      */
-    public function renderAction($vars = array())
+    public function renderAction($vars = array(), $inlineMetatags = array())
     {
         $metatagsLoader = $this->container->get('ci_metatags.metatags_loader');
 
         $request = Request::createFromGlobals();
 
         return array (
-            'metatags'  => $metatagsLoader->getMetaTagsForRequest($request),
+            'metatags'  => $metatagsLoader->getMetaTagsForRequest($request, $inlineMetatags),
             'vars'      => $vars
         );
     }

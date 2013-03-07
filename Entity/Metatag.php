@@ -3,6 +3,7 @@
 namespace Copiaincolla\MetaTagsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use \Exception;
 
 /**
  * Copiaincolla\MetaTagsBundle\Entity\Metatag
@@ -12,7 +13,20 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Metatag
 {
-    /**
+    private static $metatagsAssociation = array(
+        'title' => 'getTitle',
+        'description' => 'getDescription',
+        'keywords' => 'getKeywords',
+        'robots' => 'getRobots',
+        'googlebot' => 'getGoogleBot',
+        'author' => 'getAuthor',
+        'language' => 'getLanguage',
+        'og:title' => 'getOgTitle',
+        'og:description' => 'getOgDescription',
+        'og:image' => 'getOgImage',
+    );
+
+        /**
      * @var integer $id
      *
      * @ORM\Column(name="id", type="integer")
@@ -102,6 +116,42 @@ class Metatag
      *  CUSTOM FUNCTIONS
      *****************************************************************************************/
 
+    /**
+     * get $metatagsAssociation
+     *
+     * @return array
+     */
+    public static function getMetatagsAssociation()
+    {
+        return self::$metatagsAssociation;
+    }
+
+    /**
+     * get supported metatags
+     *
+     * @return array
+     */
+    public static function getSupportedMetaTags()
+    {
+        return array_keys(self::$metatagsAssociation);
+    }
+
+    /**
+     * retrive metatag value
+     *
+     * @param type $name
+     * @return Object Requested object. If given name don't exist return false.
+     */
+    public function getValue($name)
+    {
+        try {
+            return call_user_func(array($this, self::$metatagsAssociation[$name]));
+        } catch (\Exception $e) {
+            throw new Exception("Undefined method supported metatag \"{$name}\" in " . get_class() . " at line " . $e->getLine(), '500');
+        }
+    }
+
+
     /******************************************************************************************
      *  GETTER AND SETTER
      *****************************************************************************************/
@@ -109,7 +159,7 @@ class Metatag
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -125,14 +175,14 @@ class Metatag
     public function setUrl($url)
     {
         $this->url = $url;
-    
+
         return $this;
     }
 
     /**
      * Get url
      *
-     * @return string 
+     * @return string
      */
     public function getUrl()
     {
@@ -148,14 +198,14 @@ class Metatag
     public function setTitle($title)
     {
         $this->title = $title;
-    
+
         return $this;
     }
 
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -171,14 +221,14 @@ class Metatag
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -194,14 +244,14 @@ class Metatag
     public function setKeywords($keywords)
     {
         $this->keywords = $keywords;
-    
+
         return $this;
     }
 
     /**
      * Get keywords
      *
-     * @return string 
+     * @return string
      */
     public function getKeywords()
     {
@@ -217,14 +267,14 @@ class Metatag
     public function setRobots($robots)
     {
         $this->robots = $robots;
-    
+
         return $this;
     }
 
     /**
      * Get robots
      *
-     * @return string 
+     * @return string
      */
     public function getRobots()
     {
@@ -240,14 +290,14 @@ class Metatag
     public function setGooglebot($googlebot)
     {
         $this->googlebot = $googlebot;
-    
+
         return $this;
     }
 
     /**
      * Get googlebot
      *
-     * @return string 
+     * @return string
      */
     public function getGooglebot()
     {
@@ -263,14 +313,14 @@ class Metatag
     public function setAuthor($author)
     {
         $this->author = $author;
-    
+
         return $this;
     }
 
     /**
      * Get author
      *
-     * @return string 
+     * @return string
      */
     public function getAuthor()
     {
@@ -286,14 +336,14 @@ class Metatag
     public function setLanguage($language)
     {
         $this->language = $language;
-    
+
         return $this;
     }
 
     /**
      * Get language
      *
-     * @return string 
+     * @return string
      */
     public function getLanguage()
     {
@@ -309,14 +359,14 @@ class Metatag
     public function setOgTitle($ogTitle)
     {
         $this->ogTitle = $ogTitle;
-    
+
         return $this;
     }
 
     /**
      * Get ogTitle
      *
-     * @return string 
+     * @return string
      */
     public function getOgTitle()
     {
@@ -332,14 +382,14 @@ class Metatag
     public function setOgDescription($ogDescription)
     {
         $this->ogDescription = $ogDescription;
-    
+
         return $this;
     }
 
     /**
      * Get ogDescription
      *
-     * @return string 
+     * @return string
      */
     public function getOgDescription()
     {
@@ -355,14 +405,14 @@ class Metatag
     public function setOgImage($ogImage)
     {
         $this->ogImage = $ogImage;
-    
+
         return $this;
     }
 
     /**
      * Get ogImage
      *
-     * @return string 
+     * @return string
      */
     public function getOgImage()
     {

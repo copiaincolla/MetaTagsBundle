@@ -3,6 +3,7 @@
 namespace Copiaincolla\MetaTagsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Copiaincolla\MetaTagsBundle\Entity\Metatag;
 
 /**
  * Copiaincolla\MetaTagsBundle\Entity\MetatagDefaults
@@ -101,39 +102,17 @@ class MetatagDefaults
     public function toArray()
     {
         $metaTags = array();
+        $metatagsAssociation = Metatag::getMetatagsAssociation();
 
-        // title
-        $metaTags['title'] = $this->getTitle();
-
-        // description
-        $metaTags['description'] = $this->getDescription();
-
-        // keywords
-        $metaTags['keywords'] = $this->getKeywords();
-
-        // robots
-        $metaTags['robots'] = $this->getRobots();
-
-        // googlebot
-        $metaTags['googlebot'] = $this->getGooglebot();
-
-        // author
-        $metaTags['author'] = $this->getAuthor();
-
-        // language
-        $metaTags['language'] = $this->getLanguage();
-
-        // og:title
-        $metaTags['og:title'] = $this->getOgTitle();
-
-        // og:description
-        $metaTags['og:description'] = $this->getOgDescription();
-
-        // og:image
-        $metaTags['og:image'] = $this->getOgImage();
+        foreach ($metatagsAssociation as $metaTagName => $metaTagValue) {
+            try {
+                $metaTags[$metaTagName] = call_user_func(array($this, $metaTagValue));
+            } catch (\Exception $e) {
+                throw new Exception("Undefined method supported metatag \"{$metaTagName}\" in " . get_class() . " at line " . $e->getLine(), '500');
+            }
+        }
 
         return $metaTags;
-
     }
 
     /******************************************************************************************
@@ -143,7 +122,7 @@ class MetatagDefaults
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -159,14 +138,14 @@ class MetatagDefaults
     public function setTitle($title)
     {
         $this->title = $title;
-    
+
         return $this;
     }
 
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -182,14 +161,14 @@ class MetatagDefaults
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -205,14 +184,14 @@ class MetatagDefaults
     public function setKeywords($keywords)
     {
         $this->keywords = $keywords;
-    
+
         return $this;
     }
 
     /**
      * Get keywords
      *
-     * @return string 
+     * @return string
      */
     public function getKeywords()
     {
@@ -228,14 +207,14 @@ class MetatagDefaults
     public function setRobots($robots)
     {
         $this->robots = $robots;
-    
+
         return $this;
     }
 
     /**
      * Get robots
      *
-     * @return string 
+     * @return string
      */
     public function getRobots()
     {
@@ -251,14 +230,14 @@ class MetatagDefaults
     public function setGooglebot($googlebot)
     {
         $this->googlebot = $googlebot;
-    
+
         return $this;
     }
 
     /**
      * Get googlebot
      *
-     * @return string 
+     * @return string
      */
     public function getGooglebot()
     {
@@ -274,14 +253,14 @@ class MetatagDefaults
     public function setAuthor($author)
     {
         $this->author = $author;
-    
+
         return $this;
     }
 
     /**
      * Get author
      *
-     * @return string 
+     * @return string
      */
     public function getAuthor()
     {
@@ -297,14 +276,14 @@ class MetatagDefaults
     public function setLanguage($language)
     {
         $this->language = $language;
-    
+
         return $this;
     }
 
     /**
      * Get language
      *
-     * @return string 
+     * @return string
      */
     public function getLanguage()
     {
@@ -320,14 +299,14 @@ class MetatagDefaults
     public function setOgTitle($ogTitle)
     {
         $this->ogTitle = $ogTitle;
-    
+
         return $this;
     }
 
     /**
      * Get ogTitle
      *
-     * @return string 
+     * @return string
      */
     public function getOgTitle()
     {
@@ -343,14 +322,14 @@ class MetatagDefaults
     public function setOgDescription($ogDescription)
     {
         $this->ogDescription = $ogDescription;
-    
+
         return $this;
     }
 
     /**
      * Get ogDescription
      *
-     * @return string 
+     * @return string
      */
     public function getOgDescription()
     {
@@ -366,14 +345,14 @@ class MetatagDefaults
     public function setOgImage($ogImage)
     {
         $this->ogImage = $ogImage;
-    
+
         return $this;
     }
 
     /**
      * Get ogImage
      *
-     * @return string 
+     * @return string
      */
     public function getOgImage()
     {

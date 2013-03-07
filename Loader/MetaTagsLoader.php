@@ -10,17 +10,17 @@ use Copiaincolla\MetaTagsBundle\Entity\Metatag;
 
 /**
  * MetaTags loader.
- * 
+ *
  * Load meta tags from default values or database
  */
 class MetaTagsLoader
 {
     protected $defaults;
     protected $em;
-    
+
     /**
      * constructor
-     * 
+     *
      * @param array $config
      * @param EntityManager $em
      */
@@ -29,14 +29,15 @@ class MetaTagsLoader
         $this->em       = $em;
         $this->defaults = $defaults;
     }
-    
+
     /**
      * Load the right meta tags for a Request
-     * 
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param $inlineMetatags array of override metatags
      * @return array
      */
-    public function getMetaTagsForRequest(Request $request)
+    public function getMetaTagsForRequest(Request $request, $inlineMetatags = array())
     {
         $pathInfo = $request->getPathInfo();
 
@@ -45,82 +46,35 @@ class MetaTagsLoader
             'url' => $pathInfo
         ));
 
-        return $this->mergeWithDefaults($metaTag);
+        return $this->mergeWithDefaults($metaTag, $inlineMetatags);
     }
 
     /**
      * merges the values in $metaTag object with the default ones
      *
-     * @param \Copiaincolla\MetaTagsBundle\Entity\Metatag $metaTag
+     * @param \Copiaincolla\MetaTagsBundle\Entity\Metatag $metaTagEntity
+     * @param $inlineMetatags array of override metatags
      * @return array
      */
-    private function mergeWithDefaults($metaTag)
+    private function mergeWithDefaults($metaTagEntity, $inlineMetatags)
     {
-        $metaTags = $this->defaults->getEntityMetatagDefaults()->toArray();
+        $metaTags = array();
+        $defaultMetaTags = $this->defaults->getEntityMetatagDefaults()->toArray();
 
-        // return defaults
-        if ($metaTag === null) {
-            return $metaTags;
-        }
+        $supportedMetaTags = Metatag::getSupportedMetaTags();
 
-        // title
-        $title = $this->cleanMetaTagValue($metaTag->getTitle());
-        if ('' !== $title) {
-            $metaTags['title'] = $title;
-        }
+        // return backend metatags if defined, otherwise try to return inline metatags
+        foreach ($supportedMetaTags as $name) {
 
-        // description
-        $description = $this->cleanMetaTagValue($metaTag->getDescription());
-        if ('' !== $description) {
-            $metaTags['description'] = $description;
-        }
+            if ($metaTagEntity !== null && (string)$metaTagEntity->getValue($name)) {
+                $metaTags[$name] = $this->cleanMetaTagValue($metaTagEntity->getValue($name));
+            }
+            elseif (array_key_exists($name, $inlineMetatags)) {
+                $metaTags[$name] = $this->cleanMetaTagValue($inlineMetatags[$name]);
+            } else {
+                $metaTags[$name] = $defaultMetaTags[$name];
+            }
 
-        // keywords
-        $keywords = $this->cleanMetaTagValue($metaTag->getKeywords());
-        if ('' !== $keywords) {
-            $metaTags['keywords'] = $keywords;
-        }
-
-        // robots
-        $robots = $this->cleanMetaTagValue($metaTag->getRobots());
-        if ('' !== $robots) {
-            $metaTags['robots'] = $robots;
-        }
-
-        // googlebot
-        $googlebot = $this->cleanMetaTagValue($metaTag->getGooglebot());
-        if ('' !== $googlebot) {
-            $metaTags['googlebot'] = $googlebot;
-        }
-
-        // author
-        $author = $this->cleanMetaTagValue($metaTag->getAuthor());
-        if ('' !== $author) {
-            $metaTags['author'] = $author;
-        }
-
-        // language
-        $language = $this->cleanMetaTagValue($metaTag->getLanguage());
-        if ('' !== $language) {
-            $metaTags['language'] = $language;
-        }
-
-        // og:title
-        $ogTitle = $this->cleanMetaTagValue($metaTag->getOgTitle());
-        if ('' !== $ogTitle) {
-            $metaTags['og:title'] = $ogTitle;
-        }
-
-        // og:description
-        $ogDescription = $this->cleanMetaTagValue($metaTag->getOgDescription());
-        if ('' !== $ogTitle) {
-            $metaTags['og:description'] = $ogDescription;
-        }
-
-        // og:image
-        $ogImage = $this->cleanMetaTagValue($metaTag->getOgImage());
-        if ('' !== $ogImage) {
-            $metaTags['og:image'] = $ogImage;
         }
 
         return $metaTags;
@@ -131,7 +85,7 @@ class MetaTagsLoader
      *
      * - convert the value into a string
      * - trim
-     * 
+     *
      * @param $str
      * @return string
      */
