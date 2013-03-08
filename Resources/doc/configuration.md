@@ -13,12 +13,6 @@ The complete configuration is:
 
 ```
 copiaincolla_meta_tags:
-
-    defaults:
-        title: "Foo default title"
-        description: "Foo default description"
-        keywords: "Foo default keywords"
-        author: "Foo default author"
     
     urls_loader:
     
@@ -55,52 +49,6 @@ copiaincolla_meta_tags:
 ```
 
 ---
-
-## copiaincolla_meta_tags / defaults
-
-Set the defaults values for the meta tags.
-
-```
-copiaincolla_meta_tags:
-    defaults:
-        title: Foo default title
-        description: Foo default description
-        keywords: Foo default keywords
-        author: Foo default author
-```
-
-These values will be used for every page: if you specify one or more meta tags for a specific url, these will be loaded from database and optionally merged with the default ones.
-
-Other possible configurations for `default` key are:
-
-```
-copiaincolla_meta_tags:
-    defaults:
-        title: Foo default title
-        description: Foo default description
-        keywords: ~
-        author: ~
-```
-
-```
-copiaincolla_meta_tags:
-    defaults:
-        title: Foo default title
-        description: Foo default description
-```
-
----
-## copiaincolla_meta_tags / custom_service
-
-Specify the id and (optionally) the function of your custom service to load additional urls.
-
-```
-copiaincolla_meta_tags:
-    urls_loader:
-        custom_service:
-            id: foo.metatags.url_loader
-            function: foo
-```
 
 ## copiaincolla_meta_tags / urls_loader
 
@@ -147,6 +95,18 @@ or
 
 ```
     exposed_routes: ~
+```
+
+### copiaincolla_meta_tags / urls_loader / custom_service
+
+Specify the id and (optionally) the function of your custom service to load additional urls.
+
+```
+copiaincolla_meta_tags:
+    urls_loader:
+        custom_service:
+            id: foo.metatags.url_loader
+            function: foo
 ```
 
 ### copiaincolla_meta_tags / urls_loader / parameters

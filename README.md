@@ -29,7 +29,7 @@ Once the urls are loaded in MetaTagsBundle, you will be able to associate the fo
 - __og:description__
 - __og:image__
 
-Obviously it is possible to specify default values for each meta tag, used when a url has no or partially meta tags specified by the user.
+It is possible to specify default values for each meta tag, used when a url has no or partially meta tags specified by the user.
 
 __Note:__ This bundle is in __beta__ state at the moment, in test phase and almost ready for the first release.
 
@@ -60,6 +60,8 @@ More details about _tagging and branching system_ used in CopiaincollaMetaTagsBu
 ## Configure
 
 To configure this bundle, read [Configuration](Resources/doc/configuration.md) for all possible values.
+
+The default meta tag values are configurable by web interface, at url `/metatags/defaults`.
 
 ## Load urls
 
@@ -106,5 +108,12 @@ In the template containing an `<head>` tag, simply add:
     [...]
 </body>
 ```
+
+To overwrite the default meta tags and the custom meta tags inserted by web interface, you can specify the `inlineMetatags` variable:
+
+```
+{% render controller('CopiaincollaMetaTagsBundle:MetaTags:render', { 'inlineMetatags': {'title': 'New foo title'} }) %}
+```
+
 
 For a better explanation of usage in templates and advanced use, read [Template usage](Resources/doc/template_usage.md).

@@ -40,6 +40,22 @@ This will print:
 </body>
 ```
 
+## Override of meta tag values from template
+
+Besides specifying default meta tags and creating custom meta tags depending on a url, you can override "manually" a meta tag directly from the template.
+
+To do this, pass the variable `inlineMetatags` to the `render()` function:
+
+```
+{% render controller('CopiaincollaMetaTagsBundle:MetaTags:render', { 'inlineMetatags': {'title': 'New foo title', 'description': 'New foo description'} }) %}
+```
+
+The "precedence" order, from the most important to the less one, is:
+
+- values passed from template with `inlineMetatags` variable
+- user entered meta tag values for a specific url
+- default meta tag values
+
 ## Use of twig variables inside meta tag values
 
 There are situations where you want to use twig variables inside a meta tag value.
@@ -136,21 +152,6 @@ So, for a route you can populate the `language` field with:
 ```
 
 This is the same of putting in a template `{{ app.request.locale }}`.
-
-If you want, you can specify a default value for the `language` meta tag in the configuration:
-
-```
-copiaincolla_meta_tags:
-
-    defaults:
-        title: [my default title]
-        description: [my default description]
-        keywords: [my default keywords]
-        author: [my default author]
-        language: "{{ _master_request.locale }}"
-```
-
-Note: for `Symfony < 2.1` the `_locale` parameter is stored in session, not in the request. Extracted from [here](https://github.com/symfony/symfony/blob/master/UPGRADE-2.1.md), the `locale` is accessible by `{{ _master_request.session.locale }}` or `{{ app.session.locale }}`.
 
 In general you can access request parameter with the syntax:
 
