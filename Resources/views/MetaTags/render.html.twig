@@ -1,39 +1,39 @@
 {% if '' != metatags['title'] %}
-    <title>{% block meta_title %}{{ metaTagsParseValue(metatags['title'], vars)|raw }}{% endblock %}</title>
+    <title>{% block meta_title %}{{ ci_metatags_parse_value(metatags['title'], vars)|raw }}{% endblock %}</title>
 {% endif %}
 
 {% if '' != metatags['description'] %}
-    <meta name="description" content="{% block meta_description %}{{ metaTagsParseValue(metatags['description'], vars)|raw }}{% endblock %}" />
+    <meta name="description" content="{% block meta_description %}{{ ci_metatags_parse_value(metatags['description'], vars)|raw }}{% endblock %}" />
 {% endif %}
 
 {% if '' != metatags['keywords'] %}
-    <meta name="keywords" content="{% block meta_keywords %}{{ metaTagsParseValue(metatags['keywords'], vars)|raw }}{% endblock %}" />
+    <meta name="keywords" content="{% block meta_keywords %}{{ ci_metatags_parse_value(metatags['keywords'], vars)|raw }}{% endblock %}" />
 {% endif %}
 
 {% if '' != metatags['author'] %}
-    <meta name="author" content="{% block meta_author %}{{ metaTagsParseValue(metatags['author'], vars)|raw }}{% endblock %}" />
+    <meta name="author" content="{% block meta_author %}{{ ci_metatags_parse_value(metatags['author'], vars)|raw }}{% endblock %}" />
 {% endif %}
 
 {% if '' != metatags['language'] %}
-    <meta name="language" content="{% block meta_language %}{{ metaTagsParseValue(metatags['language'], vars)|raw }}{% endblock %}" />
+    <meta name="language" content="{% block meta_language %}{{ ci_metatags_parse_value(metatags['language'], vars)|raw }}{% endblock %}" />
 {% endif %}
 
 {% if '' != metatags['robots'] %}
-    <meta name="robots" content="{% block meta_robots %}{{ metaTagsParseValue(metatags['robots'], vars)|raw }}{% endblock %}" />
+    <meta name="robots" content="{% block meta_robots %}{{ ci_metatags_parse_value(metatags['robots'], vars)|raw }}{% endblock %}" />
 {% endif %}
 
 {% if '' != metatags['googlebot'] %}
-    <meta name="googlebot" content="{% block meta_googlebot %}{{ metaTagsParseValue(metatags['googlebot'], vars)|raw }}{% endblock %}" />
+    <meta name="googlebot" content="{% block meta_googlebot %}{{ ci_metatags_parse_value(metatags['googlebot'], vars)|raw }}{% endblock %}" />
 {% endif %}
 
 {% if '' != metatags['og:title'] %}
-    <meta property="og:title" content="{% block meta_og_title %}{{ metaTagsParseValue(metatags['og:title'], vars)|raw }}{% endblock %}" />
+    <meta property="og:title" content="{% block meta_og_title %}{{ ci_metatags_parse_value(metatags['og:title'], vars)|raw }}{% endblock %}" />
 {% endif %}
 
 {% if '' != metatags['og:description'] %}
-    <meta property="og:description" content="{% block meta_og_description %}{{ metaTagsParseValue(metatags['og:description'], vars)|raw }}{% endblock %}" />
+    <meta property="og:description" content="{% block meta_og_description %}{{ ci_metatags_parse_value(metatags['og:description'], vars)|raw }}{% endblock %}" />
 {% endif %}
 
 {% if '' != metatags['og:image'] %}
-    <meta property="og:image" content="{% block meta_og_image %}{{ metaTagsParseValue(metatags['og:image'], vars)|raw }}{% endblock %}" />
+    <meta property="og:image" content="{% block meta_og_image %}{{ ci_metatags_parse_value(metatags['og:image'], vars)|raw }}{% endblock %}" />
 {% endif %}

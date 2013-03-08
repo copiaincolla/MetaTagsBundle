@@ -26,6 +26,13 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('allow_editable_url')->defaultTrue()->end()
+                        ->arrayNode('truncate_function')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('limit')->defaultValue(180)->end()
+                                ->scalarNode('truncateWords')->defaultFalse()->end()
+                            ->end()
+                        ->end()
                     ->end()
                 ->end()
 
