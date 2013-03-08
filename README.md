@@ -81,6 +81,14 @@ You can also generate urls for associating meta tags by fetching data from datab
 
 Finally, you can also create your custom __urls loader__ service, by following [this guide](Resources/doc/custom_urls_loader_service.md).
 
+### Display help message to user
+
+You can specify a @Route option to display a message in the edit page, just use the `ci_metatags_help` options:
+
+```
+@Route("/product/{id}/{slug}", name="product_show", options={"ci_metatags_help"="This urls represents a product. Use {{ entity.title }} to print the title of a product"})
+```
+
 
 ## Usage in the templates
 
