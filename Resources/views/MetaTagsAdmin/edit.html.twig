@@ -6,7 +6,7 @@
         {{ (entity.id) ? 'Edit meta tag "'~entity.url~'"' : 'New meta tag'}}
     </h1>
 
-    {% if associated_route is not null %}
+    {% if associated_route.options.ci_metatags_help is defined %}
         <p>
             {{ associated_route.options.ci_metatags_help|raw }}
         </p>
