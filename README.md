@@ -31,8 +31,6 @@ Once the urls are loaded in MetaTagsBundle, you will be able to associate the fo
 
 It is possible to specify default values for each meta tag, used when a url has no or partially meta tags specified by the user.
 
-__Note:__ This bundle is in __beta__ state at the moment, in test phase and almost ready for the first release.
-
 ---
 
 ## Install
