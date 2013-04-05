@@ -1,40 +1,34 @@
 <tbody>
-    {% for item in items %}
-
-        {% set entity = item.entity %}
+    {% for entity in entities %}
 
         <tr>
             <td>
-                {{ item.url }}
+                {{ entity.url }}
             </td>
             <td>
-                {% if entity %}
-                    {{ entity.title|raw }}
-                {% endif %}
+                {{ entity.title|raw }}
             </td>
             <td>
-                {% if entity %}
-                    {{ entity.description|raw }}
-                {% endif %}
+                {{ entity.description|raw }}
             </td>
             <td>
-                {% if entity %}
+                {% if entity.id %}
                     <a href="{{ path('admin_metatag_edit', {'id': entity.id }) }}">
                         edit
                     </a>
                 {% else %}
-                    <a href="{{ path('admin_metatag_new', {'url': item.url }) }}">
+                    <a href="{{ path('admin_metatag_new', {'url': entity.url }) }}">
                         edit
                     </a>
                 {% endif %}
             </td>
             <td>
-                {% if entity %}
+                {% if entity.id %}
                     {% render controller('CopiaincollaMetaTagsBundle:MetaTagsAdmin:_deleteForm', {id: entity.id}) %}
                 {% endif %}
             </td>
             <td>
-                {% if entity %}
+                {% if entity.id %}
                     <a href="{{ path('admin_metatag_show', {'id': entity.id }) }}">
                         show
                     </a>
