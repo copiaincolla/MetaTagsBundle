@@ -43,8 +43,8 @@ class UrlsLoader
 ```
 
 Be careful:
-- `Acme/FooBundle/Loader/UrlsLoader` __must__ implement the function `getUrls()`
-- `$output` __must__ be reflect the following structure:
+- `Acme/FooBundle/Loader/UrlsLoader` __must__ implement the function `getUrls()` (if you do not specify another function name in config.yml)
+- `$output` __must__ reflect the following structure:
 
 ```
 $output =  array() {
