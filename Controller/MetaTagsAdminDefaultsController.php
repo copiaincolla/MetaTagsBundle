@@ -24,7 +24,7 @@ class MetaTagsAdminDefaultsController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getEntityManager();
 
         $entities = $em->getRepository('CopiaincollaMetaTagsBundle:MetatagDefaults')->findBy(
             array(),
@@ -69,10 +69,10 @@ class MetaTagsAdminDefaultsController extends Controller
 
         $form = $this->createForm($this->container->get('ci_metatags.metatagdefaults_formtype'), $entity);
 
-        $form->bind($request);
+        $form->bindRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->getDoctrine()->getEntityManager();
 
             $em->persist($entity);
             $em->flush();
@@ -94,7 +94,7 @@ class MetaTagsAdminDefaultsController extends Controller
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('CopiaincollaMetaTagsBundle:MetatagDefaults')->find($id);
 
@@ -122,7 +122,7 @@ class MetaTagsAdminDefaultsController extends Controller
      */
     public function updateAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('CopiaincollaMetaTagsBundle:MetatagDefaults')->find($id);
 
@@ -135,7 +135,7 @@ class MetaTagsAdminDefaultsController extends Controller
 
         $request = $this->getRequest();
 
-        $editForm->bind($request);
+        $editForm->bindRequest($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
@@ -162,7 +162,7 @@ class MetaTagsAdminDefaultsController extends Controller
      */
     public function _deleteFormAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('CopiaincollaMetaTagsBundle:MetatagDefaults')->find($id);
 
@@ -186,7 +186,7 @@ class MetaTagsAdminDefaultsController extends Controller
      */
     public function deleteAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('CopiaincollaMetaTagsBundle:MetatagDefaults')->find($id);
 
@@ -234,7 +234,7 @@ class MetaTagsAdminDefaultsController extends Controller
 
     private function editImportance($id, $direction)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('CopiaincollaMetaTagsBundle:MetatagDefaults')->find($id);
 

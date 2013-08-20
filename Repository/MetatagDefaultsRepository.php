@@ -14,9 +14,9 @@ use Copiaincolla\MetaTagsBundle\Entity\MetatagDefaults;
 class MetatagDefaultsRepository extends EntityRepository
 {
     /**
-     * Get (if exesting) the first, in order of importance, MetatagDefaults entity whose path regex is matching $path
+     * Get (if exesting) in order of importance, MetatagDefaults entities whose path regex is matching $path
      */
-    public function getFirstMatching($path)
+    public function getMatching($path)
     {
         $qb = $this->getEntityManager()->createQueryBuilder()
             ->select('e')
@@ -26,17 +26,18 @@ class MetatagDefaultsRepository extends EntityRepository
 
         $result = $qb->getQuery()->getResult();
 
+        $output = array();
 
         foreach ($result as $entity) {
             $regex = preg_replace('/#/', '\#', $entity->getPathRegex());
             $regex = "#$regex#";
 
             if (preg_match($regex, $path)) {
-                return $entity;
+                $output[] = $entity;
             }
         }
 
-        return null;
+        return $output;
     }
 
     /**

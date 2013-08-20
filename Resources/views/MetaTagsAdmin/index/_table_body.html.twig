@@ -20,7 +20,7 @@
             </td>
             <td>
                 {% if entity %}
-                    {% render controller('CopiaincollaMetaTagsBundle:MetaTagsAdmin:_deleteForm', {id: entity.id}) %}
+                    {% render "CopiaincollaMetaTagsBundle:MetaTagsAdmin:_deleteForm" with {id: entity.id} %}
                 {% endif %}
             </td>
             <td>

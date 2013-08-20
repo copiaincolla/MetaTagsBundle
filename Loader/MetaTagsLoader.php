@@ -59,9 +59,9 @@ class MetaTagsLoader
     private function mergeWithDefaults($pathInfo, $metaTagEntity, $inlineMetatags)
     {
         $metaTags = array();
-        
+
         // get default meta tags matching by regex
-        $defaultMetaTags = $this->defaults->getEntityMetatagDefaults($pathInfo)->toArray();
+        $defaultMetaTags = $this->defaults->getEntityMetatagDefaults($pathInfo);
 
         // return backend metatags if defined, otherwise try to return inline metatags
         foreach (Metatag::getSupportedMetaTags() as $name) {
@@ -70,7 +70,15 @@ class MetaTagsLoader
             } elseif (array_key_exists($name, $inlineMetatags)) {
                 $metaTags[$name] = $this->cleanMetaTagValue($inlineMetatags[$name]);
             } else {
-                $metaTags[$name] = $defaultMetaTags[$name];
+
+                foreach ($defaultMetaTags as $e) {
+                    $defaultMetaTag = $e->toArray();
+                    if (trim($defaultMetaTag[$name]) != '') {
+                        $metaTags[$name] = $defaultMetaTag[$name];
+                        break;
+                    }
+                }
+
             }
         }
 
