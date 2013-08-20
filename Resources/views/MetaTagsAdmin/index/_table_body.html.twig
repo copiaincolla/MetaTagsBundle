@@ -9,16 +9,6 @@
             </td>
             <td>
                 {% if entity %}
-                    {{ entity.title|raw }}
-                {% endif %}
-            </td>
-            <td>
-                {% if entity %}
-                    {{ entity.description|raw }}
-                {% endif %}
-            </td>
-            <td>
-                {% if entity %}
                     <a href="{{ path('admin_metatag_edit', {'id': entity.id }) }}">
                         edit
                     </a>

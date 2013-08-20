@@ -12,6 +12,7 @@ class MetatagDefaultsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('pathRegex', null, array('label' => 'Regex to match'))
             ->add('title', null, array('label' => 'Meta tag "title"'))
             ->add('description', null, array('label' => 'Meta tag "description"'))
             ->add('keywords', null, array('label' => 'Meta tag "keywords"'))

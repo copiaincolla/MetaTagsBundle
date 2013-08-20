@@ -1,16 +1,19 @@
 MetaTagsBundle
 ==============
 
-Symfony Bundle to manage html meta tags by matching urls.
+Symfony2 Bundle to manage html meta tags by path matching. This bundle manages relative paths, and not absolute urls.
 
 # How it works
 
-Based on the configuration provided by the user and/or a user custom service, MetaTagsBundle _loads_ some urls and manages the association between an __url__ and its __meta tags values__ storing the data in the database.
+You, as developer, specify the paths you want to be visible to admins in a reserved area of your website. Then an admin can manually set meta tags values for a concrete path, or define some regex rules to be applied to apths. You can also set some meta tags in yout twig templates.
 
-To choose which urls must be managed by MetaTagsBundle, the __routes__ generating them must be specified. There are some different methods to achieve this:
+
+MetaTagsBundle __loads__ some urls and manages the association between an __url__ and its __meta tags values__ storing the data in the database.
+
+To choose which urls must be managed by MetaTagsBundle, you must __load__ the __routes__ generating them. There are some different methods to achieve this:
 
 - load all the routes of a bundle by including the bundle name in `config.yml`
-- for each route, specify an `option` in the Route annotation
+- for each route, specify the option `ci_metatags_expose` in the Route annotation
 
 For routes requiring parameters that must be fetched from database, there's the possibility to load entities from database, and associate the route parameters to the entities values in order to create urls.
 
@@ -35,11 +38,27 @@ __Note:__ This bundle is in __beta__ state at the moment, in test phase and almo
 
 ---
 
+## Changelog
+
+20/08/2013 - Version 1.1
+
+In this date the version 1.1 is shipped! The most important introduction is the possibility to define cascading regex rules for default meta tag values.
+
+05/04/2013 - Version 1.0
+
+In this date the version 1.0 is tagged, hurray! This means that this bundle is no more in beta release, but ready for production environments.
+
+24/01/2013 - Version 0.1
+
+THe work on this bundle begins, now in alpha state.
+
+---
+
 ## Install
 
 Installation instructions can be found in [Installation](Resources/doc/install.md).
 
-The current version of this bundle is compatible with Symfony >= 2.2.*
+The current version (master branch) of this bundle is compatible with Symfony >= 2.2.*
 
 #### Tag notes
 
