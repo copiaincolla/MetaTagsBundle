@@ -46,7 +46,7 @@ class MetaTagsLoader
             'url' => $pathInfo
         ));
 
-        return $this->mergeWithDefaults($metaTag, $inlineMetatags);
+        return $this->mergeWithDefaults($pathInfo, $metaTag, $inlineMetatags);
     }
 
     /**
@@ -56,25 +56,22 @@ class MetaTagsLoader
      * @param $inlineMetatags array of override metatags
      * @return array
      */
-    private function mergeWithDefaults($metaTagEntity, $inlineMetatags)
+    private function mergeWithDefaults($pathInfo, $metaTagEntity, $inlineMetatags)
     {
         $metaTags = array();
-        $defaultMetaTags = $this->defaults->getEntityMetatagDefaults()->toArray();
-
-        $supportedMetaTags = Metatag::getSupportedMetaTags();
+        
+        // get default meta tags matching by regex
+        $defaultMetaTags = $this->defaults->getEntityMetatagDefaults($pathInfo)->toArray();
 
         // return backend metatags if defined, otherwise try to return inline metatags
-        foreach ($supportedMetaTags as $name) {
-
+        foreach (Metatag::getSupportedMetaTags() as $name) {
             if ($metaTagEntity !== null && (string)$metaTagEntity->getValue($name)) {
                 $metaTags[$name] = $this->cleanMetaTagValue($metaTagEntity->getValue($name));
-            }
-            elseif (array_key_exists($name, $inlineMetatags)) {
+            } elseif (array_key_exists($name, $inlineMetatags)) {
                 $metaTags[$name] = $this->cleanMetaTagValue($inlineMetatags[$name]);
             } else {
                 $metaTags[$name] = $defaultMetaTags[$name];
             }
-
         }
 
         return $metaTags;

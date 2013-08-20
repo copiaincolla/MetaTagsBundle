@@ -24,11 +24,11 @@ class Defaults
     }
 
     /**
-     *
+     * Get (if exesting) the first, in order of importance, MetatagDefaults entity whose path regex is matching $path
      */
-    public function getEntityMetatagDefaults()
+    public function getEntityMetatagDefaults($path)
     {
-        $entity = $this->em->getRepository('CopiaincollaMetaTagsBundle:MetatagDefaults')->findOneBy(array());
+        $entity = $this->em->getRepository('CopiaincollaMetaTagsBundle:MetatagDefaults')->getFirstMatching($path);
 
         if (!$entity) {
             $entity = new MetatagDefaults();

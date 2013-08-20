@@ -2,56 +2,66 @@
 
 {% block main %}
 
-    <h1>Meta Tag Defaults</h1>
+    <h1>Default meta tags</h1>
+
+    <p>
+        This list contains the regex rules applied to calculate the right meta tag infos to display for a given path.
+        Right atfer checking if you provided meta tag infos for a given path, theese rules are applied.
+        <br><br>
+        Important: the rules are in order of importance (the higher means the more important and applied before); so it's a good practice to put the most restrictive ones on the top.
+        <br><br>
+        Example: if you want to set the default value of the meta <b>title</b> for every path, you could add the regex rule "<b>.*</b>" and specify a <b>title</b> value.
+        In this way, if you do not set a <b>title</b> value for some path in <a href="{{ path('admin_metatag') }}">this list</a>, the one you set for "<b>.*</b>" regex rule will be loaded.
+    </p>
 
 
     <table>
-        <tr>
-            <td>title</td>
-            <td>{{ entity.title }}</td>
-        </tr>
-        <tr>
-            <td>description</td>
-            <td>{{ entity.description}}</td>
-        </tr>
-        <tr>
-            <td>keywords</td>
-            <td>{{ entity.author }}</td>
-        </tr>
-        <tr>
-            <td>language</td>
-            <td>{{ entity.language }}</td>
-        </tr>
-        <tr>
-            <td>robots</td>
-            <td>{{ entity.robots }}</td>
-        </tr>
-        <tr>
-            <td>googlebot</td>
-            <td>{{ entity.googlebot }}</td>
-        </tr>
-        <tr>
-            <td>og:title</td>
-            <td>{{ entity.ogTitle }}</td>
-        </tr>
-        <tr>
-            <td>og:description</td>
-            <td>{{ entity.ogDescription }}</td>
-        </tr>
-        <tr>
-            <td>og:image</td>
-            <td>{{ entity.ogImage }}</td>
-        </tr>
+        <thead>
+            <tr>
+                <th>
+                    Path regex
+                </th>
+                <th colspan="3"></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for entity in entities %}
+
+                <tr>
+                    <td>
+                        {{ entity.pathRegex }}
+                    </td>
+                    <td>
+                        <a href="{{ path('admin_metatag_defaults_importance_raise', {'id': entity.id }) }}">
+                            up
+                        </a>
+                        <a href="{{ path('admin_metatag_defaults_importance_lower', {'id': entity.id }) }}">
+                            down
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ path('admin_metatag_defaults_edit', {'id': entity.id }) }}">
+                            edit
+                        </a>
+                    </td>
+                    <td>
+                        {% render controller('CopiaincollaMetaTagsBundle:MetaTagsAdminDefaults:_deleteForm', {id: entity.id}) %}
+                    </td>
+                </tr>
+    
+            {% endfor %}
+        </tbody>
     </table>
 
     <br><br>
 
-    <a href="{{ path('admin_metatag_defaults_edit') }}">
-        Edit default meta tags
+    <a href="{{ path('admin_metatag_defaults_new') }}">
+        Add a regex rule
     </a>
     <br>
     <a href="{{ path('admin_metatag') }}">
-        Back to list
+        Back to paths list
     </a>
 
 {% endblock %}

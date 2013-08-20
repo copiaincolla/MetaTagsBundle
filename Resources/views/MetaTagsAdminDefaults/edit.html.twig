@@ -2,9 +2,13 @@
 
 {% block main %}
 
-    <h1>Edit meta tag defaults</h1>
+    <h1>
+        {{ (entity.id) ? 'Edit path regex rule "'~entity.pathRegex~'"' : 'New path regex rule' }}
+    </h1>
 
-    <form action="{{ path('admin_metatag_defaults_update') }}" method="post" {{ form_enctype(form) }} class="form form-horizontal form-metatag-edit" novalidate>
+    <form action="{{ (entity.id) ? path('admin_metatag_defaults_update', {id: entity.id}) : path('admin_metatag_defaults_create') }}" method="post" {{ form_enctype(form) }} class="form form-horizontal form-metatag-edit" novalidate>
+
+        {{ form_row(form.pathRegex) }}
 
         {{ form_row(form.title) }}
         {{ form_row(form.description) }}
@@ -27,6 +31,7 @@
         <a href="{{ path('admin_metatag_defaults') }}">
             Back
         </a>
+
         {{ form_rest(form) }}
     </form>
 
