@@ -9,7 +9,7 @@ use Copiaincolla\MetaTagsBundle\Entity\Metatag;
  * Copiaincolla\MetaTagsBundle\Entity\MetatagDefaults
  *
  * @ORM\Table(name="ci_metatag_defaults")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Copiaincolla\MetaTagsBundle\Repository\MetatagDefaultsRepository")
  */
 class MetatagDefaults
 {
@@ -21,6 +21,20 @@ class MetatagDefaults
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var string $pathRegex
+     *
+     * @ORM\Column(name="path_regex", type="string", length=255, nullable=true)
+     */
+    private $pathRegex;
+
+    /**
+     * @var string $importance
+     *
+     * @ORM\Column(name="importance", type="integer", nullable=true)
+     */
+    private $importance;
 
     /**
      * @var string $title
@@ -127,6 +141,52 @@ class MetatagDefaults
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set pathRegex
+     *
+     * @param string $pathRegex
+     * @return string
+     */
+    public function setPathRegex($pathRegex)
+    {
+        $this->pathRegex = $pathRegex;
+
+        return $this;
+    }
+
+    /**
+     * Get pathRegex
+     *
+     * @return string
+     */
+    public function getPathRegex()
+    {
+        return $this->pathRegex;
+    }
+
+    /**
+     * Set importance
+     *
+     * @param string $importance
+     * @return string
+     */
+    public function setImportance($importance)
+    {
+        $this->importance = $importance;
+
+        return $this;
+    }
+
+    /**
+     * Get importance
+     *
+     * @return string
+     */
+    public function getImportance()
+    {
+        return $this->importance;
     }
 
     /**

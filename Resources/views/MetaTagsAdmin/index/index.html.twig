@@ -2,19 +2,26 @@
 
 {% block main %}
 
-    <h1>Meta Tag</h1>
+    <h1>Meta Tags</h1>
+
+    <p>
+        This list contains all the paths you want to manage.
+        <br>
+        For each path you can manually edit the associated meta tag infos. You can also set a list of
+        <a href="{{ path('admin_metatag_defaults') }}">regex rules</a> to be applied to calculate the right meta tag
+        infos to display for a given path.
+    </p>
 
     {% include "CopiaincollaMetaTagsBundle:MetaTagsAdmin:index/_table.html.twig" with {"entities": entities} %}
 
     <hr>
 
     <a href="{{ path('admin_metatag_new') }}">
-        New custom Meta Tag
+        Add meta tags for a custom path (not listed here)
     </a>
-    <br>
+    <br><br>
     <a href="{{ path('admin_metatag_defaults') }}">
-        Manage default Meta Tags
+        Manage default meta tags
     </a>
-
 
 {% endblock %}

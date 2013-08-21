@@ -43,8 +43,8 @@ class UrlsLoader
 ```
 
 Be careful:
-- `Acme/FooBundle/Loader/UrlsLoader` __must__ implement the function `getUrls()`
-- `$output` __must__ be reflect the following structure:
+- `Acme/FooBundle/Loader/UrlsLoader` __must__ implement the function `getUrls()` (if you do not specify another function name in config.yml)
+- `$output` __must__ reflect the following structure:
 
 ```
 $output =  array() {
@@ -80,7 +80,7 @@ In your `Acme/FooBundle/Resources/services.xml`:
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="acme.metatags.urll_loader" class="Acme\FooBundle\Loader\UrlsLoader">
+        <service id="acme.metatags.url_loader" class="Acme\FooBundle\Loader\UrlsLoader">
             <argument type="service" id="router" />
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>

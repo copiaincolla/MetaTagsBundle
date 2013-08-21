@@ -1,40 +1,36 @@
 <tbody>
-    {% for entity in entities %}
+{% for item in items %}
 
-        <tr>
-            <td>
-                {{ entity.url }}
-            </td>
-            <td>
-                {{ entity.title|raw }}
-            </td>
-            <td>
-                {{ entity.description|raw }}
-            </td>
-            <td>
-                {% if entity.id %}
-                    <a href="{{ path('admin_metatag_edit', {'id': entity.id }) }}">
-                        edit
-                    </a>
-                {% else %}
-                    <a href="{{ path('admin_metatag_new', {'url': entity.url }) }}">
-                        edit
-                    </a>
-                {% endif %}
-            </td>
-            <td>
-                {% if entity.id %}
-                    {% render controller('CopiaincollaMetaTagsBundle:MetaTagsAdmin:_deleteForm', {id: entity.id}) %}
-                {% endif %}
-            </td>
-            <td>
-                {% if entity.id %}
-                    <a href="{{ path('admin_metatag_show', {'id': entity.id }) }}">
-                        show
-                    </a>
-                {% endif %}
-            </td>
-        </tr>
+    {% set entity = item.entity %}
 
-    {% endfor %}
+    <tr>
+        <td>
+            {{ item.url }}
+        </td>
+        <td>
+            {% if entity %}
+                <a href="{{ path('admin_metatag_edit', {'id': entity.id }) }}">
+                    edit
+                </a>
+            {% else %}
+                <a href="{{ path('admin_metatag_new', {'url': item.url }) }}">
+                    edit
+                </a>
+            {% endif %}
+        </td>
+        <td>
+            {% if entity %}
+                {% render "CopiaincollaMetaTagsBundle:MetaTagsAdmin:_deleteForm" with {id: entity.id} %}
+            {% endif %}
+        </td>
+        <td>
+            {% if entity %}
+                <a href="{{ path('admin_metatag_show', {'id': entity.id }) }}">
+                    show
+                </a>
+            {% endif %}
+        </td>
+    </tr>
+
+{% endfor %}
 </tbody>

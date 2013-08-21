@@ -1,39 +1,39 @@
-{% if '' != metatags['title'] %}
+{% if metatags['title'] is defined and  '' != metatags['title'] %}
     <title>{% block meta_title %}{{ ci_metatags_parse_value(metatags['title'], vars)|raw }}{% endblock %}</title>
 {% endif %}
 
-{% if '' != metatags['description'] %}
+{% if metatags['description'] is defined and  '' != metatags['description'] %}
     <meta name="description" content="{% block meta_description %}{{ ci_metatags_parse_value(metatags['description'], vars)|raw }}{% endblock %}" />
 {% endif %}
 
-{% if '' != metatags['keywords'] %}
+{% if metatags['keywords'] is defined and  '' != metatags['keywords'] %}
     <meta name="keywords" content="{% block meta_keywords %}{{ ci_metatags_parse_value(metatags['keywords'], vars)|raw }}{% endblock %}" />
 {% endif %}
 
-{% if '' != metatags['author'] %}
+{% if metatags['author'] is defined and  '' != metatags['author'] %}
     <meta name="author" content="{% block meta_author %}{{ ci_metatags_parse_value(metatags['author'], vars)|raw }}{% endblock %}" />
 {% endif %}
 
-{% if '' != metatags['language'] %}
+{% if metatags['language'] is defined and  '' != metatags['language'] %}
     <meta name="language" content="{% block meta_language %}{{ ci_metatags_parse_value(metatags['language'], vars)|raw }}{% endblock %}" />
 {% endif %}
 
-{% if '' != metatags['robots'] %}
+{% if metatags['robots'] is defined and  '' != metatags['robots'] %}
     <meta name="robots" content="{% block meta_robots %}{{ ci_metatags_parse_value(metatags['robots'], vars)|raw }}{% endblock %}" />
 {% endif %}
 
-{% if '' != metatags['googlebot'] %}
+{% if metatags['googlebot'] is defined and  '' != metatags['googlebot'] %}
     <meta name="googlebot" content="{% block meta_googlebot %}{{ ci_metatags_parse_value(metatags['googlebot'], vars)|raw }}{% endblock %}" />
 {% endif %}
 
-{% if '' != metatags['og:title'] %}
+{% if metatags['og:title'] is defined and  '' != metatags['og:title'] %}
     <meta property="og:title" content="{% block meta_og_title %}{{ ci_metatags_parse_value(metatags['og:title'], vars)|raw }}{% endblock %}" />
 {% endif %}
 
-{% if '' != metatags['og:description'] %}
+{% if metatags['og:description'] is defined and  '' != metatags['og:description'] %}
     <meta property="og:description" content="{% block meta_og_description %}{{ ci_metatags_parse_value(metatags['og:description'], vars)|raw }}{% endblock %}" />
 {% endif %}
 
-{% if '' != metatags['og:image'] %}
+{% if metatags['og:image'] is defined and  '' != metatags['og:image'] %}
     <meta property="og:image" content="{% block meta_og_image %}{{ ci_metatags_parse_value(metatags['og:image'], vars)|raw }}{% endblock %}" />
 {% endif %}
