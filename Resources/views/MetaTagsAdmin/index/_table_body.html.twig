@@ -1,36 +1,36 @@
 <tbody>
-{% for item in items %}
+    {% for item in items %}
 
-    {% set entity = item.entity %}
+        {% set entity = item.entity %}
 
-    <tr>
-        <td>
-            {{ item.url }}
-        </td>
-        <td>
-            {% if entity %}
-                <a href="{{ path('admin_metatag_edit', {'id': entity.id }) }}">
-                    edit
-                </a>
-            {% else %}
-                <a href="{{ path('admin_metatag_new', {'url': item.url }) }}">
-                    edit
-                </a>
-            {% endif %}
-        </td>
-        <td>
-            {% if entity %}
-                {% render "CopiaincollaMetaTagsBundle:MetaTagsAdmin:_deleteForm" with {id: entity.id} %}
-            {% endif %}
-        </td>
-        <td>
-            {% if entity %}
-                <a href="{{ path('admin_metatag_show', {'id': entity.id }) }}">
-                    show
-                </a>
-            {% endif %}
-        </td>
-    </tr>
+        <tr>
+            <td>
+                {{ item.url }}
+            </td>
+            <td>
+                {% if entity %}
+                    <a href="{{ path('admin_metatag_edit', {'id': entity.id }) }}">
+                        edit
+                    </a>
+                {% else %}
+                    <a href="{{ path('admin_metatag_new', {'url': item.url }) }}">
+                        edit
+                    </a>
+                {% endif %}
+            </td>
+            <td>
+                {% if entity %}
+                    {% render "CopiaincollaMetaTagsBundle:MetaTagsAdmin:_deleteForm" with {id: entity.id} %}
+                {% endif %}
+            </td>
+            <td>
+                {% if entity %}
+                    <a href="{{ path('admin_metatag_show', {'id': entity.id }) }}">
+                        show
+                    </a>
+                {% endif %}
+            </td>
+        </tr>
 
-{% endfor %}
+    {% endfor %}
 </tbody>
