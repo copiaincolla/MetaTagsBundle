@@ -40,9 +40,13 @@ __Note:__ This bundle is in __beta__ state at the moment, in test phase and almo
 
 ## Changelog
 
+03/03/2014 - Version 2.0
+
+The templates of the admin area have been refactored, reducing the number of files. Compatibility with Symfony 2.3 has been introduced. Functionality "allow_edit_url" has been suspended.
+
 20/08/2013 - Version 1.1
 
-In this date the version 1.1 is shipped! The most important introduction is the possibility to define cascading regex rules for default meta tag values.
+The version 1.1 is shipped! The most important introduction is the possibility to define cascading regex rules for default meta tag values.
 
 05/04/2013 - Version 1.0
 

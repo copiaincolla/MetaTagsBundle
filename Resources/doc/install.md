@@ -1,7 +1,7 @@
 Installation
 ============
 
-The `master` branch and the `X.Y` tags are compatible with `Symfony >= 2.2.*`.
+The `master` branch and the last `X.Y` tag are compatible with `Symfony >= 2.3.*`.
 
 ## Step 1 - Vendors
 
@@ -11,7 +11,7 @@ Review the list of available tags [here.](https://github.com/copiaincolla/MetaTa
 
 In short:
 
-- tags with the __"X.Y"__ format are compatible with `Symfony >= 2.2.*`
+- tags with the __"X.Y"__ format are compatible with the lastest version of Symfony
 - tags with the __"S2.1/X.Y"__ format are compatible with `Symfony 2.1.*`
 - tags with the __"S2.0/X.Y"__ format are compatible with `Symfony 2.0.*`
 
@@ -27,8 +27,8 @@ If you are using `composer`, add the following line to your `composer.json`:
 }
 ```
 
-note: substitute `"X.Y"` with the most recent tag or the concrete tag you want to use
-    
+note: substitute `"X.Y"` with the most recent tag or the specific tag you want to use
+
 ### deps
 
 If you are using `deps`, add the following line to your `deps`:
@@ -55,12 +55,12 @@ Load the bundle by adding this to `app/AppKernel.php`:
 
 ## Step 3 - Import routing
 
-Add the following line to `app/routing.yml`:
+Import the routes to manage the metatags by adding the following line to `app/routing.yml`:
 
     # CopiaincollaMetaTagsBundle
     ci_metatags_bundle_admin:
         resource: "@CopiaincollaMetaTagsBundle/Resources/config/routing.yml"
-    
+
 These routes should be proteced by access control. Given `^/admin` as a secured path, you may write:
 
     # CopiaincollaMetaTagsBundle
@@ -68,12 +68,14 @@ These routes should be proteced by access control. Given `^/admin` as a secured 
         resource: "@CopiaincollaMetaTagsBundle/Resources/config/routing.yml"
         prefix:   /admin/
 
-    
+
 ## Step 4 - Configuration
 
-Add to `app/config.yml`:
+Add the minimal configuration to `app/config.yml`:
 
     copiaincolla_meta_tags: ~
+
+For configuration reference see [Configuration](configuration.md).
 
 ## Step 5 - Database
 
@@ -81,5 +83,10 @@ Update the database by adding some tables; run:
 
     php app/console doctrine:schema:update --force
 
+Two tables will be created: `ci_metatag` and `ci_metatag_default`.
+
+## Finish
 
 The bundle is now ready to work!
+
+Have a look at [Configuration](configuration.md), [Template usage](template_usage.md) and [How to manually add urls to be managed by the bundle](custom_urls_loader_service.md).

@@ -22,6 +22,33 @@
 
     <hr />
 
-    {% include "CopiaincollaMetaTagsBundle:MetaTagsAdmin:index/_table.html.twig" with {"items": items} %}
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Url
+                </th>
+                <th colspan="3">Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for item in items %}
+
+                {% set entity = item.entity %}
+
+                <tr>
+                    <td>
+                        {{ item.url }}
+                    </td>
+                    <td>
+                        {% include "CopiaincollaMetaTagsBundle:MetaTagsAdmin:index/_actions.html.twig" with {"entity": item.entity} %}
+                    </td>
+                </tr>
+
+            {% endfor %}
+        </tbody>
+
+    </table>
 
 {% endblock %}
