@@ -58,8 +58,16 @@ Load the bundle by adding this to `app/AppKernel.php`:
 Add the following line to `app/routing.yml`:
 
     # CopiaincollaMetaTagsBundle
-    ci_metatags_bundle:
+    ci_metatags_bundle_admin:
         resource: "@CopiaincollaMetaTagsBundle/Resources/config/routing.yml"
+    
+These routes should be proteced by access control. Given `^/admin` as a secured path, you may write:
+
+    # CopiaincollaMetaTagsBundle
+    ci_metatags_bundle_admin:
+        resource: "@CopiaincollaMetaTagsBundle/Resources/config/routing.yml"
+        prefix:   /admin/
+
     
 ## Step 4 - Configuration
 
