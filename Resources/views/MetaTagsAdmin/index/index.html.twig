@@ -12,16 +12,16 @@
         infos to display for a given path.
     </p>
 
-    {% include "CopiaincollaMetaTagsBundle:MetaTagsAdmin:index/_table.html.twig" with {"items": items} %}
-
-    <hr>
-
-    <a href="{{ path('admin_metatag_new') }}">
-        Add meta tags for a custom path (not listed here)
-    </a>
-    <br><br>
     <a href="{{ path('admin_metatag_defaults') }}">
-        Manage default meta tags
+        Manage meta tags by regex
     </a>
+    &nbsp;
+    <a href="{{ path('admin_metatag_new') }}">
+        Add meta tags for a custom path (not listed below)
+    </a>
+
+    <hr />
+
+    {% include "CopiaincollaMetaTagsBundle:MetaTagsAdmin:index/_table.html.twig" with {"items": items} %}
 
 {% endblock %}

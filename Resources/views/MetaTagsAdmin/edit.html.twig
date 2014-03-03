@@ -3,7 +3,7 @@
 {% block main %}
 
     <h1>
-        {{ (entity.id) ? 'Edit meta tag "'~entity.url~'"' : 'New meta tag'}}
+        {{ (entity.url != '') ? 'Edit meta tag "'~entity.url~'"' : 'New meta tag'}}
     </h1>
 
     {% if associated_route.options.ci_metatags_help is defined %}
@@ -16,9 +16,11 @@
 
         {{ form_errors(form) }}
 
+        {#
         {% if form.vars.allow_editable_url == false and form.url.vars.value != '' %}
             <h3>{{ form.url.vars.value }}</h3>
         {% endif %}
+        #}
 
         {{ form_row(form.url) }}
 

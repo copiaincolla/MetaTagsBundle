@@ -20,14 +20,17 @@ class MetatagType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /*
         $config = $this->urlsLoader->getConfig();
 
         $entity = $builder->getForm()->getData();
+        */
 
 
         /*
          * add 'url' field
          */
+        /*
         $builder->setAttribute('allow_editable_url', $config['config']['allow_editable_url']);
 
         $urlType = 'text';
@@ -35,6 +38,8 @@ class MetatagType extends AbstractType
             $urlType = 'hidden';
         };
         $builder->add('url', $urlType, array('required' => true));
+        */
+        $builder->add('url', 'hidden');
 
 
         // add other fields
@@ -52,10 +57,12 @@ class MetatagType extends AbstractType
         ;
     }
 
+    /*
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['allow_editable_url'] = $form->getAttribute('allow_editable_url');
     }
+    */
 
     public function getName()
     {

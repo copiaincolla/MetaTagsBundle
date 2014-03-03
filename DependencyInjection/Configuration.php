@@ -25,7 +25,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('config')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('allow_editable_url')->defaultTrue()->end()
+                        ->scalarNode('allow_editable_url')->defaultFalse()->end()
                         ->arrayNode('truncate_function')
                             ->addDefaultsIfNotSet()
                             ->children()
