@@ -79,7 +79,7 @@ class MetaTagsAdminController extends Controller
         ksort($output);
 
         return array(
-            'items' => $output
+            'urls' => $output
         );
     }
 
