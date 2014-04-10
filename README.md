@@ -40,6 +40,10 @@ __Note:__ This bundle is in __beta__ state at the moment, in test phase and almo
 
 ## Changelog
 
+10/04/2014 - Version 2.1
+
+Compatibility with Symfony 2.4 has been added.
+
 03/03/2014 - Version 2.0
 
 The templates of the admin area have been refactored, reducing the number of files. Compatibility with Symfony 2.3 has been introduced. Functionality "allow_edit_url" has been suspended.
