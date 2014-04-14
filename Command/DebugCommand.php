@@ -65,7 +65,7 @@ EOF
         $urlsLoader = $this->getContainer()->get('ci_metatags.url_loader');
 
         // load urls managed by CopiaincollaMetaTagsBundle
-        $routes = $urlsLoader->getUrls(
+        $routes = $urlsLoader->getGeneratedUrls(
             ($input->getOption('exclude-already-associated')) ? true : false
         );
 
