@@ -142,7 +142,7 @@ class MetaTagsAdminController extends Controller
 
         $form = $this->createForm($this->container->get('ci_metatags.metatag_formtype'), $entity);
 
-        $form->handle($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -209,7 +209,7 @@ class MetaTagsAdminController extends Controller
 
         $request = $this->getRequest();
 
-        $editForm->handle($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
