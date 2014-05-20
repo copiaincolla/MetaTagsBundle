@@ -1,4 +1,4 @@
-{% extends 'CopiaincollaMetaTagsBundle::layout.html.twig' %}
+{% extends 'BricksMetaTagsBundle::layout.html.twig' %}
 
 {% block main %}
 
@@ -30,8 +30,32 @@
             <td>{{ entity.keywords }}</td>
         </tr>
         <tr>
+            <td>Robots:</td>
+            <td>{{ entity.robots }}</td>
+        </tr>
+        <tr>
+            <td>Googlebot:</td>
+            <td>{{ entity.googlebot }}</td>
+        </tr>
+        <tr>
             <td>Author:</td>
             <td>{{ entity.author }}</td>
+        </tr>
+        <tr>
+            <td>Language:</td>
+            <td>{{ entity.language }}</td>
+        </tr>
+        <tr>
+            <td>og:title:</td>
+            <td>{{ entity.ogTitle }}</td>
+        </tr>
+        <tr>
+            <td>og:description:</td>
+            <td>{{ entity.ogDescription }}</td>
+        </tr>
+        <tr>
+            <td>og:image:</td>
+            <td>{{ entity.ogImage }}</td>
         </tr>
     </table>
 
