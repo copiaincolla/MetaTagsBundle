@@ -43,7 +43,7 @@ class RouteExposer
             }
         }
 
-        return $regex;
+        return "#".$regex."#";
     }
 
     /**
